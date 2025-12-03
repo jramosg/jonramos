@@ -1,0 +1,236 @@
+---
+import { Image } from "astro:assets";
+import jonRamosImg from "../assets/jonramos.jpeg";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="home" class="hero">
+    <div class="container">
+        <div class="hero-layout">
+            <div class="content">
+                <span class="greeting">{t("hero.greeting")}</span>
+                <h1 class="name">
+                    Jon Ramos {lang === "eu" && <span class="i-am">naiz</span>}
+                </h1>
+                <h2 class="title">
+                    {t("hero.title")}
+                </h2>
+                <p class="description">
+                    {t("hero.description")}
+                    <a
+                        href="https://ubikare.io/"
+                        target="_blank"
+                        class="highlight">Ubikare</a
+                    >.
+                </p>
+
+                <div class="actions">
+                    <a href="#projects" class="btn btn-primary"
+                        >{t("hero.viewWork")}</a
+                    >
+                    <a href="#contact" class="btn btn-secondary"
+                        >{t("hero.contactMe")}</a
+                    >
+                </div>
+            </div>
+
+            <div class="image-container">
+                <div class="image-bg-glow"></div>
+                <Image
+                    src={jonRamosImg}
+                    alt="Jon Ramos"
+                    class="profile-image"
+                    width={600}
+                />
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: calc(var(--nav-height) + 2rem);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-layout {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4rem;
+    }
+
+    .content {
+        flex: 1;
+        max-width: 600px;
+        z-index: 2;
+    }
+
+    .greeting {
+        display: inline-block;
+        font-size: 1rem;
+        color: var(--color-primary);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        background: rgba(139, 92, 246, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 100px;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .name {
+        font-size: 4.5rem;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.03em;
+        color: var(--color-text);
+    }
+
+    .title {
+        font-size: 2.25rem;
+        color: var(--color-text-muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.3;
+        font-weight: 400;
+    }
+
+    .i-am {
+        font-size: 2.25rem;
+        color: var(--color-text-muted);
+        margin-bottom: 2.5rem;
+        line-height: 1.3;
+        font-weight: 400;
+    }
+
+    .description {
+        font-size: 1.125rem;
+        max-width: 540px;
+        margin-bottom: 3.5rem;
+        color: var(--color-text-muted);
+    }
+
+    .highlight {
+        color: var(--color-text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--color-primary);
+        transition: all 0.2s;
+    }
+
+    .highlight:hover {
+        background: rgba(139, 92, 246, 0.1);
+        color: var(--color-primary);
+    }
+
+    .actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+        background: var(--color-text);
+        color: var(--color-bg);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--color-text);
+        border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--color-text);
+    }
+
+    /* Image Styles */
+    .image-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .image-bg-glow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at center,
+            var(--color-primary),
+            transparent 70%
+        );
+        opacity: 0.15;
+        filter: blur(60px);
+        z-index: 0;
+        transform: scale(1.2);
+    }
+
+    .profile-image {
+        width: 100%;
+        max-width: 480px;
+        height: auto;
+        border-radius: 24px;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .profile-image:hover {
+        transform: scale(1.01);
+    }
+
+    @media (max-width: 968px) {
+        .hero-layout {
+            flex-direction: column;
+            text-align: center;
+            gap: 4rem;
+        }
+
+        .content {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .name {
+            font-size: 3.5rem;
+        }
+
+        .title {
+            font-size: 1.75rem;
+        }
+    }
+</style>
