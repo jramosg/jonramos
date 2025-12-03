@@ -180,11 +180,13 @@ const links = [
   .nav-links a {
     font-size: 0.95rem;
     font-weight: 500;
-    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, opacity 0.2s;
   }
 
   .nav-links a:hover {
-    color: var(--color-text);
+    border-color: var(--color-text);
+    opacity: 0.82;
   }
 
   .divider {

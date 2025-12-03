@@ -4,19 +4,20 @@ import GithubIcon from "@/assets/github.svg";
 import LinkedinIcon from "@/assets/linkedin.svg";
 import MailIcon from "@/assets/mail.svg";
 import AstroIcon from "@/assets/astro.svg";
+import { github, linkedin, mail } from "@/settings";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const currentYear = new Date().getFullYear();
 
 const socials = [
-    { icon: GithubIcon, href: "https://github.com/jramosg", label: "GitHub" },
+    { icon: GithubIcon, href: `https://github.com/${github}`, label: "GitHub" },
     {
         icon: LinkedinIcon,
-        href: "https://linkedin.com/in/jonramos",
+        href: `https://linkedin.com/in/${linkedin}`,
         label: "LinkedIn",
     },
-    { icon: MailIcon, href: "mailto:hello@jonramos.dev", label: "Email" },
+    { icon: MailIcon, href: `mailto:${mail}`, label: "Email" },
 ];
 ---
 

@@ -18,7 +18,7 @@ export const ui = {
     "experience.present": "Present",
     "experience.role": "Software Engineer",
     "experience.ubikare_desc":
-      "Developing Naiha.io, a healthcare platform built with Clojure, ClojureScript, and Datomic. Focusing on building robust, data-driven applications for the healthcare sector.",
+      "Developing Naiha, a healthcare platform built with Clojure, ClojureScript, and Datomic. Focusing on building robust, data-driven applications for the healthcare sector.",
 
     "projects.title": "Selected Projects",
     "projects.naiha_desc":
@@ -32,9 +32,10 @@ export const ui = {
 
     "contact.title": "Get in Touch",
     "contact.text":
-      "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.",
+      "You can reach me through the following means",
     "contact.email": "Email",
     "contact.github": "GitHub",
+    "contact.linkedin": "LinkedIn",
 
     "footer.rights": "All rights reserved.",
     "themeSwitcher.toggleTheme": "Toggle theme",
@@ -56,7 +57,7 @@ export const ui = {
     "experience.present": "Presente",
     "experience.role": "Ingeniero de Software",
     "experience.ubikare_desc":
-      "Desarrollando Naiha.io, una plataforma de salud construida con Clojure, ClojureScript y Datomic. Enfocado en crear aplicaciones robustas y orientadas a datos para el sector salud.",
+      "Desarrollando Naiha, una plataforma de salud construida con Clojure, ClojureScript y Datomic. Enfocado en crear aplicaciones robustas y orientadas a datos para el sector salud.",
 
     "projects.title": "Proyectos Seleccionados",
     "projects.naiha_desc":
@@ -70,9 +71,10 @@ export const ui = {
 
     "contact.title": "Contacto",
     "contact.text":
-      "Siempre estoy abierto a discutir nuevos proyectos, ideas creativas u oportunidades para ser parte de tus visiones.",
+      "Puedes contactarme de las siguientes maneras",
     "contact.email": "Correo",
     "contact.github": "GitHub",
+    "contact.linkedin": "LinkedIn",
 
     "footer.rights": "Todos los derechos reservados.",
     "themeSwitcher.toggleTheme": "Cambiar tema",
@@ -108,9 +110,10 @@ export const ui = {
 
     "contact.title": "Harremanetan Jarri",
     "contact.text":
-      "Hurrengo balideen bitartez jarri zaitezke nirekin harremanetan.",
+      "Hurrengo balideen bitartez jarri zaitezke nirekin harremanetan",
     "contact.email": "Emaila:",
     "contact.github": "GitHub:",
+    "contact.linkedin": "LinkedIn:",
 
     "footer.rights": "Eskubide guztiak erreserbatuta.",
     "themeSwitcher.toggleTheme": "Gaia aldatu",

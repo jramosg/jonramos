@@ -2,134 +2,150 @@
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import GithubIcon from "@/assets/github.svg";
 import MailIcon from "@/assets/mail.svg";
+import LinkedinIcon from "@/assets/linkedin.svg";
+import { github, linkedin, mail } from "@/settings";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const links = [
+  {
+    href: `mailto:${mail}`,
+    icon: MailIcon,
+    label: t("contact.email"),
+    value: mail,
+  },
+  {
+    href: `https://github.com/${github}`,
+    icon: GithubIcon,
+    label: t("contact.github"),
+    value: `@${github}`,
+  },
+  {
+    href: `https://www.linkedin.com/in/${linkedin}`,
+    icon: LinkedinIcon,
+    value: t("contact.linkedin"),
+  },
+];
 ---
 
 <section id="contact" class="section">
-    <div class="container">
-        <div class="content">
-            <h2 class="section-title">{t("contact.title")}</h2>
-            <p class="text">
-                {t("contact.text")}
-            </p>
+  <div class="container">
+    <div class="content">
+      <h2 class="section-title">{t("contact.title")}</h2>
+      <p class="text">
+        {t("contact.text")}
+      </p>
 
-            <div class="links">
-                <a href="mailto:hello@jonramos.dev" class="link-item">
-                    <div class="link-icon">
-                        <MailIcon />
-                    </div>
-                    <div class="link-content">
-                        <span class="label">{t("contact.email")}</span>
-                        <span class="value">hello@jonramos.dev</span>
-                    </div>
-                </a>
-
-                <a
-                    href="https://github.com/jramosg"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="link-item"
-                >
-                    <div class="link-icon">
-                        <GithubIcon />
-                    </div>
-                    <div class="link-content">
-                        <span class="label">{t("contact.github")}</span>
-                        <span class="value">@jramosg</span>
-                    </div>
-                </a>
-            </div>
-        </div>
+      <div class="links">
+        {
+          links.map(({ href, icon: Icon, label, value }) => (
+            <a
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+              class="link-item"
+            >
+              <div class="link-icon">
+                <Icon />
+              </div>
+              <div class="link-content">
+                {label && <span class="label">{label}</span>}
+                <span class="value">{value}</span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
     </div>
+  </div>
 </section>
 
 <style>
-    .section {
-        padding: 6rem 0 8rem;
-    }
+  .section {
+    padding: 6rem 0 8rem;
+  }
 
-    .content {
-        max-width: 600px;
-    }
+  .content {
+    max-width: 600px;
+  }
 
-    .text {
-        font-size: 1.25rem;
-        margin-bottom: 3rem;
-    }
+  .text {
+    font-size: 1.25rem;
+    margin-bottom: 3rem;
+  }
 
-    .links {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .link-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-text);
+    transform: translateX(4px);
+  }
+
+  .link-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .link-icon :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+
+  .link-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .value {
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 1.125rem;
+  }
+
+  @media (max-width: 600px) {
     .link-item {
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        padding: 1.5rem;
-        background: var(--color-card-bg);
-        border: 1px solid var(--color-border);
-        border-radius: 1rem;
-        transition: all 0.3s ease;
-    }
-
-    .link-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: var(--color-text);
-        transform: translateX(4px);
+      padding: 1.25rem;
     }
 
     .link-icon {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        color: var(--color-primary);
-        flex-shrink: 0;
-    }
-
-    .link-icon :global(svg) {
-        width: 24px;
-        height: 24px;
-    }
-
-    .link-content {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-        flex: 1;
-    }
-
-    .label {
-        font-weight: 600;
-        color: var(--color-text-muted);
-        font-size: 0.875rem;
+      width: 40px;
+      height: 40px;
     }
 
     .value {
-        color: var(--color-text);
-        font-weight: 500;
-        font-size: 1.125rem;
+      font-size: 1rem;
     }
-
-    @media (max-width: 600px) {
-        .link-item {
-            padding: 1.25rem;
-        }
-
-        .link-icon {
-            width: 40px;
-            height: 40px;
-        }
-
-        .value {
-            font-size: 1rem;
-        }
-    }
+  }
 </style>
