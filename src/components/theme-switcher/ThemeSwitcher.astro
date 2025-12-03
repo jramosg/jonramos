@@ -10,16 +10,17 @@ import "./expand.css";
   id="theme-toggle"
   class="theme-toggle"
   title={t("themeSwitcher.toggleTheme")}
+  aria-label={t("themeSwitcher.toggleTheme")}
 >
 </label>
 
 <style>
-	.theme-toggle {
-		height: 100%;
-		display: flex;
-		align-items: center;
-		margin-left: 1rem;
-	}
+  .theme-toggle {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+  }
 </style>
 
 <script>
@@ -28,7 +29,7 @@ import "./expand.css";
   document.addEventListener("DOMContentLoaded", () => {
     const themeToggle = document.getElementById("theme-toggle");
     const preferedTheme = getStoredTheme();
-	
+
     if (themeToggle) {
       themeToggle.innerHTML = `
   <input type="checkbox" id='theme-toggle-checkbox' ${preferedTheme === "dark" ? "checked" : ""}/>

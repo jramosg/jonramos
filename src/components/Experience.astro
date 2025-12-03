@@ -5,117 +5,125 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="experience" class="section">
-    <div class="container">
-        <h2 class="section-title">{t("experience.title")}</h2>
+<section id="experience" class="section" aria-labelledby="experience-title">
+  <div class="container">
+    <h2 id="experience-title" class="section-title">{t("experience.title")}</h2>
 
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">
-                    Sep 2016 - {t("experience.present")}
-                </div>
-                <div class="timeline-content">
-                    <h3>{t("experience.role")}</h3>
-                    <a
-                        href="https://ubikare.io/"
-                        target="_blank"
-                        class="company">Ubikare</a
-                    >
-                    <p>
-                        {t("experience.ubikare_desc")}
-                    </p>
-                    <div class="tags">
-                        <span>Clojure</span>
-                        <span>ClojureScript</span>
-                        <span>Datomic</span>
-                    </div>
-                </div>
-            </div>
+    <div class="timeline" role="list">
+      <article class="timeline-item" role="listitem">
+        <time datetime="2016-09" class="timeline-date">
+          Sep 2016 - {t("experience.present")}
+        </time>
+        <div class="timeline-content">
+          <h3>{t("experience.role")}</h3>
+          <a
+            href="https://ubikare.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="company"
+            aria-label="Ubikare company website (opens in new tab)">Ubikare</a
+          >
+          <p>
+            {t("experience.ubikare_desc")}
+          </p>
+          <ul class="tags" aria-label="Technologies used">
+            <li><span>Clojure</span></li>
+            <li><span>ClojureScript</span></li>
+            <li><span>Datomic</span></li>
+          </ul>
         </div>
+      </article>
     </div>
+  </div>
 </section>
 
 <style>
-    .section {
-        padding: 6rem 0;
-    }
+  .section {
+    padding: 6rem 0;
+  }
 
-    .timeline {
-        position: relative;
-        max-width: 800px;
-        border-left: 2px solid var(--color-border);
-        padding-left: 2rem;
-        margin-left: 1rem;
-    }
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    border-left: 2px solid var(--color-border);
+    padding-left: 2rem;
+    margin-left: 1rem;
+  }
 
-    .timeline-item {
-        position: relative;
-        margin-bottom: 4rem;
-    }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 4rem;
+  }
 
-    .timeline-item::before {
-        content: "";
-        position: absolute;
-        left: -2.6rem;
-        top: 0.5rem;
-        width: 1rem;
-        height: 1rem;
-        background: var(--color-primary);
-        border-radius: 50%;
-        box-shadow: 0 0 0 4px var(--color-bg);
-    }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -2.6rem;
+    top: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    background: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--color-bg);
+  }
 
-    .timeline-date {
-        font-size: 0.875rem;
-        color: var(--color-primary);
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
+  .timeline-date {
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
 
-    .timeline-content h3 {
-        font-size: 1.5rem;
-        margin-bottom: 0.25rem;
-    }
+  .timeline-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
 
-    .company {
-        font-size: 1.125rem;
-        color: var(--color-text-muted);
-        display: block;
-        margin-bottom: 1rem;
-        transition: color 0.2s;
-    }
+  .company {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+  }
 
-    .company:hover {
-        color: var(--color-text);
-    }
+  .company:hover {
+    color: var(--color-text);
+  }
 
-    .link {
-        color: var(--color-text);
-        text-decoration: underline;
-        text-decoration-color: var(--color-border);
-        transition: all 0.2s;
-    }
+  .link {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    transition: all 0.2s;
+  }
 
-    .link:hover {
-        color: var(--color-primary);
-        text-decoration-color: var(--color-primary);
-    }
+  .link:hover {
+    color: var(--color-primary);
+    text-decoration-color: var(--color-primary);
+  }
 
-    .tags {
-        display: flex;
-        gap: 0.75rem;
-        margin-top: 1.5rem;
-        flex-wrap: wrap;
-    }
+  .tags {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+  }
 
-    .tags span {
-        font-size: 0.875rem;
-        padding: 0.25rem 0.75rem;
-        background: var(--color-card-bg);
-        border: 1px solid var(--color-border);
-        border-radius: 100px;
-        color: var(--color-text-muted);
-    }
+  .tags li {
+    display: contents;
+  }
+
+  .tags span {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    color: var(--color-text-muted);
+  }
 </style>
