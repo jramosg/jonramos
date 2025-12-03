@@ -37,7 +37,6 @@ export const ui = {
     "contact.github": "GitHub",
 
     "footer.rights": "All rights reserved.",
-    "footer.builtWith": "Built with Astro",
     "themeSwitcher.toggleTheme": "Toggle theme",
   },
   es: {
@@ -76,7 +75,6 @@ export const ui = {
     "contact.github": "GitHub",
 
     "footer.rights": "Todos los derechos reservados.",
-    "footer.builtWith": "Creado con Astro",
     "themeSwitcher.toggleTheme": "Cambiar tema",
   },
   eu: {

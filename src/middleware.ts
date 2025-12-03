@@ -1,18 +1,24 @@
 import { defineMiddleware } from "astro:middleware";
 import { ui } from "./i18n/ui";
+import { logger } from "./logger";
 
 // `context` and `next` are automatically typed
 export const onRequest = defineMiddleware((context, next) => {
-  const path = context.url.pathname;
+  const path = context.originPathname;
 
+  const isHealthcheck = new URL(context.url).searchParams.get("health") === "1";
+
+  // Skip logging and rewrites for container healthchecks
+  if (isHealthcheck) {
+    return next();
+  }
+
+  logger.info("request: %s %s", context.request.method, path);
   // Allow common Astro/static internals to pass through untouched
   if (
     path.startsWith("/_image") ||
     path.startsWith("/_astro") ||
-    path.startsWith("/assets") ||
-    path.startsWith("/favicon") ||
-    path === "/robots.txt" ||
-    path === "/sitemap.xml"
+    path.startsWith("/assets")
   ) {
     return next();
   }
