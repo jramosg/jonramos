@@ -5,7 +5,6 @@ import { logger } from "@/logger";
 import type { APIContext } from "astro";
 
 export async function GET(context: APIContext) {
-  logger.info("context: %O", context);
 
   const site = context.site?.toString();
 
