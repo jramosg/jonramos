@@ -1,0 +1,39 @@
+   <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 6V20C14 23.3137 11.3137 26 8 26H7"
+              stroke="url(#logo-gradient)"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <path
+              d="M20 26V6H23C25.2091 6 27 7.79086 27 10C27 12.2091 25.2091 14 23 14H20"
+              stroke="url(#logo-gradient)"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <path
+              d="M20 14L26 26"
+              stroke="url(#logo-gradient)"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <defs>
+              <linearGradient
+                id="logo-gradient"
+                x1="8"
+                y1="6"
+                x2="27"
+                y2="26"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#7c3aed"></stop>
+                <stop offset="1" stop-color="#db2777"></stop>
+              </linearGradient>
+            </defs>
+          </svg>

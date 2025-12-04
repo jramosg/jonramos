@@ -2,6 +2,7 @@
 import LanguagePicker from "./LanguagePicker.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import ThemeSwitcher from "./theme-switcher/ThemeSwitcher.astro";
+import LogoIcon from "@/assets/logo.svg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -20,7 +21,9 @@ const links = [
   <header class="header">
     <div class="container">
       <nav class="nav">
-        <a href={`/${lang}`} class="logo">JR</a>
+        <a href={`/${lang}`} class="logo" aria-label="Home">
+          <LogoIcon />
+        </a>
 
         <div class="nav-right">
           <ul class="nav-links">
@@ -156,16 +159,13 @@ const links = [
   }
 
   .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.05em;
-    background: linear-gradient(
-      to right,
-      var(--color-primary),
-      var(--color-secondary)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.2s;
+  }
+
+  .logo:hover {
+    opacity: 0.8;
   }
 
   .nav-links {
@@ -181,7 +181,9 @@ const links = [
     font-size: 0.95rem;
     font-weight: 500;
     border-bottom: 1px solid transparent;
-    transition: border-color 0.2s, opacity 0.2s;
+    transition:
+      border-color 0.2s,
+      opacity 0.2s;
   }
 
   .nav-links a:hover {
