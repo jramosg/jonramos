@@ -8,6 +8,17 @@ import Experience from '@/components/Experience.astro';
 import Projects from '@/components/Projects.astro';
 import Contact from '@/components/Contact.astro';
 import Footer from '@/components/Footer.astro';
+import { resolveLanguage } from '@/utils/languageResolver';
+import { getLangFromUrl } from '@/i18n/utils';
+import { logger } from '@/logger';
+
+const lang = getLangFromUrl(Astro.url);
+const resolvedLang = resolveLanguage(Astro);
+
+if (lang !== resolvedLang) {
+  logger.info(`Redirecting to /${resolvedLang} from /${lang}`);
+  return Astro.redirect(`/${resolvedLang}`);
+}
 ---
 
 <Layout>
