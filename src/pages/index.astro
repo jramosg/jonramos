@@ -1,8 +1,13 @@
 ---
 export const prerender = false;
+
 import { resolveLanguage } from '@/utils/languageResolver';
 
-// @ts-ignore - TypeScript doesn't recognize usage in Astro return
 const lang = resolveLanguage(Astro);
-return Astro.rewrite(lang);
+
+if (lang) {
+  Astro.redirect(lang);
+} else {
+  Astro.rewrite('/404');
+}
 ---
