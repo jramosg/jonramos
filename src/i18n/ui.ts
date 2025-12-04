@@ -11,10 +11,10 @@ export const ui = {
     'meta.title':
       'Jon Ramos | Software Engineer & Web Developer | Urnieta, Basque Country',
     'meta.description':
-      'Software Engineer & Full Stack Developer based in Urnieta, Basque Country (Euskal Herria). Building high-performance web applications with Clojure, ClojureScript, Astro and modern web technologies.',
-    'meta.jobTitles': 'Software Engineer, Full Stack Developer, Web Developer',
+      'Software Engineer based in Urnieta, Basque Country (Euskal Herria). Specializing in web development and web applications. Building high-performance, data-driven solutions with modern technologies like Astro and Clojure/ClojureScript.',
+    'meta.jobTitles': 'Software Engineer, Web Developer, Full Stack Developer',
     'meta.structuredDescription':
-      'Software Engineer and Full Stack Developer based in Urnieta, Basque Country (Euskal Herria)',
+      'Software Engineer specializing in web development and web applications based in Urnieta, Basque Country (Euskal Herria)',
 
     'nav.home': 'Home',
     'nav.experience': 'Experience',
@@ -22,9 +22,9 @@ export const ui = {
     'nav.contact': 'Contact',
 
     'hero.greeting': "Hello, I'm",
-    'hero.title': 'Software Engineer & Full Stack Developer | Web Developer',
-    'hero.description':
-      'Building high-performance web applications with a focus on premium design and seamless user experiences. Based in Urnieta, Basque Country (Euskal Herria). Currently developing at',
+    'hero.title': 'Software Engineer | Web Developer',
+      'hero.description':
+        'I build websites and web applications focused on high performance, data-driven solutions, and design. Astro for static/SSR sites and Clojure/ClojureScript for complex web apps. Based in Urnieta, Basque Country (Euskal Herria). Currently developing at',
     'hero.viewWork': 'View Work',
     'hero.contactMe': 'Contact Me',
 
@@ -64,11 +64,11 @@ export const ui = {
     'meta.title':
       'Jon Ramos | Ingeniero de Software y Desarrollador Web | Urnieta, País Vasco',
     'meta.description':
-      'Ingeniero de Software y Desarrollador Full Stack en Urnieta, País Vasco (Euskal Herria). Creando aplicaciones web de alto rendimiento con Clojure, ClojureScript, Astro y tecnologías web modernas.',
+      'Ingeniero de Software en Urnieta, País Vasco (Euskal Herria). Especializado en desarrollo web y aplicaciones web. Construyendo soluciones de alto rendimiento orientadas a datos con tecnologías modernas como Astro y Clojure/ClojureScript.',
     'meta.jobTitles':
-      'Ingeniero de Software, Desarrollador Full Stack, Desarrollador Web',
+      'Ingeniero de Software, Desarrollador Web, Desarrollador Full Stack',
     'meta.structuredDescription':
-      'Ingeniero de Software y Desarrollador Full Stack en Urnieta, País Vasco (Euskal Herria)',
+      'Ingeniero de Software especializado en desarrollo web y aplicaciones web en Urnieta, País Vasco (Euskal Herria)',
 
     'nav.home': 'Inicio',
     'nav.experience': 'Experiencia',
@@ -76,10 +76,9 @@ export const ui = {
     'nav.contact': 'Contacto',
 
     'hero.greeting': 'Hola, soy',
-    'hero.title':
-      'Ingeniero de Software | Desarrollador Full Stack | Desarrollador Web',
-    'hero.description':
-      'Creando aplicaciones web de alto rendimiento con un enfoque en diseño premium y experiencias de usuario fluidas. Ubicado en Urnieta, País Vasco (Euskal Herria). Actualmente desarrollando en',
+    'hero.title': 'Ingeniero de Software | Desarrollador Web',
+      'hero.description':
+        'Desarrollo sitios web y aplicaciones web centradas en alto rendimiento, soluciones orientadas a datos y diseño. Astro para sitios estáticos/SSR y Clojure/ClojureScript para aplicaciones web complejas. Ubicado en Urnieta, País Vasco (Euskal Herria). Actualmente desarrollando en',
     'hero.viewWork': 'Ver Trabajos',
     'hero.contactMe': 'Contáctame',
 
@@ -119,11 +118,11 @@ export const ui = {
     'meta.title':
       'Jon Ramos | Software Ingeniaria eta Web Garatzailea | Urnieta, Euskal Herria',
     'meta.description':
-      'Software Ingeniaria eta Full Stack Garatzailea Urnietan, Euskal Herrian. Errendimendu handiko web aplikazioak sortzen Clojure, ClojureScript, Astro eta web teknologia modernoez.',
+      'Software Ingeniaria Urnietan, Euskal Herrian. Web eta web aplikazioen garapena. Errendimendu handiko eta datuetan oinarritutako soluzioak eraikitzen ditut teknologia modernoez, Astro eta Clojure/ClojureScript-en espezializatua nagoelarik.',
     'meta.jobTitles':
-      'Software Ingeniaria, Full Stack Garatzailea, Web Garatzailea',
+      'Software Ingeniaria, Web Garatzailea, Full Stack Garatzailea',
     'meta.structuredDescription':
-      'Software Ingeniaria eta Full Stack Garatzailea Urnietan, Euskal Herrian',
+      'Software Ingeniaria web garapenean eta web aplikazioetan espezializatua Urnietan, Euskal Herrian',
 
     'nav.home': 'Hasiera',
     'nav.experience': 'Esperientzia',
@@ -131,9 +130,9 @@ export const ui = {
     'nav.contact': 'Kontaktua',
 
     'hero.greeting': 'Kaixo!',
-    'hero.title': 'Software Ingeniaria | Software Garatzailea | Web Garapena',
+    'hero.title': 'Software Ingeniaria | Web Garatzailea',
     'hero.description':
-      'Errendimendu handiko web aplikazioak sortzen, diseinu premium eta erabiltzaile esperientzia bikainetan zentratuta. Urnietako software garatzailea, Euskal Herrian. Gaur egun garatzen',
+      'Webguneak eta web aplikazioak eraikitzen ditut. Errendimendu handiko, datuetan oinarritutako soluzioetan eta diseinuan zentratuta. Astro teknologia erabiliz webgune estatikoak/SSR eta Clojure/ClojureScript web aplikazio konplexuetarako. Urnietan, Euskal Herrian kokatua. Gaur egun garatzen',
     'hero.viewWork': 'Lanak Ikusi',
     'hero.contactMe': 'Kontaktatu',
 
