@@ -1,6 +1,6 @@
 ---
 import ThemeProvider from '@/components/theme-switcher/ThemeProvider.astro';
-import { getLangFromUrl } from '@/i18n/utils';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { github, linkedin } from '@/settings';
 import LogoIcon from '@/assets/logo.svg';
 
@@ -11,9 +11,10 @@ interface Props {
 }
 
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const {
-  title = 'Jon Ramos | Software Engineer',
-  description = 'Software Engineer & Full Stack Developer building high-performance web applications',
+  title = t('meta.title'),
+  description = t('meta.description'),
   ogImage = '/og-image.jpg',
 } = Astro.props;
 ---
@@ -24,6 +25,10 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="Software Engineer, Full Stack Developer, Web Developer, Desarrollador Web, Software Garatzailea, Web Garapena, Urnieta, Basque Country, Euskal Herria, País Vasco, Clojure, ClojureScript, JavaScript, TypeScript, Astro"
+    />
     <link rel="sitemap" href="/sitemap.xml" />
 
     <!-- Open Graph / Social Media -->
@@ -32,6 +37,10 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:url" content={Astro.url} />
+    <meta
+      property="og:locale"
+      content={lang === 'eu' ? 'eu_ES' : lang === 'es' ? 'es_ES' : 'en_US'}
+    />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -59,12 +68,30 @@ const {
         '@context': 'https://schema.org',
         '@type': 'Person',
         name: 'Jon Ramos',
-        jobTitle: 'Software Engineer',
+        jobTitle: t('meta.jobTitles').split(', '),
+        description: t('meta.structuredDescription'),
         url: Astro.url.origin,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Urnieta',
+          addressRegion: 'Gipuzkoa',
+          addressCountry: 'ES',
+        },
+        workLocation: {
+          '@type': 'Place',
+          name: 'Urnieta, Basque Country',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Urnieta',
+            addressRegion: 'Euskal Herria',
+            addressCountry: 'ES',
+          },
+        },
         sameAs: [
           `https://github.com/${github}`,
-          `"https://linkedin.com/in/${linkedin}"`,
+          `https://linkedin.com/in/${linkedin}`,
         ],
+        knowsLanguage: ['eu', 'es', 'en'],
       })}
     />
   </head>
@@ -140,8 +167,9 @@ const {
   }
 
   p {
-    line-height: 1.6;
     color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-top: 0;
   }
 
   .background-gradient {
