@@ -1,11 +1,9 @@
 export const prerender = false;
 
-import { languages } from "@/i18n/ui";
-import { logger } from "@/logger";
-import type { APIContext } from "astro";
+import { languages } from '@/i18n/ui';
+import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-
   const site = context.site?.toString();
 
   const urls: Array<{
@@ -26,7 +24,7 @@ export async function GET(context: APIContext) {
         }))
         .concat([
           {
-            hreflang: "x-default",
+            hreflang: 'x-default',
             href: `${site}en`,
           },
         ]),
@@ -44,28 +42,28 @@ ${urls
   .map(
     (url) => `<url>
   <loc>${url.loc}</loc>
-  ${url.changefreq ? `<changefreq>${url.changefreq}</changefreq>` : ""}
-  ${url.priority !== undefined ? `<priority>${url.priority}</priority>` : ""}
+  ${url.changefreq ? `<changefreq>${url.changefreq}</changefreq>` : ''}
+  ${url.priority !== undefined ? `<priority>${url.priority}</priority>` : ''}
   ${
     url.alternateRefs
       ? url.alternateRefs
           .map(
             (ref) =>
-              `<xhtml:link rel="alternate" hreflang="${ref.hreflang}" href="${ref.href}" />`
+              `<xhtml:link rel="alternate" hreflang="${ref.hreflang}" href="${ref.href}" />`,
           )
-          .join("\n  ")
-      : ""
+          .join('\n  ')
+      : ''
   }
-</url>`
+</url>`,
   )
-  .join("\n")}
+  .join('\n')}
 </urlset>`;
 
   return new Response(sitemap, {
     status: 200,
     headers: {
-      "Content-Type": "application/xml",
-      "Cache-Control": "public, max-age=86400", // Cache for 24 hours
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=86400', // Cache for 24 hours
     },
   });
 }

@@ -1,16 +1,16 @@
 ---
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-import "./expand.css";
+import './expand.css';
 ---
 
 <label
   id="theme-toggle"
   class="theme-toggle"
-  title={t("themeSwitcher.toggleTheme")}
-  aria-label={t("themeSwitcher.toggleTheme")}
+  title={t('themeSwitcher.toggleTheme')}
+  aria-label={t('themeSwitcher.toggleTheme')}
 >
 </label>
 
@@ -24,15 +24,15 @@ import "./expand.css";
 </style>
 
 <script>
-  import { getStoredTheme, setTheme } from "./theme";
+  import { getStoredTheme, setTheme } from './theme';
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const themeToggle = document.getElementById("theme-toggle");
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
     const preferedTheme = getStoredTheme();
 
     if (themeToggle) {
       themeToggle.innerHTML = `
-  <input type="checkbox" id='theme-toggle-checkbox' ${preferedTheme === "dark" ? "checked" : ""}/>
+  <input type="checkbox" id='theme-toggle-checkbox' ${preferedTheme === 'dark' ? 'checked' : ''}/>
   <span class="theme-toggle-sr">Toggle theme</span>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -54,13 +54,13 @@ import "./expand.css";
 `;
     }
     const themeToggleCheckbox = document.getElementById(
-      "theme-toggle-checkbox"
+      'theme-toggle-checkbox',
     );
-    themeToggleCheckbox?.addEventListener("change", () => {
+    themeToggleCheckbox?.addEventListener('change', () => {
       const checkbox = document.getElementById(
-        "theme-toggle-checkbox"
+        'theme-toggle-checkbox',
       ) as HTMLInputElement | null;
-      setTheme(checkbox?.checked ? "dark" : "light");
+      setTheme(checkbox?.checked ? 'dark' : 'light');
     });
   });
 </script>

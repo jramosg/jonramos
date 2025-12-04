@@ -11,12 +11,16 @@ services:
       HOST: ${HOST:-0.0.0.0}
       PORT: ${PORT:-4321}
     ports:
-      - "${PORT:-4321}:${PORT:-4321}"
+      - '${PORT:-4321}:${PORT:-4321}'
     volumes:
       - ./logs:/app/logs
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "node -e \"require('http').get({host:'127.0.0.1',port:process.env.PORT||4321,path:'/?health=1'},res=>process.exit(res.statusCode>=200&&res.statusCode<500?0:1)).on('error',()=>process.exit(1))\" "]
+      test:
+        [
+          'CMD-SHELL',
+          'node -e "require(''http'').get({host:''127.0.0.1'',port:process.env.PORT||4321,path:''/?health=1''},res=>process.exit(res.statusCode>=200&&res.statusCode<500?0:1)).on(''error'',()=>process.exit(1))" ',
+        ]
       interval: 10s
       timeout: 3s
       retries: 5

@@ -1,68 +1,66 @@
 ---
-import { languages } from "@/i18n/ui";
-import { getLangFromUrl, getLangPath } from "@/i18n/utils";
+import { languages } from '@/i18n/ui';
+import { getLangFromUrl, getLangPath } from '@/i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const currentUrl = Astro.url;
-
-
 ---
 
 <div class="language-picker">
-    {
-        Object.entries(languages).map(([langCode, label]) => (
-            <a
-                href={getLangPath(currentUrl, langCode)}
-                class={`lang-link ${lang === langCode ? "active" : ""}`}
-            >
-                {label}
-            </a>
-        ))
-    }
+  {
+    Object.entries(languages).map(([langCode, label]) => (
+      <a
+        href={getLangPath(currentUrl, langCode)}
+        class={`lang-link ${lang === langCode ? 'active' : ''}`}
+      >
+        {label}
+      </a>
+    ))
+  }
 </div>
 
 <style>
-    .language-picker {
-        display: flex;
-        gap: 0.25rem;
-        align-items: center;
-    }
+  .language-picker {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
 
+  .lang-link {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: all 0.2s;
+    border-radius: 0.375rem;
+    position: relative;
+  }
+
+  .lang-link:hover {
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .lang-link.active {
+    color: var(--color-text);
+  }
+
+  .lang-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
     .lang-link {
-        padding: 0.375rem 0.75rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--color-text-muted);
-        transition: all 0.2s;
-        border-radius: 0.375rem;
-        position: relative;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.8rem;
     }
-
-    .lang-link:hover {
-        color: var(--color-text);
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .lang-link.active {
-        color: var(--color-text);
-    }
-
-    .lang-link.active::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 20px;
-        height: 2px;
-        background: var(--color-primary);
-        border-radius: 2px;
-    }
-
-    @media (max-width: 768px) {
-        .lang-link {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.8rem;
-        }
-    }
+  }
 </style>

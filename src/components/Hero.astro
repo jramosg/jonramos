@@ -1,7 +1,7 @@
 ---
-import { Image } from "astro:assets";
-import jonRamosImg from "../assets/jonramos.jpeg";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { Image } from 'astro:assets';
+import jonRamosImg from '../assets/jonramos.jpeg';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -11,15 +11,15 @@ const t = useTranslations(lang);
   <div class="container">
     <div class="hero-layout">
       <div class="content">
-        <p class="greeting" aria-label="Greeting">{t("hero.greeting")}</p>
+        <p class="greeting" aria-label="Greeting">{t('hero.greeting')}</p>
         <h1 id="hero-title" class="name">
-          Jon Ramos {lang === "eu" && <span class="i-am">naiz</span>}
+          Jon Ramos {lang === 'eu' && <span class="i-am">naiz</span>}
         </h1>
         <p class="title">
-          {t("hero.title")}
+          {t('hero.title')}
         </p>
         <p class="description">
-          {t("hero.description")}
+          {t('hero.description')}
           <a
             href="https://ubikare.io/"
             target="_blank"
@@ -30,8 +30,8 @@ const t = useTranslations(lang);
         </p>
 
         <div class="actions">
-          <a href="#projects" class="btn btn-primary">{t("hero.viewWork")}</a>
-          <a href="#contact" class="btn btn-secondary">{t("hero.contactMe")}</a>
+          <a href="#projects" class="btn btn-primary">{t('hero.viewWork')}</a>
+          <a href="#contact" class="btn btn-secondary">{t('hero.contactMe')}</a>
         </div>
       </div>
 

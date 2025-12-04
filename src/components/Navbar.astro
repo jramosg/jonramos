@@ -1,17 +1,17 @@
 ---
-import LanguagePicker from "./LanguagePicker.astro";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
-import ThemeSwitcher from "./theme-switcher/ThemeSwitcher.astro";
-import LogoIcon from "@/assets/logo.svg";
+import LanguagePicker from './LanguagePicker.astro';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import ThemeSwitcher from './theme-switcher/ThemeSwitcher.astro';
+import LogoIcon from '@/assets/logo.svg';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const links = [
-  { name: t("nav.home"), href: "#home" },
-  { name: t("nav.experience"), href: "#experience" },
-  { name: t("nav.projects"), href: "#projects" },
-  { name: t("nav.contact"), href: "#contact" },
+  { name: t('nav.home'), href: '#home' },
+  { name: t('nav.experience'), href: '#experience' },
+  { name: t('nav.projects'), href: '#projects' },
+  { name: t('nav.contact'), href: '#contact' },
 ];
 ---
 
@@ -69,38 +69,38 @@ const links = [
   </header>
 </>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const menuBtn = document.getElementById("menuBtn");
-    const drawer = document.getElementById("drawer");
-    const overlay = document.getElementById("drawerOverlay");
-    const drawerLinks = document.querySelectorAll(".drawer-link");
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('drawerOverlay');
+    const drawerLinks = document.querySelectorAll('.drawer-link');
 
     function toggleDrawer() {
-      const isOpen = drawer?.classList.contains("open");
+      const isOpen = drawer?.classList.contains('open');
 
       if (isOpen) {
-        drawer?.classList.remove("open");
-        overlay?.classList.remove("open");
-        menuBtn?.classList.remove("open");
-        document.body.style.overflow = "";
+        drawer?.classList.remove('open');
+        overlay?.classList.remove('open');
+        menuBtn?.classList.remove('open');
+        document.body.style.overflow = '';
       } else {
-        drawer?.classList.add("open");
-        overlay?.classList.add("open");
-        menuBtn?.classList.add("open");
-        document.body.style.overflow = "hidden";
+        drawer?.classList.add('open');
+        overlay?.classList.add('open');
+        menuBtn?.classList.add('open');
+        document.body.style.overflow = 'hidden';
       }
     }
 
     if (menuBtn) {
-      menuBtn.addEventListener("click", toggleDrawer);
+      menuBtn.addEventListener('click', toggleDrawer);
     }
 
     if (overlay) {
-      overlay.addEventListener("click", toggleDrawer);
+      overlay.addEventListener('click', toggleDrawer);
     }
 
     drawerLinks.forEach((link) => {
-      link.addEventListener("click", toggleDrawer);
+      link.addEventListener('click', toggleDrawer);
     });
   });
 </script>

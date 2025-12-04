@@ -1,11 +1,11 @@
 ---
-import { Image } from "astro:assets";
-import AstroIcon from "@/assets/astro.svg";
-import TypescriptIcon from "@/assets/typescript.svg";
-import ClojureIcon from "@/assets/clojure.svg";
-import ClojureScriptIcon from "@/assets/clojurescript.svg";
-import GsapIcon from "@/assets/gsap.svg";
-import DatomicImg from "@/assets/datomic.png";
+import { Image } from 'astro:assets';
+import AstroIcon from '@/assets/astro.svg';
+import TypescriptIcon from '@/assets/typescript.svg';
+import ClojureIcon from '@/assets/clojure.svg';
+import ClojureScriptIcon from '@/assets/clojurescript.svg';
+import GsapIcon from '@/assets/gsap.svg';
+import DatomicImg from '@/assets/datomic.png';
 
 interface Props {
   tech: string;
@@ -24,16 +24,12 @@ const iconMap: Record<string, any> = {
 };
 
 const iconData = iconMap[tech];
-const isPNG = iconData && typeof iconData === "object" && "src" in iconData;
+const isPNG = iconData && typeof iconData === 'object' && 'src' in iconData;
 const Icon = !isPNG ? iconData : null;
 ---
 
 {Icon && <Icon class="tech-icon" fill="currentColor" />}
-{
-  isPNG && (
-    <Image src={iconData} alt={tech} class="tech-icon" height={16} />
-  )
-}
+{isPNG && <Image src={iconData} alt={tech} class="tech-icon" height={16} />}
 
 <style>
   .tech-icon {

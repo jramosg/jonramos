@@ -1,9 +1,9 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import GithubIcon from "@/assets/github.svg";
-import MailIcon from "@/assets/mail.svg";
-import LinkedinIcon from "@/assets/linkedin.svg";
-import { github, linkedin, mail } from "@/settings";
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import GithubIcon from '@/assets/github.svg';
+import MailIcon from '@/assets/mail.svg';
+import LinkedinIcon from '@/assets/linkedin.svg';
+import { github, linkedin, mail } from '@/settings';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -12,19 +12,19 @@ const links = [
   {
     href: `mailto:${mail}`,
     icon: MailIcon,
-    label: t("contact.email"),
+    label: t('contact.email'),
     value: mail,
   },
   {
     href: `https://github.com/${github}`,
     icon: GithubIcon,
-    label: t("contact.github"),
+    label: t('contact.github'),
     value: `@${github}`,
   },
   {
     href: `https://www.linkedin.com/in/${linkedin}`,
     icon: LinkedinIcon,
-    value: t("contact.linkedin"),
+    value: t('contact.linkedin'),
   },
 ];
 ---
@@ -32,9 +32,9 @@ const links = [
 <section id="contact" class="section">
   <div class="container">
     <div class="content">
-      <h2 class="section-title">{t("contact.title")}</h2>
+      <h2 class="section-title">{t('contact.title')}</h2>
       <p class="text">
-        {t("contact.text")}
+        {t('contact.text')}
       </p>
 
       <div class="links">
@@ -42,8 +42,8 @@ const links = [
           links.map(({ href, icon: Icon, label, value }) => (
             <a
               href={href}
-              target={href.startsWith("http") ? "_blank" : undefined}
-              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+              target={href.startsWith('http') ? '_blank' : undefined}
+              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
               class="link-item"
             >
               <div class="link-icon">
