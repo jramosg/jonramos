@@ -2,7 +2,6 @@
 import ThemeProvider from '@/components/theme-switcher/ThemeProvider.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { github, linkedin } from '@/settings';
-import LogoIcon from '@/assets/logo.svg';
 
 interface Props {
   title?: string;
@@ -51,7 +50,7 @@ const {
     <!-- Canonical URL -->
     <link rel="canonical" href={Astro.url.href} />
 
-    <link rel="icon" type="image/svg+xml" href={LogoIcon.src} />
+    <link rel="icon" type="image/ico" href='/favicon.ico' />
     <meta name="generator" content={Astro.generator} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
