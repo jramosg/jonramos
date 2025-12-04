@@ -1,9 +1,7 @@
 import pino from 'pino';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
+import { Transform } from 'stream';
 
 const isProduction = import.meta.env.PROD;
 const logLevel = process.env.LOG_LEVEL || (isProduction ? 'info' : 'debug');
@@ -36,14 +34,34 @@ const logger = (() => {
     console.error('Unable to create or write to log directory:', logDir, err);
   }
 
-  const combinedDest = pino.destination(path.join(logDir, 'combined.log'));
+  const infoStream = fs.createWriteStream(path.join(logDir, 'info.log'));
+  const warnStream = fs.createWriteStream(path.join(logDir, 'warn.log'));
+  const errorStream = fs.createWriteStream(path.join(logDir, 'error.log'));
+
+  const splitter = new Transform({
+    transform(chunk, _enc, cb) {
+      try {
+        const log = JSON.parse(chunk.toString());
+        if (log.level >= 50) {
+          errorStream.write(chunk);
+        } else if (log.level === 40) {
+          warnStream.write(chunk);
+        } else if (log.level === 30) {
+          infoStream.write(chunk);
+        }
+      } catch (e) {
+        // If not JSON, ignore
+      }
+      cb();
+    },
+  });
 
   return pino(
     {
       level: logLevel,
       timestamp: () => `,"timestamp":"${new Date().toISOString()}"`,
     },
-    combinedDest,
+    splitter,
   );
 })();
 
