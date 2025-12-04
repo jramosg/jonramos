@@ -9,7 +9,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     path.startsWith('/_image') ||
     path.startsWith('/_astro') ||
     path.startsWith('/assets') ||
-    path === '/api/health' ||
+    path === '/health' ||
     path === '/favicon.ico' ||
     path === '/robots.txt' ||
     path === '/sitemap.xml' ||

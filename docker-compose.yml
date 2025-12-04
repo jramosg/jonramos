@@ -17,7 +17,7 @@ services:
       test:
         [
           'CMD-SHELL',
-          'node -e "require(''http'').get({host:''127.0.0.1'',port:process.env.PORT||4321,path:''/?health=1''},res=>process.exit(res.statusCode>=200&&res.statusCode<500?0:1)).on(''error'',()=>process.exit(1))" ',
+          'node -e "require(''http'').get({host:''127.0.0.1'',port:process.env.PORT||4321,path:''/health''},res=>process.exit(res.statusCode===200?0:1)).on(''error'',()=>process.exit(1))" ',
         ]
       interval: 10s
       timeout: 3s

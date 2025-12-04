@@ -41,6 +41,45 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
+## 🐳 Docker
+
+To run the application using Docker:
+
+### Build the Docker image
+
+```sh
+docker build -t jonramos:latest .
+```
+
+### Run with Docker Compose
+
+```sh
+docker compose up -d
+```
+
+Check the container status:
+
+```sh
+docker compose ps
+```
+
+View Docker container logs:
+
+```sh
+docker compose logs -f
+```
+
+Application logs are written to `./logs` (or path specified in `LOG_DIR` env variable):
+- `logs/info.log` - Info level logs
+- `logs/warn.log` - Warning level logs
+- `logs/error.log` - Error level logs
+
+Stop the container:
+
+```sh
+docker compose down
+```
+
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
