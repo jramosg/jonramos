@@ -3,7 +3,6 @@ import { logger } from '@/logger';
 import type { AstroGlobal } from 'astro';
 
 export function resolveLanguage(Astro: AstroGlobal): string {
-
   const [, urlLang] = Astro.url.pathname.split('/');
 
   const supported = new Set(Object.keys(languages));
