@@ -2,7 +2,8 @@ import { languages } from '@/i18n/ui';
 import type { AstroGlobal } from 'astro';
 
 export function resolveLanguage(Astro: AstroGlobal): string {
-  const [, urlLang] = Astro.url.pathname.split('/');
+  const pathname = Astro.url.pathname.replace(/\/$/, '');
+  const [, urlLang] = pathname.split('/');
 
   const supported = new Set(Object.keys(languages));
 
