@@ -1,65 +1,108 @@
 import { defineMiddleware } from 'astro:middleware';
-import { ui } from './i18n/ui';
 import { logger } from './logger';
 
-// `context` and `next` are automatically typed
-export const onRequest = defineMiddleware((context, next) => {
+export const onRequest = defineMiddleware(async (context, next) => {
   const path = context.originPathname;
 
-  const isHealthcheck = new URL(context.url).searchParams.get('health') === '1';
-
-  // Skip logging and rewrites for container healthchecks
-  if (isHealthcheck) {
-    return next();
-  }
-
-  logger.info('request: %s %s', context.request.method, path);
-  // Allow common Astro/static internals to pass through untouched
-  if (
+  // Paths that should not be logged (static assets, health checks, etc.)
+  const shouldNotLog =
     path.startsWith('/_image') ||
     path.startsWith('/_astro') ||
     path.startsWith('/assets') ||
-    path.startsWith('/sitemap.xml')
-  ) {
+    path === '/api/health' ||
+    path === '/favicon.ico' ||
+    path === '/robots.txt' ||
+    path === '/sitemap.xml' ||
+    path.endsWith('.css') ||
+    path.endsWith('.png') ||
+    path.endsWith('.jpg') ||
+    path.endsWith('.jpeg') ||
+    path.endsWith('.gif') ||
+    path.endsWith('.svg') ||
+    path.endsWith('.ico') ||
+    path.endsWith('.webp') ||
+    path.endsWith('.woff') ||
+    path.endsWith('.woff2') ||
+    path.endsWith('.ttf') ||
+    path.endsWith('.eot');
+
+  if (shouldNotLog) {
     return next();
   }
 
-  // Build supported language set from i18n ui keys
-  const supported = new Set(Object.keys(ui));
+  const startTime = Date.now();
+  const method = context.request.method;
+  const userAgent = context.request.headers.get('user-agent') || 'unknown';
+  const ip =
+    context.request.headers.get('x-forwarded-for') ||
+    context.request.headers.get('x-real-ip') ||
+    'unknown';
 
-  // Extract first URL segment as potential lang prefix
-  const segments = path.split('/');
-  const urlLang = (segments[1] || '').toLowerCase();
+  try {
+    const response = await next();
+    const duration = Date.now() - startTime;
+    const status = response.status;
 
-  // Parse Accept-Language header into ordered language prefs
-  const acceptLang = context.request.headers.get('accept-language') || '';
-  const preferredLangs = acceptLang
-    .split(',')
-    .map((entry) => entry.split(';')[0].trim().toLowerCase())
-    .map((code) => code.split('-')[0]);
+    // Log successful requests (except filtered paths)
+    if (!shouldNotLog) {
+      logger.info('Request completed: %O', {
+        method,
+        url: path,
+        status,
+        duration: `${duration}ms`,
+        ip,
+        userAgent: userAgent.substring(0, 100), // Truncate long user agents
+      });
+    }
 
-  // Resolve language: use URL prefix, else first supported header, else default
-  const headerLang = preferredLangs.find((l) => supported.has(l));
-  const resolvedLang = supported.has(urlLang) ? urlLang : headerLang || 'en';
+    // Log slow requests (>1 second)
+    if (duration > 1000 && !shouldNotLog) {
+      logger.warn('Slow request detected: %O', {
+        method,
+        url: path,
+        status,
+        duration: `${duration}ms`,
+        ip,
+      });
+    }
 
-  // Expose the resolved language to downstream code
-  if (!context.locals.lang) {
-    context.locals.lang = resolvedLang;
+    // Log client errors (4xx)
+    if (status >= 400 && status < 500 && !shouldNotLog) {
+      logger.warn('Client error: %O', {
+        method,
+        url: path,
+        status,
+        duration: `${duration}ms`,
+        ip,
+      });
+    }
+
+    // Log server errors (5xx)
+    if (status >= 500 && !shouldNotLog) {
+      logger.error('Server error: %O', {
+        method,
+        url: path,
+        status,
+        duration: `${duration}ms`,
+        ip,
+        userAgent: userAgent.substring(0, 100),
+      });
+    }
+
+    return response;
+  } catch (error) {
+    const duration = Date.now() - startTime;
+
+    // Log exceptions
+    logger.error('Request failed with exception: %O', {
+      method,
+      url: path,
+      duration: `${duration}ms`,
+      ip,
+      userAgent: userAgent.substring(0, 100),
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+
+    throw error;
   }
-
-  const hasSupportedPrefix = supported.has(urlLang);
-
-  // If no supported prefix, rewrite to a language-prefixed path.
-  if (!hasSupportedPrefix) {
-    const target =
-      segments.filter(Boolean).length === 1
-        ? `/${resolvedLang}`
-        : path === '/'
-          ? `/${resolvedLang}`
-          : `/${resolvedLang}${path}`;
-    const withQuery = `${target}${context.url.search || ''}`;
-    return context.rewrite(withQuery);
-  }
-
-  return next();
 });
