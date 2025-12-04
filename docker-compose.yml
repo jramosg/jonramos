@@ -1,9 +1,7 @@
 services:
   web:
     container_name: jonramos
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: jonramos:latest
     env_file:
       - .env
     environment:
