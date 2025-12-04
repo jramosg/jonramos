@@ -31,13 +31,13 @@ const Icon = !isPNG ? iconData : null;
 {Icon && <Icon class="tech-icon" fill="currentColor" />}
 {
   isPNG && (
-    <Image src={iconData} alt={tech} class="tech-icon" width={16} height={16} />
+    <Image src={iconData} alt={tech} class="tech-icon" height={16} />
   )
 }
 
 <style>
   .tech-icon {
-    width: 16px;
+    width: auto;
     height: 16px;
     flex-shrink: 0;
   }
