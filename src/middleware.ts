@@ -2,7 +2,7 @@ import { defineMiddleware } from 'astro:middleware';
 import { logger } from './logger';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const path = context.originPathname;
+  const path = context.originPathname.replace(/\/$/, '');
 
   // Paths that should not be logged (static assets, health checks, etc.)
   const shouldNotLog =
