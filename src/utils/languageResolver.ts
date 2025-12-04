@@ -1,5 +1,4 @@
 import { languages } from '@/i18n/ui';
-import { logger } from '@/logger';
 import type { AstroGlobal } from 'astro';
 
 export function resolveLanguage(Astro: AstroGlobal): string {

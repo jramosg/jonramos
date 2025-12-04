@@ -2,7 +2,7 @@
 export const prerender = false;
 import { resolveLanguage } from '@/utils/languageResolver';
 
-const resolvedLang = resolveLanguage(Astro);
-
-return Astro.rewrite(resolvedLang);
+// @ts-ignore - TypeScript doesn't recognize usage in Astro return
+const lang = resolveLanguage(Astro);
+return Astro.rewrite(lang);
 ---
