@@ -6,8 +6,8 @@ import { resolveLanguage } from '@/utils/languageResolver';
 const lang = resolveLanguage(Astro);
 
 if (lang) {
-  Astro.redirect(lang);
+  return Astro.rewrite(lang);
 } else {
-  Astro.rewrite('/404');
+  return Astro.redirect('/404');
 }
 ---
