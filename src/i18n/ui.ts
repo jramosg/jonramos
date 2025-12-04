@@ -1,5 +1,11 @@
 export const defaultLang = "en";
 
+export const languages = {
+  en: "EN",
+  es: "ES",
+  eu: "EU",
+};
+
 export const ui = {
   en: {
     "nav.home": "Home",

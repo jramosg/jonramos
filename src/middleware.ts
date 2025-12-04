@@ -18,7 +18,8 @@ export const onRequest = defineMiddleware((context, next) => {
   if (
     path.startsWith("/_image") ||
     path.startsWith("/_astro") ||
-    path.startsWith("/assets")
+    path.startsWith("/assets") ||
+    path.startsWith("/sitemap.xml")
   ) {
     return next();
   }

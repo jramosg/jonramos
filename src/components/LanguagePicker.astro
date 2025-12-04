@@ -1,14 +1,11 @@
 ---
+import { languages } from "@/i18n/ui";
 import { getLangFromUrl, getLangPath } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const currentUrl = Astro.url;
 
-const languages = {
-    en: "EN",
-    es: "ES",
-    eu: "EU",
-};
+
 ---
 
 <div class="language-picker">
