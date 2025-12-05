@@ -27,7 +27,7 @@ const {
     data-zoom={zoom}
     data-tiles={tileLayer}
     data-marker-component={markerComponent ||
-      `<div style="font-fUamily: var(--font-main); color: #000; padding: 4px;"><strong>${company}</strong><br>${location.city}</div>`}
+      `<div style="font-family: var(--font-main); padding: 4px;"><strong>${company}</strong><br>${location.city}</div>`}
   >
   </leaflet-map>
 </div>
@@ -138,7 +138,8 @@ const {
   }
 
   :global(.leaflet-popup-content-wrapper) {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--color-card-bg);
+    color: var(--color-text);
     backdrop-filter: blur(8px);
     border-radius: 12px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -146,5 +147,21 @@ const {
 
   :global(.leaflet-popup-tip) {
     background: rgba(255, 255, 255, 0.9);
+  }
+
+  :global(.leaflet-bar a) {
+    background: var(--color-card-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  :global(.leaflet-bar a) {
+    background: var(--color-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  :global([data-theme='dark'] .leaflet-bar a) {
+    background: var(--color-card-bg-solid);
   }
 </style>

@@ -23,8 +23,8 @@ export const ui = {
 
     'hero.greeting': "Hello, I'm",
     'hero.title': 'Software Engineer | Web Developer',
-      'hero.description':
-        'I build websites and web applications focused on high performance, data-driven solutions, and design. Astro for static/SSR sites and Clojure/ClojureScript for complex web apps. Based in Urnieta, Basque Country (Euskal Herria). Currently developing at',
+    'hero.description':
+      'I build websites and web applications focused on high performance, data-driven solutions, and design. Astro for static/SSR sites and Clojure/ClojureScript for complex web apps. Based in Urnieta, Basque Country (Euskal Herria). Currently developing at',
     'hero.viewWork': 'View Work',
     'hero.contactMe': 'Contact Me',
 
@@ -77,8 +77,8 @@ export const ui = {
 
     'hero.greeting': 'Hola, soy',
     'hero.title': 'Ingeniero de Software | Desarrollador Web',
-      'hero.description':
-        'Desarrollo sitios web y aplicaciones web centradas en alto rendimiento, soluciones orientadas a datos y diseño. Astro para sitios estáticos/SSR y Clojure/ClojureScript para aplicaciones web complejas. Ubicado en Urnieta, País Vasco (Euskal Herria). Actualmente desarrollando en',
+    'hero.description':
+      'Desarrollo sitios web y aplicaciones web centradas en alto rendimiento, soluciones orientadas a datos y diseño. Astro para sitios estáticos/SSR y Clojure/ClojureScript para aplicaciones web complejas. Ubicado en Urnieta, País Vasco (Euskal Herria). Actualmente desarrollando en',
     'hero.viewWork': 'Ver Trabajos',
     'hero.contactMe': 'Contáctame',
 

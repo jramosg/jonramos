@@ -50,7 +50,7 @@ const {
     <!-- Canonical URL -->
     <link rel="canonical" href={Astro.url.href} />
 
-    <link rel="icon" type="image/ico" href='/favicon.ico' />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -128,6 +128,7 @@ const {
     --color-accent: #3b82f6; /* Blue */
     --color-border: rgba(255, 255, 255, 0.1);
     --color-card-bg: rgba(255, 255, 255, 0.03);
+    --color-card-bg-solid: #1a1a1a;
     --color-bg-alpha: rgba(10, 10, 10, 0.8);
   }
 
@@ -208,8 +209,9 @@ const {
     display: inline-block;
   }
 
-  :global([data-theme='dark']) .section-title {
+  [data-theme='dark'] .section-title {
     background: linear-gradient(to right, #fff, #52525b);
+    -webkit-background-clip: text;
   }
 
   .skip-link {
