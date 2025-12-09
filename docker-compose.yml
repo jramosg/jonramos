@@ -8,6 +8,8 @@ services:
       NODE_ENV: ${NODE_ENV:-production}
       HOST: ${HOST:-0.0.0.0}
       PORT: ${PORT:-4321}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      CONTACT_EMAIL: ${CONTACT_EMAIL}
     ports:
       - '${PORT:-4321}:${PORT:-4321}'
     volumes:
