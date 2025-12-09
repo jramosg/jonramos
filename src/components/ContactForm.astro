@@ -1,0 +1,258 @@
+---
+import { useTranslations, getLangFromUrl } from '@/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<form class="contact-form" id="contact-form">
+  <input type="hidden" name="language" value={lang} />
+  <div class="form-group">
+    <label for="name" class="sr-only">{t('contact.form.name')}</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Name"
+      required
+      class="form-input"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="sr-only">{t('contact.form.email')}</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="Email"
+      required
+      class="form-input"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="sr-only">{t('contact.form.message')}</label>
+    <textarea
+      id="message"
+      name="message"
+      placeholder="Message"
+      rows="4"
+      required
+      class="form-input textarea"></textarea>
+  </div>
+
+  <button type="submit" class="submit-btn">
+    <span class="btn-text">Send Message</span>
+    <div class="btn-icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+        ></path>
+      </svg>
+    </div>
+  </button>
+
+  <div class="form-status" id="form-status"></div>
+</form>
+
+<script>
+  import { actions } from 'astro:actions';
+
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const status = document.getElementById('form-status');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.submit-btn');
+      const originalText = btn?.innerHTML;
+
+      if (btn) {
+        btn.innerHTML = '<span class="loader"></span> Sending...';
+        (btn as HTMLButtonElement).disabled = true;
+      }
+
+      const formData = new FormData(form);
+      const { error } = await actions.submitContact(formData);
+
+      if (status) {
+        if (error) {
+          status.textContent = 'Error sending message. Please try again.';
+          status.className = 'form-status error show';
+        } else {
+          status.textContent = 'Message sent successfully!';
+          status.className = 'form-status success show';
+          form.reset();
+        }
+
+        if (btn && originalText) {
+          btn.innerHTML = originalText;
+          (btn as HTMLButtonElement).disabled = false;
+        }
+
+        setTimeout(() => {
+          status.className = 'form-status';
+        }, 3000);
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .form-group {
+    position: relative;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    color: var(--color-text);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .form-input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+  }
+
+  .form-input:focus {
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+  }
+
+  .textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-icon svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .submit-btn:hover .btn-icon svg {
+    transform: translateX(4px) rotate(-10deg);
+  }
+
+  .form-status {
+    padding: 0 1rem;
+    margin-top: 0;
+    max-height: 0;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+  }
+
+  .form-status.show {
+    padding: 1rem;
+    margin-top: 1rem;
+    max-height: 200px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .form-status.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.2);
+  }
+
+  .form-status.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.2);
+  }
+
+  /* Loader */
+  .loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>

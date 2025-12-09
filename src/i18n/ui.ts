@@ -59,6 +59,10 @@ export const ui = {
 
     'footer.rights': 'All rights reserved.',
     'themeSwitcher.toggleTheme': 'Toggle theme',
+    'email.membership.subject.membership': 'Membership Application',
+    'email.membership.subject.federation': 'Federation Application',
+    'email.membership.subject.membership-and-federation':
+      'Membership and Federation Application',
   },
   es: {
     'meta.title':
@@ -113,6 +117,10 @@ export const ui = {
 
     'footer.rights': 'Todos los derechos reservados.',
     'themeSwitcher.toggleTheme': 'Cambiar tema',
+    'email.membership.subject.membership': 'Solicitud de Membresía',
+    'email.membership.subject.federation': 'Solicitud de Federación',
+    'email.membership.subject.membership-and-federation':
+      'Solicitud de Membresía y Federación',
   },
   eu: {
     'meta.title':
@@ -167,6 +175,10 @@ export const ui = {
 
     'footer.rights': 'Eskubide guztiak erreserbatuta.',
     'themeSwitcher.toggleTheme': 'Gaia aldatu',
+    'email.membership.subject.membership': 'Bazkidetza Eskaera',
+    'email.membership.subject.federation': 'Federazio Eskaera',
+    'email.membership.subject.membership-and-federation':
+      'Bazkidetza eta Federazio Eskaera',
   },
 } as const;
 

@@ -27,3 +27,15 @@ export function getLangPath(url: URL, lang: string): string {
   const cleanRoute = route.replace(/\/$/, '');
   return `/${lang}${cleanRoute}`;
 }
+
+export function formatDate(
+  date: Date | string,
+  lang: string = defaultLang,
+): string {
+  const d = new Date(date);
+  return d.toLocaleDateString(lang === 'eu' ? 'eu-ES' : 'es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}

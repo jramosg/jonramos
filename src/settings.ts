@@ -7,3 +7,4 @@ export const location = {
   lng: -1.994,
 };
 export const company = 'Jon Ramos';
+export const url = 'https://jonramos.dev';
