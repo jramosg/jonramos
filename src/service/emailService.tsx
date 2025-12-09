@@ -9,10 +9,6 @@ export async function sendContactEmail(data: {
   message: string;
   language: Langs;
 }) {
-  import.meta.env.RESEND_API_KEY
-    ? logger.info('Resend API key found, attempting to send email: %O', { maskedApiKey: import.meta.env.RESEND_API_KEY.slice(0, 4) + '...' })
-    : logger.error('Resend API key not found, email will not be sent');
-  
   const resend = import.meta.env.RESEND_API_KEY
     ? new Resend(import.meta.env.RESEND_API_KEY)
     : null;

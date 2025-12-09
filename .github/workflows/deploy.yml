@@ -40,7 +40,7 @@ jobs:
           cp jonramos.tar deployment-package/
 
           # Create production environment file from secrets
-          cat > deployment-package/.env.prod << EOF
+          cat > deployment-package/.env << EOF
           NODE_ENV=production
           HOST=0.0.0.0
           PORT=${{ secrets.SITE_PORT }}
@@ -49,7 +49,7 @@ jobs:
           CONTACT_EMAIL=${{ secrets.CONTACT_EMAIL }}
           # Add more as needed...
           EOF
-          echo "✅ Created production environment from GitHub secrets"
+          echo "✅ Created .env file from GitHub secrets"
 
           # Copy environment template if it exists
           if [ -f .env.example ]; then
@@ -146,12 +146,12 @@ jobs:
             cp load-and-deploy.sh $DEPLOY_DIR/
             cp jonramos.tar $DEPLOY_DIR/
 
-            # Use production environment file
-            if [ -f .env.prod ]; then
-              cp .env.prod $DEPLOY_DIR/.env
-              echo "✅ Using .env.prod as production environment"
+            # Copy environment file
+            if [ -f .env ]; then
+              cp .env $DEPLOY_DIR/.env
+              echo "✅ Copied .env file to deployment directory"
             else
-              echo "❌ .env.prod not found in deployment package!"
+              echo "❌ .env not found in deployment package!"
               exit 1
             fi
 
