@@ -12,7 +12,7 @@ export async function sendContactEmail(data: {
   const resend = import.meta.env.RESEND_API_KEY
     ? new Resend(import.meta.env.RESEND_API_KEY)
     : null;
-  
+
   if (!resend) {
     logger.error('Resend API key missing, simulating email send');
     return { success: false, error: 'Resend API key missing' };
