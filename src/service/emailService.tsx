@@ -3,25 +3,25 @@ import { render, toPlainText } from '@react-email/render';
 import type { Langs } from '@/i18n/ui';
 import { logger } from '@/logger';
 
-const resend = import.meta.env.RESEND_API_KEY
-  ? new Resend(import.meta.env.RESEND_API_KEY)
-  : null;
-
 export async function sendContactEmail(data: {
   name: string;
   email: string;
   message: string;
   language: Langs;
 }) {
+  const resend = import.meta.env.RESEND_API_KEY
+    ? new Resend(import.meta.env.RESEND_API_KEY)
+    : null;
+  
+  if (!resend) {
+    logger.error('Resend API key missing, simulating email send');
+    return { success: false, error: 'Resend API key missing' };
+  }
+
   try {
     const ContactEmail = (await import('@mail/emails/ContactEmail')).default;
     const emailHtml = await render(<ContactEmail {...data} />);
     const plainText = toPlainText(emailHtml);
-
-    if (!resend) {
-      logger.error('Resend API key missing, simulating email send');
-      return { success: false, error: 'Resend API key missing' };
-    }
 
     const result = await resend.emails.send({
       from: import.meta.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
