@@ -9,8 +9,8 @@ export async function sendContactEmail(data: {
   message: string;
   language: Langs;
 }) {
-  const resend = import.meta.env.RESEND_API_KEY
-    ? new Resend(import.meta.env.RESEND_API_KEY)
+  const resend = process.env.RESEND_API_KEY
+    ? new Resend(process.env.RESEND_API_KEY)
     : null;
 
   if (!resend) {
@@ -24,8 +24,8 @@ export async function sendContactEmail(data: {
     const plainText = toPlainText(emailHtml);
 
     const result = await resend.emails.send({
-      from: import.meta.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
-      to: import.meta.env.CONTACT_EMAIL || 'jon@example.com', // Replace with actual destination
+      from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
+      to: process.env.CONTACT_EMAIL || 'jon@example.com', // Replace with actual destination
       subject: `New Contact Message from ${data.name}`,
       replyTo: data.email,
       html: emailHtml,
