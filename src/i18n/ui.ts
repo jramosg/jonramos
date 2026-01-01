@@ -19,6 +19,7 @@ export const ui = {
     'nav.home': 'Home',
     'nav.experience': 'Experience',
     'nav.projects': 'Projects',
+    'nav.contributions': 'Contributions',
     'nav.contact': 'Contact',
 
     'hero.greeting': "Hello, I'm",
@@ -63,6 +64,31 @@ export const ui = {
     'email.membership.subject.federation': 'Federation Application',
     'email.membership.subject.membership-and-federation':
       'Membership and Federation Application',
+
+    'contributions.page.title': 'Open Source Contributions | Jon Ramos',
+    'contributions.page.description':
+      'Comprehensive overview of my open source contributions to clj-kondo, cljfmt, Logseq and other projects. Specialized in Clojure tooling, static analysis, and developer experience improvements.',
+    'contributions.hero.title': 'Open Source Contributions',
+    'contributions.hero.subtitle':
+      'Building better developer tools and experiences through meaningful contributions to open source projects',
+    'contributions.stats.merged': 'Merged Contributions',
+    'contributions.stats.merged.desc': 'Production-ready code improvements',
+    'contributions.stats.projects': 'Projects',
+    'contributions.stats.projects.desc': 'Widely-used open source tools',
+    'contributions.stats.technologies': 'Technologies',
+    'contributions.section.projects': 'Projects',
+    'contributions.section.timeline': 'Contribution Timeline',
+    'contributions.section.subtitle':
+      'Contributing to {projects} projects with {contributions}',
+    'contributions.card.contributions': 'Contribution',
+    'contributions.card.contributions_plural': 'Contributions',
+    'contributions.card.more': 'more',
+    'contributions.card.repository': 'Repository',
+    'contributions.card.website': 'Website',
+    'contributions.card.viewPR': 'View Pull Request',
+    'contributions.timeline.viewPR': 'View PR →',
+    'contributions.home.viewAll': 'View All Contributions',
+    'contributions.stats.contributions': 'Contributions',
   },
   es: {
     'meta.title':
@@ -77,6 +103,7 @@ export const ui = {
     'nav.home': 'Inicio',
     'nav.experience': 'Experiencia',
     'nav.projects': 'Proyectos',
+    'nav.contributions': 'Contribuciones',
     'nav.contact': 'Contacto',
 
     'hero.greeting': 'Hola, soy',
@@ -121,6 +148,33 @@ export const ui = {
     'email.membership.subject.federation': 'Solicitud de Federación',
     'email.membership.subject.membership-and-federation':
       'Solicitud de Membresía y Federación',
+
+    'contributions.page.title': 'Contribuciones Open Source | Jon Ramos',
+    'contributions.page.description':
+      'Descripción completa de mis contribuciones open source a clj-kondo, cljfmt, Logseq y otros proyectos. Especializado en herramientas Clojure, análisis estático y mejoras de experiencia de desarrollador.',
+    'contributions.hero.title': 'Contribuciones Open Source',
+    'contributions.hero.subtitle':
+      'Construyendo mejores herramientas y experiencias para desarrolladores a través de contribuciones significativas a proyectos open source',
+    'contributions.stats.merged': 'Contribuciones Fusionadas',
+    'contributions.stats.merged.desc':
+      'Mejoras de código listas para producción',
+    'contributions.stats.projects': 'Proyectos',
+    'contributions.stats.projects.desc':
+      'Herramientas open source ampliamente utilizadas',
+    'contributions.stats.technologies': 'Tecnologías',
+    'contributions.section.projects': 'Proyectos',
+    'contributions.section.timeline': 'Línea de Tiempo de Contribuciones',
+    'contributions.section.subtitle':
+      'Contribuyendo a {projects} proyectos con {contributions} contribuciones',
+    'contributions.card.contributions': 'Contribución',
+    'contributions.card.contributions_plural': 'Contribuciones',
+    'contributions.card.more': 'más',
+    'contributions.card.repository': 'Repositorio',
+    'contributions.card.website': 'Sitio Web',
+    'contributions.card.viewPR': 'Ver Pull Request',
+    'contributions.timeline.viewPR': 'Ver PR →',
+    'contributions.home.viewAll': 'Ver Todas las Contribuciones',
+    'contributions.stats.contributions': 'Contribuciones',
   },
   eu: {
     'meta.title':
@@ -135,6 +189,7 @@ export const ui = {
     'nav.home': 'Hasiera',
     'nav.experience': 'Esperientzia',
     'nav.projects': 'Proiektuak',
+    'nav.contributions': 'Ekarpenak',
     'nav.contact': 'Kontaktua',
 
     'hero.greeting': 'Kaixo!',
@@ -179,6 +234,33 @@ export const ui = {
     'email.membership.subject.federation': 'Federazio Eskaera',
     'email.membership.subject.membership-and-federation':
       'Bazkidetza eta Federazio Eskaera',
+
+    'contributions.page.title': 'Kode Irekiko Ekarpenak | Jon Ramos',
+    'contributions.page.description':
+      'Nire kode irekiko ekarpenen ikuspegi osoa clj-kondo, cljfmt, Logseq eta beste proiektuetara. Clojure tresnak, analisi estatikoan eta garatzaileen esperientzian espezializatua.',
+    'contributions.hero.title': 'Kode Irekiko Ekarpenak',
+    'contributions.hero.subtitle':
+      'Garatzaile-tresna eta esperientzia hobeak eraikitzen kode irekiko proiektuetara ekapen esanguratsuak eginez',
+    'contributions.stats.merged': 'Bateratutako Ekarpenak',
+    'contributions.stats.merged.desc':
+      'Produkziora prest dauden kode-hobekuntzak',
+    'contributions.stats.projects': 'Proiektuak',
+    'contributions.stats.projects.desc':
+      'Erabili asko diren kode irekiko tresnak',
+    'contributions.stats.technologies': 'Teknologiak',
+    'contributions.section.projects': 'Proiektuak',
+    'contributions.section.timeline': 'Ekarpenen Denbora-lerroa',
+    'contributions.section.subtitle':
+      '{projects} proiekturi laguntzen {contributions} ekarpenekin',
+    'contributions.card.contributions': 'Ekarpena',
+    'contributions.card.contributions_plural': 'Ekarpenak',
+    'contributions.card.more': 'gehiago',
+    'contributions.card.repository': 'Biltegia',
+    'contributions.card.website': 'Webgunea',
+    'contributions.card.viewPR': 'Pull Request-a Ikusi',
+    'contributions.timeline.viewPR': 'PR-a ikusi →',
+    'contributions.home.viewAll': 'Ekarpen Guztiak Ikusi',
+    'contributions.stats.contributions': 'Ekarpenak',
   },
 } as const;
 

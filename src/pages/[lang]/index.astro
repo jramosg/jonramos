@@ -2,12 +2,11 @@
 export const prerender = false;
 
 import Layout from '@/layouts/Layout.astro';
-import Navbar from '@/components/Navbar.astro';
 import Hero from '@/components/Hero.astro';
 import Experience from '@/components/Experience.astro';
 import Projects from '@/components/Projects.astro';
 import Contact from '@/components/Contact.astro';
-import Footer from '@/components/Footer.astro';
+import ContributionsHome from '@/components/ContributionsHome.astro';
 import { resolveLanguage } from '@/utils/languageResolver';
 import { getLangFromUrl } from '@/i18n/utils';
 import { logger } from '@/logger';
@@ -22,12 +21,11 @@ if (lang !== resolvedLang) {
 ---
 
 <Layout>
-  <Navbar />
-  <main id="main-content">
+  <>
     <Hero />
     <Experience />
     <Projects />
+    <ContributionsHome />
     <Contact />
-  </main>
-  <Footer />
+  </>
 </Layout>

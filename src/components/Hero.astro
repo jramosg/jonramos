@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import jonRamosImg from '../assets/jonramos.jpeg';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getNavigationUrl } from '@/utils/navigation';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -30,8 +31,12 @@ const t = useTranslations(lang);
         </p>
 
         <div class="actions">
-          <a href="#projects" class="btn btn-primary">{t('hero.viewWork')}</a>
-          <a href="#contact" class="btn btn-secondary">{t('hero.contactMe')}</a>
+          <a href={getNavigationUrl(lang, '#projects')} class="btn btn-primary"
+            >{t('hero.viewWork')}</a
+          >
+          <a href={getNavigationUrl(lang, '#contact')} class="btn btn-secondary"
+            >{t('hero.contactMe')}</a
+          >
         </div>
       </div>
 

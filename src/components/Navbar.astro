@@ -3,15 +3,17 @@ import LanguagePicker from './LanguagePicker.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import ThemeSwitcher from './theme-switcher/ThemeSwitcher.astro';
 import LogoIcon from '@/assets/logo.svg';
+import { getNavigationUrl } from '@/utils/navigation';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const links = [
-  { name: t('nav.home'), href: '#home' },
-  { name: t('nav.experience'), href: '#experience' },
-  { name: t('nav.projects'), href: '#projects' },
-  { name: t('nav.contact'), href: '#contact' },
+  { name: t('nav.home'), href: getNavigationUrl(lang, '#home') },
+  { name: t('nav.experience'), href: getNavigationUrl(lang, '#experience') },
+  { name: t('nav.projects'), href: getNavigationUrl(lang, '#projects') },
+  { name: t('nav.contributions'), href: `/${lang}/contributions` },
+  { name: t('nav.contact'), href: getNavigationUrl(lang, '#contact') },
 ];
 ---
 

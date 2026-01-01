@@ -1,0 +1,68 @@
+---
+import { projects } from '@/data/contributions';
+import ProjectContributionCard from './ProjectContributionCard.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="contributions" class="section">
+  <div class="container">
+    <h2 class="section-title">{t('contributions.section.projects')}</h2>
+
+    <div class="projects-grid">
+      {
+        projects.map((project) => (
+          <ProjectContributionCard project={project} lang={lang} />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 4rem 0 6rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(
+      to right,
+      var(--color-text),
+      var(--color-text-muted)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      padding: 3rem 0 4rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .projects-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
