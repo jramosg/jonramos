@@ -26,29 +26,72 @@ const {
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Software Engineer, Full Stack Developer, Web Developer, Desarrollador Web, Software Garatzailea, Web Garapena, Urnieta, Basque Country, Euskal Herria, País Vasco, Clojure, ClojureScript, JavaScript, TypeScript, Astro"
+      content="Software Engineer, Full Stack Developer, Web Developer, Desarrollador Web, Software Garatzailea, Web Garapena, Urnieta, Basque Country, Euskal Herria, País Vasco, Clojure, ClojureScript, JavaScript, TypeScript, Astro, React, Datomic, Freelance Developer, Hire Software Engineer, Web Application Development, Healthcare Software, Open Source Contributor"
     />
+    
+    <!-- Author and Copyright -->
+    <meta name="author" content="Jon Ramos" />
+    <meta name="copyright" content="Jon Ramos" />
+    
+    <!-- Robots and Indexing -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    
+    <!-- Geo-targeting for local SEO -->
+    <meta name="geo.region" content="ES-PV" />
+    <meta name="geo.placename" content="Urnieta, Gipuzkoa, Basque Country" />
+    <meta name="geo.position" content="43.2333;-1.9167" />
+    <meta name="ICBM" content="43.2333, -1.9167" />
+    
+    <!-- Mobile and PWA optimization -->
+    <meta name="theme-color" content="#7c3aed" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Jon Ramos" />
+    
     <link rel="sitemap" href="/sitemap.xml" />
 
     <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Jon Ramos - Software Engineer" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={`${Astro.url.origin}${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Jon Ramos - Software Engineer Portfolio" />
     <meta property="og:url" content={Astro.url} />
     <meta
       property="og:locale"
       content={lang === 'eu' ? 'eu_ES' : lang === 'es' ? 'es_ES' : 'en_US'}
     />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="eu_ES" />
+    
+    <!-- Profile-specific OG tags -->
+    <meta property="profile:first_name" content="Jon" />
+    <meta property="profile:last_name" content="Ramos" />
+    <meta property="profile:username" content="jramosg" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@jramosg" />
+    <meta name="twitter:creator" content="@jramosg" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={`${Astro.url.origin}${ogImage}`} />
+    <meta name="twitter:image:alt" content="Jon Ramos - Software Engineer Portfolio" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href={Astro.url.href} />
+    
+    <!-- Hreflang for multilingual SEO -->
+    <link rel="alternate" hreflang="en" href={`${Astro.url.origin}/en`} />
+    <link rel="alternate" hreflang="es" href={`${Astro.url.origin}/es`} />
+    <link rel="alternate" hreflang="eu" href={`${Astro.url.origin}/eu`} />
+    <link rel="alternate" hreflang="x-default" href={`${Astro.url.origin}/en`} />
 
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
@@ -60,37 +103,150 @@ const {
       rel="stylesheet"
     />
     <title>{title}</title>
+    
+    <!-- WebSite Schema for Google Sitelinks -->
     <script
       type="application/ld+json"
       is:inline
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'Person',
-        name: 'Jon Ramos',
-        jobTitle: t('meta.jobTitles').split(', '),
-        description: t('meta.structuredDescription'),
+        '@type': 'WebSite',
+        name: 'Jon Ramos - Software Engineer Portfolio',
+        alternateName: ['Jon Ramos Portfolio', 'jonramos.dev'],
         url: Astro.url.origin,
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: 'Urnieta',
-          addressRegion: 'Gipuzkoa',
-          addressCountry: 'ES',
-        },
-        workLocation: {
-          '@type': 'Place',
-          name: 'Urnieta, Basque Country',
+        description: t('meta.description'),
+        inLanguage: [lang, 'en', 'es', 'eu'],
+        author: {
+          '@type': 'Person',
+          name: 'Jon Ramos'
+        }
+      })}
+    />
+    
+    <!-- ProfilePage Schema - signals expertise to Google -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        dateCreated: '2024-01-01',
+        dateModified: new Date().toISOString().split('T')[0],
+        mainEntity: {
+          '@type': 'Person',
+          '@id': `${Astro.url.origin}/#person`,
+          name: 'Jon Ramos',
+          givenName: 'Jon',
+          familyName: 'Ramos',
+          jobTitle: t('meta.jobTitles').split(', '),
+          description: t('meta.structuredDescription'),
+          url: Astro.url.origin,
+          image: `${Astro.url.origin}/og-image.jpg`,
+          email: 'jonurnieta@gmail.com',
           address: {
             '@type': 'PostalAddress',
             addressLocality: 'Urnieta',
-            addressRegion: 'Euskal Herria',
-            addressCountry: 'ES',
+            addressRegion: 'Gipuzkoa',
+            addressCountry: 'ES'
           },
-        },
-        sameAs: [
-          `https://github.com/${github}`,
-          `https://linkedin.com/in/${linkedin}`,
-        ],
-        knowsLanguage: ['eu', 'es', 'en'],
+          workLocation: {
+            '@type': 'Place',
+            name: 'Urnieta, Basque Country',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: 'Urnieta',
+              addressRegion: 'Euskal Herria / Basque Country',
+              addressCountry: 'ES'
+            }
+          },
+          sameAs: [
+            `https://github.com/${github}`,
+            `https://linkedin.com/in/${linkedin}`
+          ],
+          knowsLanguage: [
+            { '@type': 'Language', name: 'Basque', alternateName: 'Euskara' },
+            { '@type': 'Language', name: 'Spanish', alternateName: 'Español' },
+            { '@type': 'Language', name: 'English' }
+          ],
+          knowsAbout: [
+            'Software Engineering',
+            'Full Stack Development',
+            'Web Development',
+            'Clojure',
+            'ClojureScript',
+            'JavaScript',
+            'TypeScript',
+            'React',
+            'Astro Framework',
+            'Datomic Database',
+            'Functional Programming',
+            'Healthcare Software',
+            'Open Source Development'
+          ],
+          hasOccupation: {
+            '@type': 'Occupation',
+            name: 'Software Engineer',
+            occupationLocation: {
+              '@type': 'Country',
+              name: 'Spain'
+            },
+            skills: 'Clojure, ClojureScript, JavaScript, TypeScript, React, Astro, Datomic, Full Stack Development, Web Applications, Healthcare Software'
+          },
+          worksFor: {
+            '@type': 'Organization',
+            name: 'Ubikare',
+            url: 'https://ubikare.io/',
+            description: 'Healthcare technology company'
+          },
+          alumniOf: {
+            '@type': 'EducationalOrganization',
+            name: 'Software Engineering Studies'
+          },
+          makesOffer: [
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'Web Development Services',
+                description: 'Custom web application development using modern technologies like Astro, React, and Clojure/ClojureScript'
+              }
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'Full Stack Development',
+                description: 'End-to-end software development from frontend to backend with focus on performance and data-driven solutions'
+              }
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'Freelance Software Engineering',
+                description: 'Professional freelance development services for businesses in Basque Country and internationally'
+              }
+            }
+          ]
+        }
+      })}
+    />
+    
+    <!-- BreadcrumbList for better navigation in search results -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: Astro.url.origin
+          }
+        ]
       })}
     />
   </head>
