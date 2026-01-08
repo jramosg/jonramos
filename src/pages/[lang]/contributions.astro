@@ -24,28 +24,32 @@ const allContributions = getAllContributions();
   title={t('contributions.page.title')}
   description={t('contributions.page.description')}
 >
-  <main id="main-content">
-    <div class="hero-section">
+  <article class="contributions-page" itemscope itemtype="https://schema.org/CollectionPage">
+    <meta itemprop="name" content={t('contributions.page.title')} />
+    <meta itemprop="description" content={t('contributions.page.description')} />
+    
+    <header class="hero-section">
       <div class="container">
-        <h1 class="hero-title">{t('contributions.hero.title')}</h1>
+        <h1 class="hero-title" itemprop="headline">{t('contributions.hero.title')}</h1>
         <p class="hero-subtitle">
           {t('contributions.hero.subtitle')}
         </p>
       </div>
-    </div>
+    </header>
 
-    <div class="stats-section">
+    <section class="stats-section" aria-labelledby="stats-heading">
+      <h2 id="stats-heading" class="visually-hidden">Contribution Statistics</h2>
       <div class="container">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value">{stats.totalContributions}</div>
+        <div class="stats-grid" role="list">
+          <div class="stat-card" role="listitem">
+            <div class="stat-value" aria-label={`${stats.totalContributions} merged contributions`}>{stats.totalContributions}</div>
             <div class="stat-label">{t('contributions.stats.merged')}</div>
             <div class="stat-description">
               {t('contributions.stats.merged.desc')}
             </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value">{stats.totalProjects}</div>
+          <div class="stat-card" role="listitem">
+            <div class="stat-value" aria-label={`${stats.totalProjects} open source projects`}>{stats.totalProjects}</div>
             <div class="stat-label">{t('contributions.stats.projects')}</div>
             <div class="stat-description">
               {t('contributions.stats.projects.desc')}
@@ -53,14 +57,14 @@ const allContributions = getAllContributions();
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="projects-section">
+    <section class="projects-section" aria-labelledby="projects-section-title">
       <div class="container">
-        <h2 class="section-title">{t('contributions.section.projects')}</h2>
+        <h2 id="projects-section-title" class="section-title">{t('contributions.section.projects')}</h2>
         <div class="projects-list">
           {
-            projects.map((project) => (
+            projects.map((project, index) => (
               <article class="project-card" id={project.name.toLowerCase()}>
                 <div class="project-header">
                   <div class="project-title-row">
@@ -84,6 +88,7 @@ const allContributions = getAllContributions();
                         target="_blank"
                         rel="noopener noreferrer"
                         class="project-link"
+                        aria-label={`View ${project.name} repository on GitHub`}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -95,6 +100,7 @@ const allContributions = getAllContributions();
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
+                          aria-hidden="true"
                         >
                           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                         </svg>
@@ -223,16 +229,16 @@ const allContributions = getAllContributions();
           }
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="timeline-section">
+    <section class="timeline-section" aria-labelledby="timeline-section-title">
       <div class="container">
-        <h2 class="section-title">{t('contributions.section.timeline')}</h2>
-        <div class="timeline">
+        <h2 id="timeline-section-title" class="section-title">{t('contributions.section.timeline')}</h2>
+        <div class="timeline" role="list">
           {
             allContributions.map((contribution) => (
-              <div class="timeline-item">
-                <div class="timeline-marker" />
+              <div class="timeline-item" role="listitem">
+                <div class="timeline-marker" aria-hidden="true" />
                 <div class="timeline-content">
                   <time class="timeline-date">
                     {new Date(contribution.date).toLocaleDateString(lang, {
@@ -266,11 +272,27 @@ const allContributions = getAllContributions();
           }
         </div>
       </div>
-    </div>
-  </main>
+    </section>
+  </article>
 </Layout>
 
 <style>
+  .contributions-page {
+    padding-top: var(--nav-height);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   main {
     padding-top: var(--nav-height);
   }

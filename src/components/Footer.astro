@@ -20,28 +20,34 @@ const socials = [
 ];
 ---
 
-<footer class="footer">
+<footer class="footer" role="contentinfo" itemscope itemtype="https://schema.org/WPFooter">
   <div class="container">
     <div class="content">
       <div class="footer-left">
-        <p>&copy; {currentYear} Jon Ramos. {t('footer.rights')}</p>
+        <p>
+          <small>&copy; {currentYear} <span itemprop="copyrightHolder">Jon Ramos</span>. {t('footer.rights')}</small>
+        </p>
+        <p class="tagline">
+          <small>Senior Software Engineer | Full Stack Developer | Available for Hire</small>
+        </p>
       </div>
 
-      <div class="social-links">
+      <nav class="social-links" aria-label="Social media links">
         {
           socials.map((social) => (
             <a
               href={social.href}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer me"
               class="social-icon"
-              aria-label={social.label}
+              aria-label={`Connect on ${social.label}`}
+              title={`Follow Jon Ramos on ${social.label}`}
             >
-              <social.icon />
+              <social.icon aria-hidden="true" />
             </a>
           ))
         }
-      </div>
+      </nav>
     </div>
   </div>
 </footer>
@@ -69,6 +75,13 @@ const socials = [
     color: var(--color-text-muted);
     font-size: 0.875rem;
     margin: 0;
+  }
+
+  .tagline {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    opacity: 0.8;
   }
 
   .social-links {

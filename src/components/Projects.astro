@@ -11,34 +11,47 @@ const projects = [
     description: t('projects.naiha_desc'),
     href: 'https://www.naiha.io/',
     tags: ['Clojure', 'ClojureScript', 'Datomic'],
+    type: 'WebApplication',
   },
   {
     title: 'Laguntza Fisioterapia',
     description: t('projects.laguntza_desc'),
     href: 'https://laguntzafisioterapia.com/',
     tags: ['Astro', 'GSAP', 'Typescript'],
+    type: 'WebSite',
   },
   {
     title: 'Besaide Mendizale Elkartea',
     description: t('projects.besaide_desc'),
     href: 'https://besaide.vercel.app/',
     tags: ['Astro', 'Typescript'],
+    type: 'WebSite',
   },
   {
     title: 'color-tools',
     description: t('projects.colortools_desc'),
     href: 'https://github.com/jramosg/color-tools',
     tags: ['Clojure', 'Library', 'Open Source'],
+    type: 'SoftwareSourceCode',
   },
 ];
 ---
 
-<section id="projects" class="section">
+<section id="projects" class="section" aria-labelledby="projects-title" itemscope itemtype="https://schema.org/ItemList">
   <div class="container">
-    <h2 class="section-title">{t('projects.title')}</h2>
+    <header>
+      <h2 id="projects-title" class="section-title" itemprop="name">{t('projects.title')}</h2>
+      <meta itemprop="numberOfItems" content={String(projects.length)} />
+      <meta itemprop="itemListOrder" content="ItemListUnordered" />
+    </header>
 
-    <div class="grid">
-      {projects.map((project) => <ProjectCard {...project} />)}
+    <div class="grid" role="list">
+      {projects.map((project, index) => (
+        <div role="listitem" itemprop="itemListElement" itemscope itemtype={`https://schema.org/${project.type}`}>
+          <meta itemprop="position" content={String(index + 1)} />
+          <ProjectCard {...project} />
+        </div>
+      ))}
     </div>
   </div>
 </section>

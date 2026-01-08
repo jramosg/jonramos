@@ -8,52 +8,64 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="home" class="hero" aria-labelledby="hero-title">
+<section id="home" class="hero" aria-labelledby="hero-title" itemscope itemtype="https://schema.org/Person">
   <div class="container">
     <div class="hero-layout">
-      <div class="content">
-        <p class="greeting" aria-label="Greeting">{t('hero.greeting')}</p>
-        <h1 id="hero-title" class="name">
+      <article class="content">
+        <span class="greeting">{t('hero.greeting')}</span>
+        <h1 id="hero-title" class="name" itemprop="name">
           Jon Ramos {lang === 'eu' && <span class="i-am">naiz</span>}
         </h1>
-        <p class="title">
+        <p class="title" itemprop="jobTitle">
           {t('hero.title')}
         </p>
-        <p class="description">
+        <p class="description" itemprop="description">
           {t('hero.description')}
           <a
             href="https://ubikare.io/"
             target="_blank"
             rel="noopener noreferrer"
             class="highlight"
-            aria-label="Ubikare company website (opens in new tab)">Ubikare</a
+            itemprop="worksFor"
+            itemscope
+            itemtype="https://schema.org/Organization"
+            aria-label="Ubikare company website (opens in new tab)"><span itemprop="name">Ubikare</span></a
           >.
         </p>
 
-        <div class="actions">
-          <a href={getNavigationUrl(lang, '#projects')} class="btn btn-primary"
+        <!-- Hidden SEO-relevant metadata -->
+        <meta itemprop="url" content="https://jonramos.dev" />
+        <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="visually-hidden">
+          <meta itemprop="addressLocality" content="Urnieta" />
+          <meta itemprop="addressRegion" content="Gipuzkoa, Basque Country" />
+          <meta itemprop="addressCountry" content="Spain" />
+        </span>
+
+        <nav class="actions" aria-label="Primary actions">
+          <a href={getNavigationUrl(lang, '#projects')} class="btn btn-primary" role="button"
             >{t('hero.viewWork')}</a
           >
-          <a href={getNavigationUrl(lang, '#contact')} class="btn btn-secondary"
+          <a href={getNavigationUrl(lang, '#contact')} class="btn btn-secondary" role="button"
             >{t('hero.contactMe')}</a
           >
-        </div>
-      </div>
+        </nav>
+      </article>
 
-      <div class="image-container">
+      <figure class="image-container">
         <div class="image-bg-glow" aria-hidden="true"></div>
         <div class="image-wrapper">
           <Image
             src={jonRamosImg}
-            alt="Jon Ramos - Software Engineer portrait"
+            alt="Jon Ramos - Software Engineer and Full Stack Developer from Urnieta, Basque Country specializing in Clojure and modern web technologies"
             width={400}
             height={400}
             class="profile-image"
             loading="eager"
             fetchpriority="high"
+            itemprop="image"
           />
         </div>
-      </div>
+      </figure>
     </div>
   </div>
 </section>
@@ -213,6 +225,18 @@ const t = useTranslations(lang);
 
   .profile-image:hover {
     transform: scale(1.01);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   @media (max-width: 968px) {

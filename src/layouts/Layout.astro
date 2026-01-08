@@ -2,11 +2,19 @@
 import Footer from '@/components/Footer.astro';
 import BaseLayout from './BaseLayout.astro';
 import Navbar from '@/components/Navbar.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout title={title} description={description} ogImage={ogImage}>
   <Navbar />
-  <main id="main-content">
+  <main id="main-content" role="main" tabindex="-1">
     <slot />
   </main>
   <Footer />

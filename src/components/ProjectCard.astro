@@ -12,27 +12,30 @@ interface Props {
 const { title, description, href, tags } = Astro.props;
 ---
 
-<a href={href} target="_blank" rel="noopener noreferrer" class="card">
-  <div class="card-content">
-    <h3 class="title">
-      <span>{title}</span>
-      <ArrowRight class="arrow" />
-    </h3>
-    <p class="description">
-      {description}
-    </p>
-    <div class="tags">
-      {
-        tags.map((tag) => (
-          <span class="tag">
-            <TechIcon tech={tag} />
-            <span class="tag-text">{tag}</span>
-          </span>
-        ))
-      }
+<article class="card">
+  <a href={href} target="_blank" rel="noopener noreferrer" class="card-link" aria-label={`View ${title} project (opens in new tab)`}>
+    <div class="card-content">
+      <h3 class="title" itemprop="name">
+        <span>{title}</span>
+        <ArrowRight class="arrow" aria-hidden="true" />
+      </h3>
+      <p class="description" itemprop="description">
+        {description}
+      </p>
+      <meta itemprop="url" content={href} />
+      <ul class="tags" aria-label="Technologies used" itemprop="keywords">
+        {
+          tags.map((tag) => (
+            <li class="tag">
+              <TechIcon tech={tag} />
+              <span class="tag-text">{tag}</span>
+            </li>
+          ))
+        }
+      </ul>
     </div>
-  </div>
-</a>
+  </a>
+</article>
 
 <style>
   .card {
@@ -41,9 +44,16 @@ const { title, description, href, tags } = Astro.props;
     background: var(--color-card-bg);
     border: 1px solid var(--color-border);
     border-radius: 1.25rem;
-    padding: 2rem;
     transition: all 0.3s ease;
     height: 100%;
+  }
+
+  .card-link {
+    display: block;
+    padding: 2rem;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
   }
 
   .card:hover {
@@ -96,6 +106,8 @@ const { title, description, href, tags } = Astro.props;
     gap: 0.5rem;
     margin-top: auto;
     align-items: center;
+    list-style: none;
+    padding: 0;
   }
 
   .tag {

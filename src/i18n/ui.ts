@@ -9,12 +9,12 @@ export const languages = {
 export const ui = {
   en: {
     'meta.title':
-      'Jon Ramos | Software Engineer & Web Developer | Urnieta, Basque Country',
+      'Jon Ramos | Senior Software Engineer & Full Stack Developer | Hire Expert Developer | Urnieta, Basque Country',
     'meta.description':
-      'Software Engineer based in Urnieta, Basque Country (Euskal Herria). Specializing in web development and web applications. Building high-performance, data-driven solutions with modern technologies like Astro and Clojure/ClojureScript.',
-    'meta.jobTitles': 'Software Engineer, Web Developer, Full Stack Developer',
+      'Senior Software Engineer available for hire. Expert in Clojure, ClojureScript, TypeScript, React, and Astro. 8+ years building scalable web applications and healthcare software. Based in Basque Country, Spain. Open to remote work with companies like Google, Meta, Netflix, and startups worldwide. Freelance web development services available.',
+    'meta.jobTitles': 'Senior Software Engineer, Full Stack Developer, Web Developer, Freelance Developer, Clojure Expert',
     'meta.structuredDescription':
-      'Software Engineer specializing in web development and web applications based in Urnieta, Basque Country (Euskal Herria)',
+      'Senior Software Engineer specializing in functional programming, web development and scalable web applications. Available for hire by top tech companies and freelance projects. Based in Urnieta, Basque Country.',
 
     'nav.home': 'Home',
     'nav.experience': 'Experience',
@@ -92,13 +92,13 @@ export const ui = {
   },
   es: {
     'meta.title':
-      'Jon Ramos | Ingeniero de Software y Desarrollador Web | Urnieta, País Vasco',
+      'Jon Ramos | Ingeniero de Software Senior y Desarrollador Full Stack | Contratar Desarrollador | Urnieta, País Vasco',
     'meta.description':
-      'Ingeniero de Software en Urnieta, País Vasco (Euskal Herria). Especializado en desarrollo web y aplicaciones web. Construyendo soluciones de alto rendimiento orientadas a datos con tecnologías modernas como Astro y Clojure/ClojureScript.',
+      'Ingeniero de Software Senior disponible para contratación. Experto en Clojure, ClojureScript, TypeScript, React y Astro. Más de 8 años construyendo aplicaciones web escalables y software sanitario. Ubicado en País Vasco, España. Abierto a trabajo remoto con empresas como Google, Meta, Netflix y startups. Servicios de desarrollo web freelance disponibles.',
     'meta.jobTitles':
-      'Ingeniero de Software, Desarrollador Web, Desarrollador Full Stack',
+      'Ingeniero de Software Senior, Desarrollador Full Stack, Desarrollador Web, Desarrollador Freelance',
     'meta.structuredDescription':
-      'Ingeniero de Software especializado en desarrollo web y aplicaciones web en Urnieta, País Vasco (Euskal Herria)',
+      'Ingeniero de Software Senior especializado en programación funcional, desarrollo web y aplicaciones web escalables. Disponible para contratación por empresas tecnológicas y proyectos freelance en Urnieta, País Vasco.',
 
     'nav.home': 'Inicio',
     'nav.experience': 'Experiencia',
@@ -178,13 +178,13 @@ export const ui = {
   },
   eu: {
     'meta.title':
-      'Jon Ramos | Software Ingeniaria eta Web Garatzailea | Urnieta, Euskal Herria',
+      'Jon Ramos | Software Ingeniaria Senior eta Full Stack Garatzailea | Kontratatu Garatzailea | Urnieta, Euskal Herria',
     'meta.description':
-      'Software Ingeniaria Urnietan, Euskal Herrian. Web eta web aplikazioen garapena. Errendimendu handiko eta datuetan oinarritutako soluzioak eraikitzen ditut teknologia modernoez, Astro eta Clojure/ClojureScript-en espezializatua nagoelarik.',
+      'Software Ingeniaria Senior kontratatzeko eskuragarri. Clojure, ClojureScript, TypeScript, React eta Astro-n aditua. 8 urte baino gehiago web aplikazio eskalagarriak eta osasun softwarea eraikitzen. Euskal Herrian kokatua. Urruneko lanerako irekia Google, Meta, Netflix eta startup-ekin. Freelance web garapen zerbitzuak eskuragarri.',
     'meta.jobTitles':
-      'Software Ingeniaria, Web Garatzailea, Full Stack Garatzailea',
+      'Software Ingeniaria Senior, Full Stack Garatzailea, Web Garatzailea, Freelance Garatzailea',
     'meta.structuredDescription':
-      'Software Ingeniaria web garapenean eta web aplikazioetan espezializatua Urnietan, Euskal Herrian',
+      'Software Ingeniaria Senior programazio funtzionalean, web garapenean eta web aplikazio eskalagarrietan espezializatua. Kontratatzeko eskuragarri enpresa teknologikoek eta freelance proiektuetarako Urnietan, Euskal Herrian.',
 
     'nav.home': 'Hasiera',
     'nav.experience': 'Esperientzia',

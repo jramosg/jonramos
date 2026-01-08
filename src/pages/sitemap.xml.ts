@@ -5,18 +5,24 @@ import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
   const site = context.site?.toString();
+  const currentDate = new Date().toISOString().split('T')[0];
 
   const urls: Array<{
     loc: string;
+    lastmod?: string;
     changefreq?: string;
     priority?: number;
     alternateRefs?: Array<{ hreflang: string; href: string }>;
   }> = [];
 
+  // Main pages for each language
   Object.entries(languages).forEach(([langCode]) => {
+    // Homepage
     urls.push({
       loc: `${site}${langCode}`,
-      priority: 1,
+      lastmod: currentDate,
+      changefreq: 'weekly',
+      priority: 1.0,
       alternateRefs: Object.entries(languages)
         .map(([altLangCode]) => ({
           hreflang: altLangCode,
@@ -26,6 +32,25 @@ export async function GET(context: APIContext) {
           {
             hreflang: 'x-default',
             href: `${site}en`,
+          },
+        ]),
+    });
+
+    // Contributions page for each language
+    urls.push({
+      loc: `${site}${langCode}/contributions`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.8,
+      alternateRefs: Object.entries(languages)
+        .map(([altLangCode]) => ({
+          hreflang: altLangCode,
+          href: `${site}${altLangCode}/contributions`,
+        }))
+        .concat([
+          {
+            hreflang: 'x-default',
+            href: `${site}en/contributions`,
           },
         ]),
     });
@@ -42,6 +67,7 @@ ${urls
   .map(
     (url) => `<url>
   <loc>${url.loc}</loc>
+  ${url.lastmod ? `<lastmod>${url.lastmod}</lastmod>` : ''}
   ${url.changefreq ? `<changefreq>${url.changefreq}</changefreq>` : ''}
   ${url.priority !== undefined ? `<priority>${url.priority}</priority>` : ''}
   ${

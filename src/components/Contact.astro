@@ -31,17 +31,20 @@ const links = [
 ];
 ---
 
-<section id="contact" class="section">
+<section id="contact" class="section" aria-labelledby="contact-title" itemscope itemtype="https://schema.org/ContactPage">
   <div class="container">
-    <h2 class="section-title">{t('contact.title')}</h2>
+    <header>
+      <h2 id="contact-title" class="section-title">{t('contact.title')}</h2>
+    </header>
 
     <div class="grid-layout">
-      <div class="contact-info">
-        <p class="text">
+      <address class="contact-info" itemscope itemtype="https://schema.org/Person">
+        <meta itemprop="name" content="Jon Ramos" />
+        <p class="text" itemprop="description">
           {t('contact.text')}
         </p>
 
-        <div class="links">
+        <nav class="links" aria-label="Contact methods">
           {
             links.map(({ href, icon: Icon, label, value }) => (
               <a
@@ -51,8 +54,10 @@ const links = [
                   href.startsWith('http') ? 'noopener noreferrer' : undefined
                 }
                 class="link-item"
+                itemprop={href.startsWith('mailto') ? 'email' : 'sameAs'}
+                aria-label={`${label || value} - ${value}`}
               >
-                <div class="link-icon">
+                <div class="link-icon" aria-hidden="true">
                   <Icon />
                 </div>
                 <div class="link-content">
@@ -62,8 +67,16 @@ const links = [
               </a>
             ))
           }
+        </nav>
+        
+        <!-- Hidden structured location data for local SEO -->
+        <div class="visually-hidden" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+          <span itemprop="addressLocality">Urnieta</span>
+          <span itemprop="addressRegion">Gipuzkoa, Basque Country</span>
+          <span itemprop="addressCountry">Spain</span>
         </div>
-      </div>
+        <meta itemprop="areaServed" content="Basque Country, Spain, Remote Worldwide" />
+      </address>
 
       <div class="form-container">
         <h3 class="form-title">{t('contact.form.title')}</h3>
@@ -72,7 +85,7 @@ const links = [
       </div>
     </div>
 
-    <div class="map-section">
+    <div class="map-section" role="region" aria-label="Location map">
       <LeafletMap />
     </div>
   </div>
@@ -93,6 +106,19 @@ const links = [
   .contact-info {
     display: flex;
     flex-direction: column;
+    font-style: normal;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .text {

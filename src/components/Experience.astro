@@ -7,23 +7,32 @@ const t = useTranslations(lang);
 
 <section id="experience" class="section" aria-labelledby="experience-title">
   <div class="container">
-    <h2 id="experience-title" class="section-title">{t('experience.title')}</h2>
+    <header>
+      <h2 id="experience-title" class="section-title">{t('experience.title')}</h2>
+    </header>
 
-    <div class="timeline" role="list">
-      <article class="timeline-item" role="listitem">
-        <time datetime="2016-09" class="timeline-date">
+    <div class="timeline" role="list" itemscope itemtype="https://schema.org/ItemList">
+      <meta itemprop="numberOfItems" content="1" />
+      <article class="timeline-item" role="listitem" itemprop="itemListElement" itemscope itemtype="https://schema.org/OrganizationRole">
+        <meta itemprop="position" content="1" />
+        <time datetime="2016-09" class="timeline-date" itemprop="startDate">
           Sep 2016 - {t('experience.present')}
         </time>
         <div class="timeline-content">
-          <h3>{t('experience.role')}</h3>
+          <h3 itemprop="roleName">{t('experience.role')}</h3>
           <a
             href="https://ubikare.io/"
             target="_blank"
             rel="noopener noreferrer"
             class="company"
-            aria-label="Ubikare company website (opens in new tab)">Ubikare</a
-          >
-          <p>
+            itemprop="memberOf"
+            itemscope
+            itemtype="https://schema.org/Organization"
+            aria-label="Ubikare company website (opens in new tab)">
+            <span itemprop="name">Ubikare</span>
+            <meta itemprop="url" content="https://ubikare.io/" />
+          </a>
+          <p itemprop="description">
             {t('experience.ubikare_desc')}
           </p>
           <ul class="tags" aria-label="Technologies used">
