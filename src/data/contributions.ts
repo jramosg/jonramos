@@ -135,6 +135,27 @@ export const projects: Project[] = [
         date: '2025-12-16',
         tags: ['type-system', 'core-functions'],
       },
+      {
+        title: 'Fix `:refer-clojure :exclude` handling for ignored vars',
+        description:
+          'Improved handling of `:refer-clojure :exclude` to properly ignore elements with `#_clj-kondo/ignore` metadata.',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2717',
+        date: '2026-01-08',
+      },
+      {
+        title: 'Fix regression for unused binding warnings',
+        description:
+          "Resolved a regression causing false positives for unused binding warnings in `~'~` unquote expressions.",
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2715',
+        date: '2026-01-07',
+      },
+      {
+        title: 'Fix unused value linter for `defmethod` bodies',
+        description:
+          'Updated the unused value linter to allow unused values in `defmethod` bodies.',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2714',
+        date: '2026-01-06',
+      },
     ],
   },
   {
