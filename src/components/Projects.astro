@@ -37,21 +37,36 @@ const projects = [
 ];
 ---
 
-<section id="projects" class="section" aria-labelledby="projects-title" itemscope itemtype="https://schema.org/ItemList">
+<section
+  id="projects"
+  class="section"
+  aria-labelledby="projects-title"
+  itemscope
+  itemtype="https://schema.org/ItemList"
+>
   <div class="container">
     <header>
-      <h2 id="projects-title" class="section-title" itemprop="name">{t('projects.title')}</h2>
+      <h2 id="projects-title" class="section-title" itemprop="name">
+        {t('projects.title')}
+      </h2>
       <meta itemprop="numberOfItems" content={String(projects.length)} />
       <meta itemprop="itemListOrder" content="ItemListUnordered" />
     </header>
 
     <div class="grid" role="list">
-      {projects.map((project, index) => (
-        <div role="listitem" itemprop="itemListElement" itemscope itemtype={`https://schema.org/${project.type}`}>
-          <meta itemprop="position" content={String(index + 1)} />
-          <ProjectCard {...project} />
-        </div>
-      ))}
+      {
+        projects.map((project, index) => (
+          <div
+            role="listitem"
+            itemprop="itemListElement"
+            itemscope
+            itemtype={`https://schema.org/${project.type}`}
+          >
+            <meta itemprop="position" content={String(index + 1)} />
+            <ProjectCard {...project} />
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>

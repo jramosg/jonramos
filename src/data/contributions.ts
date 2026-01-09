@@ -146,7 +146,8 @@ export const projects: Project[] = [
         title: 'New Linter: Condition Always True for clojure.test/is',
         description:
           'Implemented a linter to warn on literals and constants used in clojure.test/is forms that always evaluate to true, preventing common testing mistakes.',
-        impact: 'Improves test reliability by catching always-true conditions in assertions',
+        impact:
+          'Improves test reliability by catching always-true conditions in assertions',
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2722',
         date: '2026-01-08',
         tags: ['linter', 'testing', 'new-feature'],
@@ -155,7 +156,8 @@ export const projects: Project[] = [
         title: 'Type Checking Support for Clojure Test Functions',
         description:
           'Added comprehensive type checking for clojure.test functions like is, testing, deftest, etc., enabling static analysis to catch type mismatches in test code.',
-        impact: 'Enhances type safety in testing code, preventing runtime type errors',
+        impact:
+          'Enhances type safety in testing code, preventing runtime type errors',
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2706',
         date: '2026-01-08',
         tags: ['type-system', 'testing', 'static-analysis'],
@@ -164,7 +166,8 @@ export const projects: Project[] = [
         title: 'New Linter: Redundant Format',
         description:
           'Implemented a linter to warn when format strings are used without any format specifiers, indicating potential misuse of formatting functions.',
-        impact: 'Helps developers identify unnecessary use of format functions, improving code clarity',
+        impact:
+          'Helps developers identify unnecessary use of format functions, improving code clarity',
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2716',
         date: '2026-01-08',
         tags: ['linter', 'formatting', 'new-feature'],

@@ -8,12 +8,25 @@ const t = useTranslations(lang);
 <section id="experience" class="section" aria-labelledby="experience-title">
   <div class="container">
     <header>
-      <h2 id="experience-title" class="section-title">{t('experience.title')}</h2>
+      <h2 id="experience-title" class="section-title">
+        {t('experience.title')}
+      </h2>
     </header>
 
-    <div class="timeline" role="list" itemscope itemtype="https://schema.org/ItemList">
+    <div
+      class="timeline"
+      role="list"
+      itemscope
+      itemtype="https://schema.org/ItemList"
+    >
       <meta itemprop="numberOfItems" content="1" />
-      <article class="timeline-item" role="listitem" itemprop="itemListElement" itemscope itemtype="https://schema.org/OrganizationRole">
+      <article
+        class="timeline-item"
+        role="listitem"
+        itemprop="itemListElement"
+        itemscope
+        itemtype="https://schema.org/OrganizationRole"
+      >
         <meta itemprop="position" content="1" />
         <time datetime="2016-09" class="timeline-date" itemprop="startDate">
           Sep 2016 - {t('experience.present')}
@@ -28,7 +41,8 @@ const t = useTranslations(lang);
             itemprop="memberOf"
             itemscope
             itemtype="https://schema.org/Organization"
-            aria-label="Ubikare company website (opens in new tab)">
+            aria-label="Ubikare company website (opens in new tab)"
+          >
             <span itemprop="name">Ubikare</span>
             <meta itemprop="url" content="https://ubikare.io/" />
           </a>

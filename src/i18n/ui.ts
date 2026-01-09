@@ -12,7 +12,8 @@ export const ui = {
       'Jon Ramos | Senior Software Engineer & Full Stack Developer | Hire Expert Developer | Urnieta, Basque Country',
     'meta.description':
       'Senior Software Engineer available for hire. Expert in Clojure, ClojureScript, TypeScript, React, and Astro. 8+ years building scalable web applications and healthcare software. Based in Basque Country, Spain. Open to remote work with companies like Google, Meta, Netflix, and startups worldwide. Freelance web development services available.',
-    'meta.jobTitles': 'Senior Software Engineer, Full Stack Developer, Web Developer, Freelance Developer, Clojure Expert',
+    'meta.jobTitles':
+      'Senior Software Engineer, Full Stack Developer, Web Developer, Freelance Developer, Clojure Expert',
     'meta.structuredDescription':
       'Senior Software Engineer specializing in functional programming, web development and scalable web applications. Available for hire by top tech companies and freelance projects. Based in Urnieta, Basque Country.',
 

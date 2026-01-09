@@ -13,7 +13,13 @@ const { title, description, href, tags } = Astro.props;
 ---
 
 <article class="card">
-  <a href={href} target="_blank" rel="noopener noreferrer" class="card-link" aria-label={`View ${title} project (opens in new tab)`}>
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="card-link"
+    aria-label={`View ${title} project (opens in new tab)`}
+  >
     <div class="card-content">
       <h3 class="title" itemprop="name">
         <span>{title}</span>

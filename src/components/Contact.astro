@@ -31,14 +31,24 @@ const links = [
 ];
 ---
 
-<section id="contact" class="section" aria-labelledby="contact-title" itemscope itemtype="https://schema.org/ContactPage">
+<section
+  id="contact"
+  class="section"
+  aria-labelledby="contact-title"
+  itemscope
+  itemtype="https://schema.org/ContactPage"
+>
   <div class="container">
     <header>
       <h2 id="contact-title" class="section-title">{t('contact.title')}</h2>
     </header>
 
     <div class="grid-layout">
-      <address class="contact-info" itemscope itemtype="https://schema.org/Person">
+      <address
+        class="contact-info"
+        itemscope
+        itemtype="https://schema.org/Person"
+      >
         <meta itemprop="name" content="Jon Ramos" />
         <p class="text" itemprop="description">
           {t('contact.text')}
@@ -68,14 +78,22 @@ const links = [
             ))
           }
         </nav>
-        
+
         <!-- Hidden structured location data for local SEO -->
-        <div class="visually-hidden" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+        <div
+          class="visually-hidden"
+          itemprop="address"
+          itemscope
+          itemtype="https://schema.org/PostalAddress"
+        >
           <span itemprop="addressLocality">Urnieta</span>
           <span itemprop="addressRegion">Gipuzkoa, Basque Country</span>
           <span itemprop="addressCountry">Spain</span>
         </div>
-        <meta itemprop="areaServed" content="Basque Country, Spain, Remote Worldwide" />
+        <meta
+          itemprop="areaServed"
+          content="Basque Country, Spain, Remote Worldwide"
+        />
       </address>
 
       <div class="form-container">

@@ -24,13 +24,22 @@ const allContributions = getAllContributions();
   title={t('contributions.page.title')}
   description={t('contributions.page.description')}
 >
-  <article class="contributions-page" itemscope itemtype="https://schema.org/CollectionPage">
+  <article
+    class="contributions-page"
+    itemscope
+    itemtype="https://schema.org/CollectionPage"
+  >
     <meta itemprop="name" content={t('contributions.page.title')} />
-    <meta itemprop="description" content={t('contributions.page.description')} />
-    
+    <meta
+      itemprop="description"
+      content={t('contributions.page.description')}
+    />
+
     <header class="hero-section">
       <div class="container">
-        <h1 class="hero-title" itemprop="headline">{t('contributions.hero.title')}</h1>
+        <h1 class="hero-title" itemprop="headline">
+          {t('contributions.hero.title')}
+        </h1>
         <p class="hero-subtitle">
           {t('contributions.hero.subtitle')}
         </p>
@@ -38,18 +47,30 @@ const allContributions = getAllContributions();
     </header>
 
     <section class="stats-section" aria-labelledby="stats-heading">
-      <h2 id="stats-heading" class="visually-hidden">Contribution Statistics</h2>
+      <h2 id="stats-heading" class="visually-hidden">
+        Contribution Statistics
+      </h2>
       <div class="container">
         <div class="stats-grid" role="list">
           <div class="stat-card" role="listitem">
-            <div class="stat-value" aria-label={`${stats.totalContributions} merged contributions`}>{stats.totalContributions}</div>
+            <div
+              class="stat-value"
+              aria-label={`${stats.totalContributions} merged contributions`}
+            >
+              {stats.totalContributions}
+            </div>
             <div class="stat-label">{t('contributions.stats.merged')}</div>
             <div class="stat-description">
               {t('contributions.stats.merged.desc')}
             </div>
           </div>
           <div class="stat-card" role="listitem">
-            <div class="stat-value" aria-label={`${stats.totalProjects} open source projects`}>{stats.totalProjects}</div>
+            <div
+              class="stat-value"
+              aria-label={`${stats.totalProjects} open source projects`}
+            >
+              {stats.totalProjects}
+            </div>
             <div class="stat-label">{t('contributions.stats.projects')}</div>
             <div class="stat-description">
               {t('contributions.stats.projects.desc')}
@@ -61,10 +82,12 @@ const allContributions = getAllContributions();
 
     <section class="projects-section" aria-labelledby="projects-section-title">
       <div class="container">
-        <h2 id="projects-section-title" class="section-title">{t('contributions.section.projects')}</h2>
+        <h2 id="projects-section-title" class="section-title">
+          {t('contributions.section.projects')}
+        </h2>
         <div class="projects-list">
           {
-            projects.map((project, index) => (
+            projects.map((project) => (
               <article class="project-card" id={project.name.toLowerCase()}>
                 <div class="project-header">
                   <div class="project-title-row">
@@ -233,7 +256,9 @@ const allContributions = getAllContributions();
 
     <section class="timeline-section" aria-labelledby="timeline-section-title">
       <div class="container">
-        <h2 id="timeline-section-title" class="section-title">{t('contributions.section.timeline')}</h2>
+        <h2 id="timeline-section-title" class="section-title">
+          {t('contributions.section.timeline')}
+        </h2>
         <div class="timeline" role="list">
           {
             allContributions.map((contribution) => (

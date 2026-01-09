@@ -8,7 +8,13 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="home" class="hero" aria-labelledby="hero-title" itemscope itemtype="https://schema.org/Person">
+<section
+  id="home"
+  class="hero"
+  aria-labelledby="hero-title"
+  itemscope
+  itemtype="https://schema.org/Person"
+>
   <div class="container">
     <div class="hero-layout">
       <article class="content">
@@ -29,24 +35,34 @@ const t = useTranslations(lang);
             itemprop="worksFor"
             itemscope
             itemtype="https://schema.org/Organization"
-            aria-label="Ubikare company website (opens in new tab)"><span itemprop="name">Ubikare</span></a
+            aria-label="Ubikare company website (opens in new tab)"
+            ><span itemprop="name">Ubikare</span></a
           >.
         </p>
 
         <!-- Hidden SEO-relevant metadata -->
         <meta itemprop="url" content="https://jonramos.dev" />
-        <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="visually-hidden">
+        <span
+          itemprop="address"
+          itemscope
+          itemtype="https://schema.org/PostalAddress"
+          class="visually-hidden"
+        >
           <meta itemprop="addressLocality" content="Urnieta" />
           <meta itemprop="addressRegion" content="Gipuzkoa, Basque Country" />
           <meta itemprop="addressCountry" content="Spain" />
         </span>
 
         <nav class="actions" aria-label="Primary actions">
-          <a href={getNavigationUrl(lang, '#projects')} class="btn btn-primary" role="button"
-            >{t('hero.viewWork')}</a
+          <a
+            href={getNavigationUrl(lang, '#projects')}
+            class="btn btn-primary"
+            role="button">{t('hero.viewWork')}</a
           >
-          <a href={getNavigationUrl(lang, '#contact')} class="btn btn-secondary" role="button"
-            >{t('hero.contactMe')}</a
+          <a
+            href={getNavigationUrl(lang, '#contact')}
+            class="btn btn-secondary"
+            role="button">{t('hero.contactMe')}</a
           >
         </nav>
       </article>
@@ -90,7 +106,6 @@ const t = useTranslations(lang);
   .content {
     flex: 1;
     max-width: 600px;
-    z-index: 2;
   }
 
   .greeting {
@@ -194,6 +209,7 @@ const t = useTranslations(lang);
     justify-content: center;
     align-items: center;
     position: relative;
+    view-transition-name: none !important;
   }
 
   .image-bg-glow {
@@ -207,20 +223,18 @@ const t = useTranslations(lang);
     );
     opacity: 0.15;
     filter: blur(60px);
-    z-index: 0;
     transform: scale(1.2);
   }
 
   .profile-image {
     width: 100%;
     max-width: 480px;
-    height: auto;
     border-radius: 24px;
     position: relative;
-    z-index: 1;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.3s ease;
+    view-transition-name: none !important;
   }
 
   .profile-image:hover {

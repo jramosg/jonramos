@@ -10,19 +10,35 @@ const stats = getContributionStats();
 const MAX_CONTRIBUTIONS_PREVIEW = 3;
 ---
 
-<section id="contributions" class="section" aria-labelledby="contributions-title">
+<section
+  id="contributions"
+  class="section"
+  aria-labelledby="contributions-title"
+>
   <div class="container">
     <header>
-      <h2 id="contributions-title" class="section-title">{t('contributions.hero.title')}</h2>
+      <h2 id="contributions-title" class="section-title">
+        {t('contributions.hero.title')}
+      </h2>
     </header>
 
     <div class="stats-grid" role="list" aria-label="Contribution statistics">
       <div class="stat-card" role="listitem">
-        <div class="stat-value" aria-label={`${stats.totalProjects} open source projects contributed to`}>{stats.totalProjects}</div>
+        <div
+          class="stat-value"
+          aria-label={`${stats.totalProjects} open source projects contributed to`}
+        >
+          {stats.totalProjects}
+        </div>
         <div class="stat-label">{t('contributions.stats.projects')}</div>
       </div>
       <div class="stat-card" role="listitem">
-        <div class="stat-value" aria-label={`${stats.totalContributions} total contributions`}>{stats.totalContributions}</div>
+        <div
+          class="stat-value"
+          aria-label={`${stats.totalContributions} total contributions`}
+        >
+          {stats.totalContributions}
+        </div>
         <div class="stat-label">{t('contributions.stats.contributions')}</div>
       </div>
     </div>
