@@ -143,6 +143,33 @@ export const projects: Project[] = [
         date: '2026-01-08',
       },
       {
+        title: 'New Linter: Condition Always True for clojure.test/is',
+        description:
+          'Implemented a linter to warn on literals and constants used in clojure.test/is forms that always evaluate to true, preventing common testing mistakes.',
+        impact: 'Improves test reliability by catching always-true conditions in assertions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2722',
+        date: '2026-01-08',
+        tags: ['linter', 'testing', 'new-feature'],
+      },
+      {
+        title: 'Type Checking Support for Clojure Test Functions',
+        description:
+          'Added comprehensive type checking for clojure.test functions like is, testing, deftest, etc., enabling static analysis to catch type mismatches in test code.',
+        impact: 'Enhances type safety in testing code, preventing runtime type errors',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2706',
+        date: '2026-01-08',
+        tags: ['type-system', 'testing', 'static-analysis'],
+      },
+      {
+        title: 'New Linter: Redundant Format',
+        description:
+          'Implemented a linter to warn when format strings are used without any format specifiers, indicating potential misuse of formatting functions.',
+        impact: 'Helps developers identify unnecessary use of format functions, improving code clarity',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2716',
+        date: '2026-01-08',
+        tags: ['linter', 'formatting', 'new-feature'],
+      },
+      {
         title: 'Fix regression for unused binding warnings',
         description:
           "Resolved a regression causing false positives for unused binding warnings in `~'~` unquote expressions.",
