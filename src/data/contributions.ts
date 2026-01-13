@@ -186,6 +186,16 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2714',
         date: '2026-01-06',
       },
+      {
+        title: 'Add class type and type checking support',
+        description:
+          'Introduce a new type `class` and enhance type checking for class-related functions including `instance?`, `cast`, `class`, `make-array`, `bases`, and `supers`. This improves type safety and error reporting for functions that require class arguments, ensuring better validation during linting.',
+        impact:
+          'Improves type safety and error reporting for class-related functions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2725',
+        date: '2026-01-10',
+        tags: ['type-system', 'class', 'static-analysis'],
+      },
     ],
   },
   {
