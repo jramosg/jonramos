@@ -45,6 +45,8 @@ export const ui = {
       'A modern website for a mountaineering club. Features a clean interface and fast loading times using Astro.',
     'projects.colortools_desc':
       'A Clojure(Script) library for color manipulation and conversion. Open source contribution.',
+    'projects.norwegian_singles_desc':
+      'A high-performance training plan generator based on the Norwegian Singles methodology. Built with Astro and React.',
 
     'contact.title': 'My Contact Details',
     'contact.text':
@@ -129,6 +131,8 @@ export const ui = {
       'Sitio web moderno para un club de montañismo. Interfaz limpia y tiempos de carga rápidos usando Astro.',
     'projects.colortools_desc':
       'Librería Clojure(Script) para manipulación y conversión de colores. Contribución de código abierto.',
+    'projects.norwegian_singles_desc':
+      'Generador de planes de entrenamiento de alta eficiencia basado en la metodología Norwegian Singles. Construido con Astro y React.',
 
     'contact.title': 'Mis datos de contacto',
     'contact.text':
@@ -215,6 +219,8 @@ export const ui = {
       'Mendizale klub baten webgune modernoa. Interfaze garbia eta karga-denbora azkarrak Astro erabiliz.',
     'projects.colortools_desc':
       'Koloreen manipulazio eta bihurketarako Clojure(Script) liburutegia. Kode irekiko ekarpena.',
+    'projects.norwegian_singles_desc':
+      'Entrenamendu planak sortzeko aplikazioa, Norwegian Singles metodologian oinarritua. Astro eta React bidez eraikia.',
 
     'contact.title': 'Nire harremanetarako datuak',
     'contact.text':
