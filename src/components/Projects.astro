@@ -63,12 +63,7 @@ const projects = [
     <div class="grid" role="list">
       {
         projects.map((project, index) => (
-          <div
-            role="listitem"
-            itemprop="itemListElement"
-            itemscope
-            itemtype={`https://schema.org/${project.type}`}
-          >
+          <div role="listitem" itemprop="itemListElement">
             <meta itemprop="position" content={String(index + 1)} />
             <ProjectCard {...project} />
           </div>
