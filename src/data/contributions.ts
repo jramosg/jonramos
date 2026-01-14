@@ -196,6 +196,16 @@ export const projects: Project[] = [
         date: '2026-01-10',
         tags: ['type-system', 'class', 'static-analysis'],
       },
+      {
+        title: 'Add type inst and support for inst-ms types',
+        description:
+          'Introduced a new type `inst` and enhanced type checking for `inst-ms` and `inst-ms*`. These changes ensure that these types are correctly handled in the linter, improving type safety and providing clearer error messages for type mismatches.',
+        impact:
+          'Improves type safety and error reporting for instant and millisecond types in Clojure code.',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2733',
+        date: '2026-01-14',
+        tags: ['type-system', 'inst', 'static-analysis', 'bugfix'],
+      },
     ],
   },
   {
