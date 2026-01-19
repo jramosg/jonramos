@@ -43,7 +43,8 @@ export const projects: Project[] = [
         title: 'Add duplicate refer linter and tests',
         description:
           'Introduce a new linter `:duplicate-refer` that warns on duplicate entries in `:refer` vectors within `:require` statements. This change includes documentation updates and tests to ensure proper functionality of the new linter.',
-        impact: 'Improves code quality by detecting duplicate references in namespace requires',
+        impact:
+          'Improves code quality by detecting duplicate references in namespace requires',
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2737',
         date: '2026-01-14',
         tags: ['linter', 'new-feature', 'code-quality'],
