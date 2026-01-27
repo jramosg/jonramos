@@ -319,6 +319,16 @@ export const projects: Project[] = [
         date: '2026-01-14',
         tags: ['type-system', 'inst', 'static-analysis', 'bugfix'],
       },
+      {
+        title: 'Rename Linter for Unresolved Excluded Vars',
+        description:
+          'Renamed the linter from :refer-clojure-exclude-unresolved-var to :unresolved-excluded-var for consistency across the codebase. Updated references in documentation, configuration, and test files.',
+        impact:
+          'Improves naming consistency and maintainability in linter definitions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2705',
+        date: '2025-12-31',
+        tags: ['refactoring', 'linter', 'naming'],
+      },
     ],
   },
   {
