@@ -40,6 +40,109 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title:
+          'Performance Improvement: Refactor lint-cond-constants! to Eliminate sexpr Usage',
+        description:
+          'Refactored the lint-cond-constants! function to remove expensive sexpr usage, improving performance in linting operations.',
+        impact:
+          'Enhances linting speed and efficiency for conditional expressions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2759',
+        date: '2026-01-25',
+        tags: ['performance', 'refactor', 'linting'],
+      },
+      {
+        title: 'Fix False Positive for Throw with String in CLJS',
+        description:
+          'Fixed a false positive where throwing a string in ClojureScript would incorrectly trigger a type mismatch warning.',
+        impact:
+          'Improves accuracy of type checking for throw expressions in CLJS',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2763',
+        date: '2026-01-25',
+        tags: ['bugfix', 'cljs', 'type-checking'],
+      },
+      {
+        title: 'New Linter: aliased-referred-var',
+        description:
+          'Implemented a new linter :aliased-referred-var that warns when a var is both referred and accessed via an alias in the same namespace.',
+        impact: 'Prevents namespace confusion and improves code clarity',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2734',
+        date: '2026-01-19',
+        tags: ['linter', 'new-feature', 'namespaces'],
+      },
+      {
+        title: 'New Linter: is-message-not-string',
+        description:
+          'Created a linter :is-message-not-string that warns when clojure.test/is receives a non-string message argument.',
+        impact:
+          'Enhances testing code quality by enforcing string messages in assertions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2752',
+        date: '2026-01-19',
+        tags: ['linter', 'new-feature', 'testing'],
+      },
+      {
+        title: 'Fix def + defmethod :def-fn Warning Location',
+        description:
+          'Ensured that def + defmethod combinations trigger :def-fn warnings with valid source locations.',
+        impact: 'Improves accuracy of location reporting for def-fn linter',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2757',
+        date: '2026-01-19',
+        tags: ['bugfix', 'linter', 'location'],
+      },
+      {
+        title: 'Enhance unused-excluded-var Linter with Location Metadata',
+        description:
+          'Added location metadata to excluded vars in ns-unmap for the unused-excluded-var linter.',
+        impact: 'Fixes location reporting for unused exclusions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2754',
+        date: '2026-01-19',
+        tags: ['enhancement', 'linter', 'metadata'],
+      },
+      {
+        title: 'Fix Gensym Bindings in Nested Syntax Quotes',
+        description:
+          'Fixed recognition of gensym bindings in nested syntax quotes for proper analysis.',
+        impact: 'Improves macro analysis accuracy',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2751',
+        date: '2026-01-19',
+        tags: ['bugfix', 'macros', 'analysis'],
+      },
+      {
+        title: 'Fix Primitive Array Class Syntax Recognition',
+        description:
+          'Resolved regression where primitive array class syntax (e.g., byte/1, int/2) was not recognized in type checking.',
+        impact: 'Enables proper type checking for Clojure 1.12 array syntax',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2748',
+        date: '2026-01-19',
+        tags: ['bugfix', 'type-checking', 'clojure-1.12'],
+      },
+      {
+        title: 'Extend equals-expected-position Linter to not=',
+        description:
+          'Extended the :equals-expected-position linter to also warn for not= when the expected value is not first.',
+        impact: 'Improves consistency in equality checks',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2740',
+        date: '2026-01-19',
+        tags: ['enhancement', 'linter', 'equality'],
+      },
+      {
+        title: 'Fix False Positive for Throw in CLJS with Non-Throwable Values',
+        description:
+          'Fixed false positive warnings for throw in ClojureScript when throwing non-throwable values.',
+        impact: 'Reduces false warnings in CLJS throw expressions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2750',
+        date: '2026-01-19',
+        tags: ['bugfix', 'cljs', 'throw'],
+      },
+      {
+        title: 'Enhance unreachable-code Linter for Reader Conditionals',
+        description:
+          'Updated the unreachable-code linter to warn when :default does not come last in reader conditionals.',
+        impact: 'Catches unreachable code in conditional reader forms',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2738',
+        date: '2026-01-19',
+        tags: ['enhancement', 'linter', 'reader-conditionals'],
+      },
+      {
         title: 'Add duplicate refer linter and tests',
         description:
           'Introduce a new linter `:duplicate-refer` that warns on duplicate entries in `:refer` vectors within `:require` statements. This change includes documentation updates and tests to ensure proper functionality of the new linter.',
