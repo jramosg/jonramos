@@ -333,6 +333,16 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Fix Case-Sensitive Sorting in sort-ns-references',
+        description:
+          'Fixed the :sort-ns-references? option to perform case-insensitive string sorting, preventing uppercase namespace references from sorting before lowercase ones. Modified the node-sort-string function and added a test case.',
+        impact:
+          'Improves code formatting consistency by ensuring predictable namespace reference ordering',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/389',
+        date: '2026-01-20',
+        tags: ['bugfix', 'sorting', 'case-insensitive'],
+      },
+      {
         title: 'Configurable Column Alignment',
         description:
           'Introduced :align-single-column-lines? configuration option to control column alignment behavior in maps and forms. This prevents excessive horizontal padding when forms contain multi-line values.',
