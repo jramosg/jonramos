@@ -362,6 +362,26 @@ export const projects: Project[] = [
         date: '2025-12-23',
         tags: ['formatting', 'configuration', 'new-feature'],
       },
+      {
+        title: 'Ignore .clj config files by default',
+        description:
+          'Ignore .clj configuration files by default for security. Introduce the :read-clj-config-files? option to opt in to reading .clj config files. When a .clj config file is detected but the option is not enabled, emit a warning and fall back to .edn config files if available.',
+        impact:
+          'Improves security by avoiding execution of arbitrary Clojure config code while preserving compatibility via an opt-in and fallback to .edn. Provides clearer warnings when .clj files are present.',
+        date: '2026-01-28',
+        tags: ['security', 'configuration', 'compatibility'],
+        prLink: 'https://github.com/weavejester/cljfmt/pull/392',
+      },
+      {
+        title: 'Add :normalize-newlines-at-file-end? option',
+        description:
+          ':normalize-newlines-at-file-end? ensures files end with exactly one newline character. When enabled, cljfmt removes multiple trailing blank lines and guarantees a single newline at EOF for consistent file endings.',
+        impact:
+          'Produces consistent file endings across the codebase, reduces accidental trailing blank lines, and prevents spurious diffs in version control.',
+        date: '2026-01-28',
+        tags: ['formatting', 'newline', 'option'],
+        prLink: 'https://github.com/weavejester/cljfmt/pull/394',
+      },
     ],
   },
   {
