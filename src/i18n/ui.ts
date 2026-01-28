@@ -92,6 +92,10 @@ export const ui = {
     'contributions.timeline.viewPR': 'View PR →',
     'contributions.home.viewAll': 'View All Contributions',
     'contributions.stats.contributions': 'Contributions',
+    'contributions.filter.all': 'All Projects',
+    'contributions.filter.search': 'Search contributions...',
+    'contributions.card.showMore': 'Show {count} more',
+    'contributions.card.showLess': 'Show less',
   },
   es: {
     'meta.title':
@@ -180,6 +184,10 @@ export const ui = {
     'contributions.timeline.viewPR': 'Ver PR →',
     'contributions.home.viewAll': 'Ver Todas las Contribuciones',
     'contributions.stats.contributions': 'Contribuciones',
+    'contributions.filter.all': 'Todos los Proyectos',
+    'contributions.filter.search': 'Buscar contribuciones...',
+    'contributions.card.showMore': 'Ver {count} más',
+    'contributions.card.showLess': 'Ver menos',
   },
   eu: {
     'meta.title':
@@ -268,6 +276,10 @@ export const ui = {
     'contributions.timeline.viewPR': 'PR-a ikusi →',
     'contributions.home.viewAll': 'Ekarpen Guztiak Ikusi',
     'contributions.stats.contributions': 'Ekarpenak',
+    'contributions.filter.all': 'Proiektu Guztiak',
+    'contributions.filter.search': 'Bilatu ekarpenak...',
+    'contributions.card.showMore': 'Ikusi {count} gehiago',
+    'contributions.card.showLess': 'Ikusi gutxiago',
   },
 } as const;
 
