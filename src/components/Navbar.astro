@@ -78,6 +78,8 @@ const links = [
           links.map((link, index) => (
             <a
               href={link.href}
+              tabindex="-1"
+              aria-hidden="true"
               class="drawer-link"
               role="menuitem"
               style={`animation-delay: ${index * 0.1}s`}
@@ -105,11 +107,19 @@ const links = [
         overlay?.classList.remove('open');
         menuBtn?.classList.remove('open');
         document.body.style.overflow = '';
+        drawerLinks.forEach((link) => {
+          link.setAttribute('tabindex', '-1');
+          link.setAttribute('aria-hidden', 'true');
+        });
       } else {
         drawer?.classList.add('open');
         overlay?.classList.add('open');
         menuBtn?.classList.add('open');
         document.body.style.overflow = 'hidden';
+        drawerLinks.forEach((link) => {
+          link.setAttribute('tabindex', '0');
+          link.setAttribute('aria-hidden', 'false');
+        });
       }
     }
 
