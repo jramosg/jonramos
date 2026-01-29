@@ -27,7 +27,9 @@ const {
     data-zoom={zoom}
     data-tiles={tileLayer}
     data-marker-component={markerComponent ||
-      `<div style="font-family: var(--font-main); padding: 4px;"><strong>${company}</strong><br>${location.city}</div>`}
+      `<div style=\"font-family: var(--font-main); padding: 4px;\"><strong>${company}</strong><br>${location.city}</div>`}
+    data-company={company}
+    data-city={location.city}
   >
   </leaflet-map>
 </div>
@@ -67,6 +69,24 @@ const {
       });
 
       const marker = L.marker(latlng, { icon: myIcon }).addTo(this.map);
+
+      const el = marker.getElement();
+      if (el) {
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+        const ariaCompany = this.dataset.company || '';
+        const ariaCity = this.dataset.city || '';
+        el.setAttribute(
+          'aria-label',
+          `Show location: ${ariaCompany}${ariaCity ? ', ' + ariaCity : ''}`,
+        );
+        el.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            marker.openPopup();
+            event.preventDefault();
+          }
+        });
+      }
 
       if (markerComponent) {
         marker.bindPopup(markerComponent);
