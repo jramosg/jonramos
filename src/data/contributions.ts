@@ -397,6 +397,17 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title:
+          'Improve backspace and deleteForward functions for reader macro hash deletion',
+        description:
+          'Enhanced the backspace and deleteForward functions to correctly handle deletion of reader macro hashes (#) when the cursor is positioned immediately after or before them. This prevents orphaned hashes and maintains code integrity during editing.',
+        impact:
+          'Improves editor behavior and user experience when deleting reader macros in Clojure code',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3002',
+        date: '2026-01-30',
+        tags: ['enhancement', 'editor', 'reader-macros'],
+      },
+      {
         title: 'Add Support for Pair/Triple Selecting in condp',
         description:
           'Enhanced grow selection to recognize test/result pairs and test/:>>/function triples within condp expressions. Properly handles default values (unpaired elements at the end).',
