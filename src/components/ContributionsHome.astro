@@ -1,6 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import { projects, getContributionStats } from '@/data/contributions';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+import cljKondoLogo from '@/assets/clj-kondo.png';
+import calvaLogo from '@/assets/calva.png';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -8,6 +12,11 @@ const t = useTranslations(lang);
 const stats = getContributionStats();
 
 const MAX_CONTRIBUTIONS_PREVIEW = 3;
+
+const projectLogos: Record<string, any> = {
+  'clj-kondo': cljKondoLogo,
+  'Calva': calvaLogo,
+};
 ---
 
 <section
@@ -57,7 +66,17 @@ const MAX_CONTRIBUTIONS_PREVIEW = 3;
           return (
             <div class="project-card">
               <div class="project-header">
-                <h3 class="project-name">{project.name}</h3>
+                <div class="project-name-wrapper">
+                  {projectLogos[project.name] && (
+                    <Image
+                      src={projectLogos[project.name]}
+                      alt={`${project.name} logo`}
+                      class="project-logo"
+                      loading="eager"
+                    />
+                  )}
+                  <h3 class="project-name">{project.name}</h3>
+                </div>
                 <span class="contribution-count">
                   {project.contributions.length}{' '}
                   {t('contributions.card.contributions')}
@@ -227,6 +246,25 @@ const MAX_CONTRIBUTIONS_PREVIEW = 3;
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1rem;
+  }
+
+  .project-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .project-logo {
+    height: 40px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .project-card:hover .project-logo {
+    transform: scale(1.05);
   }
 
   .project-name {
@@ -499,6 +537,15 @@ const MAX_CONTRIBUTIONS_PREVIEW = 3;
     .projects-grid {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+    }
+
+    .project-logo {
+      height: 32px;
+      max-width: 80px;
+    }
+
+    .project-name {
+      font-size: 1.25rem;
     }
 
     .see-more-btn {

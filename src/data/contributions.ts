@@ -34,6 +34,7 @@ export const projects: Project[] = [
       'A static analyzer and linter for Clojure code that sparks joy',
     repository: 'https://github.com/clj-kondo/clj-kondo',
     website: 'https://github.com/clj-kondo/clj-kondo',
+    logo: '/src/assets/clj-kondo.svg',
     technology: ['Clojure', 'Static Analysis', 'Linting'],
     stats: {
       category: 'Developer Tools',
@@ -389,6 +390,7 @@ export const projects: Project[] = [
     description: 'Clojure & ClojureScript Interactive Programming for VS Code',
     repository: 'https://github.com/BetterThanTomorrow/calva',
     website: 'https://calva.io',
+    logo: '/src/assets/calva.png',
     technology: ['TypeScript', 'VS Code Extension', 'Developer Tools'],
     stats: {
       category: 'Developer Tools',

@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '@/layouts/Layout.astro';
 import {
   projects,
@@ -15,6 +16,9 @@ import ExternalLinkIcon from '@/assets/icons/external-link.svg';
 import ActivityIcon from '@/assets/icons/activity.svg';
 import GitPullRequestIcon from '@/assets/icons/git-pull-request.svg';
 
+import cljKondoLogo from '@/assets/clj-kondo.png';
+import calvaLogo from '@/assets/calva.png';
+
 export async function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({
     params: { lang },
@@ -25,6 +29,12 @@ const t = useTranslations(lang);
 
 const stats = getContributionStats();
 const allContributions = getAllContributions();
+
+// Map project names to imported logos
+const projectLogos: Record<string, any> = {
+  'clj-kondo': cljKondoLogo,
+  Calva: calvaLogo,
+};
 ---
 
 <Layout
@@ -158,6 +168,15 @@ const allContributions = getAllContributions();
                 >
                   <div class="project-header">
                     <div class="project-title-row">
+                      {projectLogos[project.name] && (
+                        <Image
+                          src={projectLogos[project.name]}
+                          alt={`${project.name} logo`}
+                          class="project-logo"
+                          height={48}
+                          loading="eager"
+                        />
+                      )}
                       <h3 class="project-name">{project.name}</h3>
                       {project.stats?.category && (
                         <span class="project-category">
@@ -653,6 +672,18 @@ const allContributions = getAllContributions();
     flex-wrap: wrap;
   }
 
+  .project-logo {
+    height: 48px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .project-card:hover .project-logo {
+    transform: scale(1.05);
+  }
+
   .project-name {
     font-size: 2rem;
     font-weight: 700;
@@ -999,6 +1030,11 @@ const allContributions = getAllContributions();
 
     .project-card {
       padding: 2rem;
+    }
+
+    .project-logo {
+      height: 36px;
+      max-width: 90px;
     }
 
     .project-name {
