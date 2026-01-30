@@ -434,6 +434,7 @@ export const projects: Project[] = [
       'A privacy-first, open-source knowledge base that works on top of local plain-text Markdown and Org-mode files',
     repository: 'https://github.com/logseq/logseq',
     website: 'https://logseq.com',
+    logo: '/src/assets/logseq.png',
     technology: ['ClojureScript', 'React', 'Electron', 'Knowledge Management'],
     stats: {
       category: 'Productivity',
