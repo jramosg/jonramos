@@ -427,6 +427,49 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    name: 'Calva',
+    description:
+      'Clojure & ClojureScript Interactive Programming for VS Code',
+    repository: 'https://github.com/BetterThanTomorrow/calva',
+    website: 'https://calva.io',
+    technology: ['TypeScript', 'VS Code Extension', 'Developer Tools'],
+    stats: {
+      category: 'Developer Tools',
+    },
+    contributions: [
+      {
+        title: 'Add Grow Selection Support for :let Binding Pairs',
+        description:
+          'Enhanced grow selection to recognize :let binding pairs within for loops, doseq, and other binding forms. Updated selection logic to detect :let vectors and expand through binding pairs before selecting the entire vector.',
+        impact:
+          'Improves code selection experience for :let bindings, aligning behavior with standard let functionality',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2989',
+        date: '2026-01-30',
+        tags: ['enhancement', 'paredit', 'selection', 'bindings'],
+      },
+      {
+        title: 'Add Pair Selecting Support for cond Forms',
+        description:
+          'Implemented pair selection functionality for cond forms, enabling users to select test/expression pairs within conditional forms. Introduced conditionalForms constant and dynamic offset calculation for maintainable architecture.',
+        impact:
+          'Accelerates conditional logic navigation and editing, maintaining consistency with existing pair-selection features',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2992',
+        date: '2026-01-30',
+        tags: ['enhancement', 'paredit', 'selection', 'conditionals'],
+      },
+      {
+        title: 'Add Pair Selecting Support for cond-> and cond->> Forms',
+        description:
+          'Extended pair selection functionality to cond-> and cond->> threading forms, allowing intelligent selection of test/expr pairs in threaded conditionals.',
+        impact:
+          'Streamlines code refactoring workflows for threaded conditional forms',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2996',
+        date: '2026-01-30',
+        tags: ['enhancement', 'paredit', 'selection', 'threading'],
+      },
+    ],
+  },
 ];
 
 // Helper function to get all contributions sorted by date
