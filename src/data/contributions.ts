@@ -397,6 +397,26 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Add Support for Pair/Triple Selecting in condp',
+        description:
+          'Enhanced grow selection to recognize test/result pairs and test/:>>/function triples within condp expressions. Properly handles default values (unpaired elements at the end).',
+        impact:
+          'Improves code selection experience for condp forms, enabling intuitive pair and triple selection',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2998',
+        date: '2026-01-30',
+        tags: ['enhancement', 'paredit', 'selection', 'conditionals'],
+      },
+      {
+        title: 'Add Support for Growing Selection in case Forms',
+        description:
+          'Enhanced grow selection to handle value/result pairs in case forms, similar to existing support for cond and binding forms like let.',
+        impact:
+          'Expands selections correctly when working with conditional expressions in case statements',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2997',
+        date: '2026-01-30',
+        tags: ['enhancement', 'paredit', 'selection', 'conditionals'],
+      },
+      {
         title: 'Add Grow Selection Support for :let Binding Pairs',
         description:
           'Enhanced grow selection to recognize :let binding pairs within for loops, doseq, and other binding forms. Updated selection logic to detect :let vectors and expand through binding pairs before selecting the entire vector.',
