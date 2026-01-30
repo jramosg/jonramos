@@ -429,8 +429,7 @@ export const projects: Project[] = [
   },
   {
     name: 'Calva',
-    description:
-      'Clojure & ClojureScript Interactive Programming for VS Code',
+    description: 'Clojure & ClojureScript Interactive Programming for VS Code',
     repository: 'https://github.com/BetterThanTomorrow/calva',
     website: 'https://calva.io',
     technology: ['TypeScript', 'VS Code Extension', 'Developer Tools'],
