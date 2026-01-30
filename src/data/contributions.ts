@@ -408,54 +408,64 @@ export const projects: Project[] = [
         tags: ['enhancement', 'editor', 'reader-macros'],
       },
       {
-        title: 'Add Support for Pair/Triple Selecting in condp',
+        title: 'Add Drag Sexp Tests for Form Pairs and Triples',
         description:
-          'Enhanced grow selection to recognize test/result pairs and test/:>>/function triples within condp expressions. Properly handles default values (unpaired elements at the end).',
+          'Comprehensive test coverage for drag sexp functionality across different form types including cond, case, condp, and :let bindings. Tests ensure proper movement of pairs and triples within conditional and binding forms.',
         impact:
-          'Improves code selection experience for condp forms, enabling intuitive pair and triple selection',
+          'Ensures reliability of drag sexp operations for complex form structures',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3004',
+        date: '2026-01-30',
+        tags: ['testing', 'paredit', 'drag-sexp'],
+      },
+      {
+        title: 'Add Pair/Triple Selection and Dragging Support for condp',
+        description:
+          'Enhanced grow selection and drag sexp to recognize test/result pairs and test/:>>/function triples within condp expressions. Properly handles default values (unpaired elements at the end).',
+        impact:
+          'Improves code selection and manipulation experience for condp forms, enabling intuitive pair and triple selection and movement',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2998',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'conditionals'],
+        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'conditionals'],
       },
       {
-        title: 'Add Support for Growing Selection in case Forms',
+        title: 'Add Selection and Dragging Support for case Form Pairs',
         description:
-          'Enhanced grow selection to handle value/result pairs in case forms, similar to existing support for cond and binding forms like let.',
+          'Enhanced grow selection and drag sexp to handle value/result pairs in case forms, similar to existing support for cond and binding forms like let.',
         impact:
-          'Expands selections correctly when working with conditional expressions in case statements',
+          'Expands selections correctly and enables proper pair movement when working with conditional expressions in case statements',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2997',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'conditionals'],
+        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'conditionals'],
       },
       {
-        title: 'Add Grow Selection Support for :let Binding Pairs',
+        title: 'Add Selection and Dragging Support for :let Binding Pairs',
         description:
-          'Enhanced grow selection to recognize :let binding pairs within for loops, doseq, and other binding forms. Updated selection logic to detect :let vectors and expand through binding pairs before selecting the entire vector.',
+          'Enhanced grow selection and drag sexp to recognize :let binding pairs within for loops, doseq, and other binding forms. Updated logic to detect :let vectors and expand through binding pairs before selecting the entire vector.',
         impact:
-          'Improves code selection experience for :let bindings, aligning behavior with standard let functionality',
+          'Improves code selection and manipulation experience for :let bindings, aligning behavior with standard let functionality',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2989',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'bindings'],
+        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'bindings'],
       },
       {
-        title: 'Add Pair Selecting Support for cond Forms',
+        title: 'Add Selection and Dragging Support for cond Form Pairs',
         description:
-          'Implemented pair selection functionality for cond forms, enabling users to select test/expression pairs within conditional forms. Introduced conditionalForms constant and dynamic offset calculation for maintainable architecture.',
+          'Implemented pair selection and dragging functionality for cond forms, enabling users to select and move test/expression pairs within conditional forms. Introduced conditionalForms constant and dynamic offset calculation for maintainable architecture.',
         impact:
-          'Accelerates conditional logic navigation and editing, maintaining consistency with existing pair-selection features',
+          'Accelerates conditional logic navigation and editing, maintaining consistency with existing pair-selection and drag-sexp features',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2992',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'conditionals'],
+        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'conditionals'],
       },
       {
-        title: 'Add Pair Selecting Support for cond-> and cond->> Forms',
+        title: 'Add Selection and Dragging Support for cond-> and cond->> Form Pairs',
         description:
-          'Extended pair selection functionality to cond-> and cond->> threading forms, allowing intelligent selection of test/expr pairs in threaded conditionals.',
+          'Extended pair selection and dragging functionality to cond-> and cond->> threading forms, allowing intelligent selection and movement of test/expr pairs in threaded conditionals.',
         impact:
           'Streamlines code refactoring workflows for threaded conditional forms',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2996',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'threading'],
+        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'threading'],
       },
     ],
   },
