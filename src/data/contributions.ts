@@ -425,7 +425,13 @@ export const projects: Project[] = [
           'Improves code selection and manipulation experience for condp forms, enabling intuitive pair and triple selection and movement',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2998',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'conditionals'],
+        tags: [
+          'enhancement',
+          'paredit',
+          'selection',
+          'drag-sexp',
+          'conditionals',
+        ],
       },
       {
         title: 'Add Selection and Dragging Support for case Form Pairs',
@@ -435,7 +441,13 @@ export const projects: Project[] = [
           'Expands selections correctly and enables proper pair movement when working with conditional expressions in case statements',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2997',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'conditionals'],
+        tags: [
+          'enhancement',
+          'paredit',
+          'selection',
+          'drag-sexp',
+          'conditionals',
+        ],
       },
       {
         title: 'Add Selection and Dragging Support for :let Binding Pairs',
@@ -455,10 +467,17 @@ export const projects: Project[] = [
           'Accelerates conditional logic navigation and editing, maintaining consistency with existing pair-selection and drag-sexp features',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2992',
         date: '2026-01-30',
-        tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'conditionals'],
+        tags: [
+          'enhancement',
+          'paredit',
+          'selection',
+          'drag-sexp',
+          'conditionals',
+        ],
       },
       {
-        title: 'Add Selection and Dragging Support for cond-> and cond->> Form Pairs',
+        title:
+          'Add Selection and Dragging Support for cond-> and cond->> Form Pairs',
         description:
           'Extended pair selection and dragging functionality to cond-> and cond->> threading forms, allowing intelligent selection and movement of test/expr pairs in threaded conditionals.',
         impact:
@@ -466,6 +485,58 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2996',
         date: '2026-01-30',
         tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'threading'],
+      },
+      {
+        title: 'Fix: Slurp Forward Empty Form',
+        description:
+          'Fixed Slurp Forward command adding an unwanted leading space when slurping into empty or whitespace-only forms. The fix detects when the target form contains no actual content (only whitespace between open and close brackets, or empty strings) and omits the leading space in that case.',
+        impact:
+          'Eliminates unwanted spaces in empty forms during slurp operations, improving structural editing precision',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3005',
+        date: '2025-02-02',
+        tags: ['bugfix', 'paredit', 'slurp', 'structural-editing'],
+      },
+      {
+        title: 'Fix: Slurp Backward Empty Form',
+        description:
+          'Fixed Slurp Backward command adding unwanted trailing spaces when slurping into empty or whitespace-only forms. The fix detects when the target form contains no actual content and omits the trailing space in that case, bringing consistency with the forward slurp fix.',
+        impact:
+          'Ensures consistent slurp behavior for both forward and backward operations on empty forms',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3006',
+        date: '2025-02-02',
+        tags: ['bugfix', 'paredit', 'slurp', 'structural-editing'],
+      },
+      {
+        title: 'Add Pair-Aware Support for assoc Form',
+        description:
+          'Added support for treating assoc form pairs in paredit operations (grow selection and drag sexp). The assoc form has the structure (assoc map key value key value ...) where key-value pairs start after the map argument (offset 2). This brings feature parity with other pair-aware forms like cond, case, and condp.',
+        impact:
+          'Enables intuitive key-value pair manipulation in assoc forms, improving code editing efficiency',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3009',
+        date: '2025-02-02',
+        tags: [
+          'enhancement',
+          'paredit',
+          'assoc',
+          'pair-forms',
+          'structural-editing',
+        ],
+      },
+      {
+        title: 'Add Threading Macro Support for Pair Forms',
+        description:
+          'Enhanced pair-aware forms (flatPairForms) to work correctly inside -> threading macros. The fix reduces the offset by 1 when inside a threading context to maintain proper pair calculation without breaking existing functionality.',
+        impact:
+          'Enables correct pair selection and dragging for forms like assoc, cond, and case when used inside threading macros',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3011',
+        date: '2025-02-02',
+        tags: [
+          'enhancement',
+          'paredit',
+          'threading',
+          'pair-forms',
+          'structural-editing',
+        ],
       },
     ],
   },
