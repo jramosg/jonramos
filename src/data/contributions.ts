@@ -41,6 +41,26 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Add Type Support for pmap with Arity Checking',
+        description:
+          'Added comprehensive type support for pmap with proper arity checking (2 or more args). Updated map and mapcat to utilize a shared type definition for consistency and maintainability in type handling.',
+        impact:
+          'Improves type checking for parallel map operations and enhances code maintainability through shared type definitions',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2766',
+        date: '2025-02-01',
+        tags: ['type-system', 'arity-checking', 'parallel', 'refactor'],
+      },
+      {
+        title: 'Add Type Support for Future-Related Functions',
+        description:
+          'Introduced comprehensive type support for functions related to futures, including future, future-call, future-done?, future-cancel, and future-cancelled?. Added tests to ensure correct linting behavior for these types.',
+        impact:
+          'Enhances type system coverage for concurrent programming, enabling better static analysis of future-based code',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2765',
+        date: '2025-02-01',
+        tags: ['type-system', 'concurrency', 'futures', 'testing'],
+      },
+      {
         title:
           'Performance Improvement: Refactor lint-cond-constants! to Eliminate sexpr Usage',
         description:
