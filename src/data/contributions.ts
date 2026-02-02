@@ -513,7 +513,7 @@ export const projects: Project[] = [
         impact:
           'Eliminates unwanted spaces in empty forms during slurp operations, improving structural editing precision',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3005',
-        date: '2025-02-02',
+        date: '2026-02-02',
         tags: ['bugfix', 'paredit', 'slurp', 'structural-editing'],
       },
       {
@@ -523,7 +523,7 @@ export const projects: Project[] = [
         impact:
           'Ensures consistent slurp behavior for both forward and backward operations on empty forms',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3006',
-        date: '2025-02-02',
+        date: '2026-02-02',
         tags: ['bugfix', 'paredit', 'slurp', 'structural-editing'],
       },
       {
@@ -533,7 +533,7 @@ export const projects: Project[] = [
         impact:
           'Enables intuitive key-value pair manipulation in assoc forms, improving code editing efficiency',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3009',
-        date: '2025-02-02',
+        date: '2026-02-02',
         tags: [
           'enhancement',
           'paredit',
@@ -549,7 +549,7 @@ export const projects: Project[] = [
         impact:
           'Enables correct pair selection and dragging for forms like assoc, cond, and case when used inside threading macros',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3011',
-        date: '2025-02-02',
+        date: '2026-02-02',
         tags: [
           'enhancement',
           'paredit',
