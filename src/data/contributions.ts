@@ -558,6 +558,22 @@ export const projects: Project[] = [
           'structural-editing',
         ],
       },
+      {
+        title: 'Consolidate and Generalize Pair Form Handling in Paredit',
+        description:
+          'Unified the handling of pair forms (like let bindings, cond pairs, and keyword-based modifiers) within the Paredit logic. Introduced PairFormConfig supporting VectorBindingForm, KeywordPairForm, and FlatPairForm styles. Enhanced parent validation and generalized triple handling (like test :>> expression in condp). Replaced hardcoded bindingForms and conditionalForms arrays with defaultPairForms for improved extensibility.',
+        impact:
+          'Provides the internal infrastructure for making pair form handling fully configurable, enabling easier addition of similar patterns in the future and improving code maintainability through unified configuration-driven approach',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3012',
+        date: '2026-02-01',
+        tags: [
+          'refactoring',
+          'paredit',
+          'pair-forms',
+          'configuration',
+          'infrastructure',
+        ],
+      },
     ],
   },
   {
