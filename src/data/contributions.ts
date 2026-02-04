@@ -41,14 +41,80 @@ export const projects: Project[] = [
     },
     contributions: [
       {
-        title: 'Add Type Support for pmap with Arity Checking',
+        title: 'User Customizable Pair Forms and Threading Macros',
         description:
-          'Added comprehensive type support for pmap with proper arity checking (2 or more args). Updated map and mapcat to utilize a shared type definition for consistency and maintainability in type handling.',
+          'Introduced comprehensive configuration system for custom pair forms and threading macros, now configurable via VS Code Settings menu. Users can define custom pair forms and threading macros through the VS Code UI settings panel, JSON settings, or config.edn file. Implemented createPareditConfig function that merges custom and default configurations, enabling complete paredit customization.',
         impact:
-          'Improves type checking for parallel map operations and enhances code maintainability through shared type definitions',
-        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2766',
-        date: '2025-02-01',
-        tags: ['type-system', 'arity-checking', 'parallel', 'refactor'],
+          'Provides users with powerful and accessible customization options for pair-aware editing operations through the familiar VS Code Settings UI, greatly enhancing flexibility and enabling library-specific workflows',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3015',
+        date: '2026-02-04',
+        tags: [
+          'enhancement',
+          'paredit',
+          'configuration',
+          'customization',
+          'settings-ui',
+        ],
+      },
+      {
+        title: 'Refactor Structural Prefix Deletion for Consistency',
+        description:
+          "Unified the handling of structural prefix deletion (for both ' and #) to be consistent between backward and forward deletion operations. Refactored backspace and deleteForward functions into smaller, more maintainable functions for better code clarity.",
+        impact:
+          'Eliminates inconsistencies in structural prefix deletion behavior, providing predictable and intuitive editing experience',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3022',
+        date: '2026-02-04',
+        tags: ['refactoring', 'paredit', 'structural-editing', 'consistency'],
+      },
+      {
+        title: 'Fix Quote Prefix Deletion After Quoted Lists',
+        description:
+          "Fixed structural backspace and deleteForward operations to correctly handle deletion of quote prefixes positioned right after quoted forms. Issue manifested when attempting operations like '()|: now the quote can be deleted properly. Added comprehensive unit tests for quoted lists, nested quoted lists, and quoted vectors.",
+        impact:
+          'Improves structural editing experience by enabling proper quote prefix deletion in edge cases with quoted forms',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3023',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'structural-editing', 'quotes'],
+      },
+      {
+        title: 'Fix Slurping with Ignored/Commented Expressions',
+        description:
+          'Fixed slurp forward and backward operations to properly handle s-expressions with #_ (ignore marker) comments. Modified forwardSexp and backwardSexp in token-cursor.ts to treat #_(form) as a unified s-expression unit rather than separate tokens, preventing errors during slurp operations.',
+        impact:
+          'Enables reliable slurping operations when working with commented-out code, improving workflow for refactoring and structural editing',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3024',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'slurp', 'ignore-comments'],
+      },
+      {
+        title: 'Fix Slurp Backward with Ignored/Commented Expressions',
+        description:
+          "Fixed slurp backward operation to properly handle cursor positioning when encountering #_ (ignore marker) comments. After calling backwardSexp to find the previous form, the cursor is now correctly checked if it's preceded by an #_ ignore marker, enabling reliable backward slurping with commented code.",
+        impact:
+          'Ensures backward slurping works correctly with ignored expressions, completing the fix for structural editing with #_ comments',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3026',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'slurp', 'ignore-comments'],
+      },
+      {
+        title: 'Fix Pair Detection in Regular Vectors Inside Let Body',
+        description:
+          'Resolved issue where regular vectors in let body contexts were incorrectly treated as pair forms during grow selection and drag sexp operations. Enhanced vector detection logic to distinguish between binding vectors and regular vectors by directly comparing opening positions, ensuring accurate pair form behavior.',
+        impact:
+          'Fixes grow selection and drag sexp operations for vectors within let bodies, eliminating incorrect pair form treatment',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3028',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'drag-sexp', 'vectors'],
+      },
+      {
+        title: 'Add Pair Selection and Drag Support for Threaded cond->',
+        description:
+          'Enhanced pair selection and drag sexp operations to correctly recognize and handle test/expression pairs within cond-> and cond->> threading macros. Added comprehensive test coverage for nested threading macros (e.g., cond-> with assoc pairs) to ensure proper expansion behavior.',
+        impact:
+          'Enables intuitive pair selection and dragging for threaded conditional forms at multiple nesting levels, improving code manipulation workflows',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3019',
+        date: '2026-02-02',
+        tags: ['enhancement', 'paredit', 'threading', 'pair-forms'],
       },
       {
         title: 'Add Type Support for Future-Related Functions',
@@ -416,6 +482,82 @@ export const projects: Project[] = [
       category: 'Developer Tools',
     },
     contributions: [
+      {
+        title: 'User Customizable Pair Forms and Threading Macros',
+        description:
+          'Introduced comprehensive configuration system for custom pair forms and threading macros, now configurable via VS Code Settings menu. Users can define custom pair forms and threading macros through the VS Code UI settings panel, JSON settings, or config.edn file. Implemented createPareditConfig function that merges custom and default configurations, enabling complete paredit customization.',
+        impact:
+          'Provides users with powerful and accessible customization options for pair-aware editing operations through the familiar VS Code Settings UI, greatly enhancing flexibility and enabling library-specific workflows',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3015',
+        date: '2026-02-04',
+        tags: [
+          'enhancement',
+          'paredit',
+          'configuration',
+          'customization',
+          'settings-ui',
+        ],
+      },
+      {
+        title: 'Refactor Structural Prefix Deletion for Consistency',
+        description:
+          "Unified the handling of structural prefix deletion (for both ' and #) to be consistent between backward and forward deletion operations. Refactored backspace and deleteForward functions into smaller, more maintainable functions for better code clarity.",
+        impact:
+          'Eliminates inconsistencies in structural prefix deletion behavior, providing predictable and intuitive editing experience',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3022',
+        date: '2026-02-04',
+        tags: ['refactoring', 'paredit', 'structural-editing', 'consistency'],
+      },
+      {
+        title: 'Fix Quote Prefix Deletion After Quoted Lists',
+        description:
+          "Fixed structural backspace and deleteForward operations to correctly handle deletion of quote prefixes positioned right after quoted forms. Issue manifested when attempting operations like '()|: now the quote can be deleted properly. Added comprehensive unit tests for quoted lists, nested quoted lists, and quoted vectors.",
+        impact:
+          'Improves structural editing experience by enabling proper quote prefix deletion in edge cases with quoted forms',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3023',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'structural-editing', 'quotes'],
+      },
+      {
+        title: 'Fix Slurping with Ignored/Commented Expressions',
+        description:
+          'Fixed slurp forward and backward operations to properly handle s-expressions with #_ (ignore marker) comments. Modified forwardSexp and backwardSexp in token-cursor.ts to treat #_(form) as a unified s-expression unit rather than separate tokens, preventing errors during slurp operations.',
+        impact:
+          'Enables reliable slurping operations when working with commented-out code, improving workflow for refactoring and structural editing',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3024',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'slurp', 'ignore-comments'],
+      },
+      {
+        title: 'Fix Slurp Backward with Ignored/Commented Expressions',
+        description:
+          "Fixed slurp backward operation to properly handle cursor positioning when encountering #_ (ignore marker) comments. After calling backwardSexp to find the previous form, the cursor is now correctly checked if it's preceded by an #_ ignore marker, enabling reliable backward slurping with commented code.",
+        impact:
+          'Ensures backward slurping works correctly with ignored expressions, completing the fix for structural editing with #_ comments',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3026',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'slurp', 'ignore-comments'],
+      },
+      {
+        title: 'Fix Pair Detection in Regular Vectors Inside Let Body',
+        description:
+          'Resolved issue where regular vectors in let body contexts were incorrectly treated as pair forms during grow selection and drag sexp operations. Enhanced vector detection logic to distinguish between binding vectors and regular vectors by directly comparing opening positions, ensuring accurate pair form behavior.',
+        impact:
+          'Fixes grow selection and drag sexp operations for vectors within let bodies, eliminating incorrect pair form treatment',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3028',
+        date: '2026-02-04',
+        tags: ['bugfix', 'paredit', 'drag-sexp', 'vectors'],
+      },
+      {
+        title: 'Add Pair Selection and Drag Support for Threaded cond->',
+        description:
+          'Enhanced pair selection and drag sexp operations to correctly recognize and handle test/expression pairs within cond-> and cond->> threading macros. Added comprehensive test coverage for nested threading macros (e.g., cond-> with assoc pairs) to ensure proper expansion behavior.',
+        impact:
+          'Enables intuitive pair selection and dragging for threaded conditional forms at multiple nesting levels, improving code manipulation workflows',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3019',
+        date: '2026-02-02',
+        tags: ['enhancement', 'paredit', 'threading', 'pair-forms'],
+      },
       {
         title:
           'Improve backspace and deleteForward functions for reader macro hash deletion',
