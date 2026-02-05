@@ -279,26 +279,24 @@ const {
 
 <style is:global>
   :root {
-    /* Terminal Editorial Dark Theme - Default */
-    --color-bg: #0d1117;
-    --color-bg-elevated: #161b22;
-    --color-bg-surface: #21262d;
-    --color-text: #e6edf3;
-    --color-text-muted: #aeb4bc;
-    --color-text-subtle: #6e7681;
-
-    /* Accent Colors - Mint/Cyan terminal feel */
-    --color-primary: #7ee787;
-    --color-primary-muted: rgba(126, 231, 135, 0.15);
-    --color-secondary: #58a6ff;
-    --color-accent: #f78166;
-    --color-featured: #d2a8ff;
+    --color-bg: #fafbfc;
+    --color-bg-elevated: #ffffff;
+    --color-bg-surface: #f3f4f6;
+    --color-text: #1f2328;
+    --color-text-muted: #57606a;
+    --color-text-subtle: #8b949e;
+    /* Accent Colors */
+    --color-primary: #1a7f37;
+    --color-primary-muted: rgba(26, 127, 55, 0.1);
+    --color-secondary: #0969da;
+    --color-accent: #cf222e;
+    --color-featured: #8250df;
 
     /* Borders and surfaces */
-    --color-border: rgba(240, 246, 252, 0.1);
-    --color-border-emphasis: rgba(240, 246, 252, 0.2);
-    --color-card-bg: rgba(22, 27, 34, 0.8);
-    --color-bg-alpha: rgba(13, 17, 23, 0.95);
+    --color-border: rgba(31, 35, 40, 0.1);
+    --color-border-emphasis: rgba(31, 35, 40, 0.2);
+    --color-card-bg: rgba(255, 255, 255, 0.9);
+    --color-bg-alpha: rgba(250, 251, 252, 0.95);
 
     /* Typography */
     --font-mono:
@@ -315,24 +313,24 @@ const {
     --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  [data-theme='light'] {
-    --color-bg: #fafbfc;
-    --color-bg-elevated: #ffffff;
-    --color-bg-surface: #f3f4f6;
-    --color-text: #1f2328;
-    --color-text-muted: #57606a;
-    --color-text-subtle: #8b949e;
+  [data-theme='dark'] {
+    --color-bg: #0d1117;
+    --color-bg-elevated: #161b22;
+    --color-bg-surface: #21262d;
+    --color-text: #e6edf3;
+    --color-text-muted: #aeb4bc;
+    --color-text-subtle: #6e7681;
 
-    --color-primary: #1a7f37;
-    --color-primary-muted: rgba(26, 127, 55, 0.1);
-    --color-secondary: #0969da;
-    --color-accent: #cf222e;
-    --color-featured: #8250df;
+    --color-primary: #7ee787;
+    --color-primary-muted: rgba(126, 231, 135, 0.15);
+    --color-secondary: #58a6ff;
+    --color-accent: #f78166;
+    --color-featured: #d2a8ff;
 
-    --color-border: rgba(31, 35, 40, 0.1);
-    --color-border-emphasis: rgba(31, 35, 40, 0.2);
-    --color-card-bg: rgba(255, 255, 255, 0.9);
-    --color-bg-alpha: rgba(250, 251, 252, 0.95);
+    --color-border: rgba(240, 246, 252, 0.1);
+    --color-border-emphasis: rgba(240, 246, 252, 0.2);
+    --color-card-bg: rgba(22, 27, 34, 0.8);
+    --color-bg-alpha: rgba(13, 17, 23, 0.95);
   }
 
   * {
