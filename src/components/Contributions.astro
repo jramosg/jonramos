@@ -11,7 +11,7 @@ const stats = getContributionStats();
 
 <section id="contributions" class="section">
   <div class="container">
-    <div class="section-header">
+    <header class="section-header">
       <h2 class="section-title">{t('contributions.hero.title')}</h2>
       <p class="section-subtitle">
         {
@@ -21,16 +21,22 @@ const stats = getContributionStats();
             .replace('{technologies}', stats.technologies.join(', '))
         }
       </p>
-    </div>
+    </header>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-value">{stats.totalContributions}</div>
-        <div class="stat-label">{t('contributions.stats.merged')}</div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-value">{stats.totalContributions}</span>
+        <span class="stat-label">{t('contributions.stats.merged')}</span>
       </div>
-      <div class="stat-card">
-        <div class="stat-value">{stats.totalProjects}</div>
-        <div class="stat-label">{t('contributions.stats.projects')}</div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value">{stats.totalProjects}</span>
+        <span class="stat-label">{t('contributions.stats.projects')}</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value">{stats.featured}</span>
+        <span class="stat-label">Featured</span>
       </div>
     </div>
 
@@ -49,87 +55,77 @@ const stats = getContributionStats();
     padding: 6rem 0;
   }
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
   .section-header {
-    text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   }
 
   .section-title {
-    font-size: 3rem;
-    font-weight: 700;
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-text);
     margin-bottom: 1rem;
-    background: linear-gradient(
-      135deg,
-      var(--color-primary),
-      var(--color-accent)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-title::before {
+    content: '//';
+    color: var(--color-primary);
+    font-weight: 400;
   }
 
   .section-subtitle {
-    font-size: 1.125rem;
+    font-size: 1.1rem;
     color: var(--color-text-muted);
     max-width: 700px;
-    margin: 0 auto;
     line-height: 1.6;
   }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 4rem;
-  }
-
-  .stat-card {
-    background: var(--color-card-bg);
+  .stats-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem 2rem;
+    background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    width: fit-content;
   }
 
-  .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.1);
-    border-color: var(--color-primary);
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
   .stat-value {
-    font-size: 2.5rem;
+    font-family: var(--font-mono);
+    font-size: 2rem;
     font-weight: 700;
-    background: linear-gradient(
-      135deg,
-      var(--color-primary),
-      var(--color-accent)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.5rem;
+    color: var(--color-primary);
   }
 
   .stat-label {
-    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
     color: var(--color-text-muted);
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--color-border);
+  }
+
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr));
+    gap: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -138,34 +134,31 @@ const stats = getContributionStats();
     }
 
     .section-title {
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
 
     .section-subtitle {
       font-size: 1rem;
     }
 
-    .section-header {
-      margin-bottom: 3rem;
+    .stats-row {
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      justify-content: center;
     }
 
-    .stats-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .stat-card {
-      padding: 1.5rem;
+    .stat-divider {
+      display: none;
     }
 
     .stat-value {
-      font-size: 2rem;
+      font-size: 1.75rem;
     }
 
     .projects-grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
     }
   }
 </style>

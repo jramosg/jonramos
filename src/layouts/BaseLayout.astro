@@ -48,7 +48,7 @@ const {
     <meta name="ICBM" content="43.2333, -1.9167" />
 
     <!-- Mobile and PWA optimization -->
-    <meta name="theme-color" content="#7c3aed" />
+    <meta name="theme-color" content="#0d1117" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Jon Ramos" />
@@ -109,10 +109,11 @@ const {
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Typography: JetBrains Mono for code/headings, Crimson Pro for body -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
@@ -269,7 +270,8 @@ const {
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div class="background-gradient" aria-hidden="true"></div>
+    <div class="background-texture" aria-hidden="true"></div>
+    <div class="background-grid" aria-hidden="true"></div>
     <slot />
   </body>
   <ThemeProvider />
@@ -277,58 +279,73 @@ const {
 
 <style is:global>
   :root {
-    --color-bg: #ffffff;
-    --color-text: #0a0a0a;
-    --color-text-muted: #52525b;
-    --color-primary: #7c3aed; /* Violet */
-    --color-secondary: #db2777; /* Pink */
-    --color-accent: #2563eb; /* Blue */
-    --color-border: rgba(0, 0, 0, 0.1);
-    --color-card-bg: rgba(0, 0, 0, 0.03);
-    --color-bg-alpha: rgba(255, 255, 255, 0.8);
+    /* Terminal Editorial Dark Theme - Default */
+    --color-bg: #0d1117;
+    --color-bg-elevated: #161b22;
+    --color-bg-surface: #21262d;
+    --color-text: #e6edf3;
+    --color-text-muted: #8b949e;
+    --color-text-subtle: #6e7681;
 
-    --font-main: 'Outfit Variable', sans-serif;
+    /* Accent Colors - Mint/Cyan terminal feel */
+    --color-primary: #7ee787;
+    --color-primary-muted: rgba(126, 231, 135, 0.15);
+    --color-secondary: #58a6ff;
+    --color-accent: #f78166;
+    --color-featured: #d2a8ff;
 
+    /* Borders and surfaces */
+    --color-border: rgba(240, 246, 252, 0.1);
+    --color-border-emphasis: rgba(240, 246, 252, 0.2);
+    --color-card-bg: rgba(22, 27, 34, 0.8);
+    --color-bg-alpha: rgba(13, 17, 23, 0.95);
+
+    /* Typography */
+    --font-mono:
+      'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo,
+      Consolas, monospace;
+    --font-serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+
+    /* Layout */
     --max-width: 1200px;
-    --nav-height: 80px;
+    --nav-height: 72px;
 
-    --expo-out: linear(
-      0 0%,
-      0.1684 2.66%,
-      0.3165 5.49%,
-      0.446 8.52%,
-      0.5581 11.78%,
-      0.6535 15.29%,
-      0.7341 19.11%,
-      0.8011 23.3%,
-      0.8557 27.93%,
-      0.8962 32.68%,
-      0.9283 38.01%,
-      0.9529 44.08%,
-      0.9711 51.14%,
-      0.9833 59.06%,
-      0.9915 68.74%,
-      1 100%
-    );
+    /* Animation */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  [data-theme='dark'] {
-    --color-bg: #0a0a0a;
-    --color-text: #ededed;
-    --color-text-muted: #a1a1aa;
-    --color-secondary: #ec4899; /* Pink */
-    --color-accent: #3b82f6; /* Blue */
-    --color-border: rgba(255, 255, 255, 0.1);
-    --color-card-bg: rgba(255, 255, 255, 0.03);
-    --color-card-bg-solid: #1a1a1a;
-    --color-bg-alpha: rgba(10, 10, 10, 0.8);
+  [data-theme='light'] {
+    --color-bg: #fafbfc;
+    --color-bg-elevated: #ffffff;
+    --color-bg-surface: #f3f4f6;
+    --color-text: #1f2328;
+    --color-text-muted: #57606a;
+    --color-text-subtle: #8b949e;
+
+    --color-primary: #1a7f37;
+    --color-primary-muted: rgba(26, 127, 55, 0.1);
+    --color-secondary: #0969da;
+    --color-accent: #cf222e;
+    --color-featured: #8250df;
+
+    --color-border: rgba(31, 35, 40, 0.1);
+    --color-border-emphasis: rgba(31, 35, 40, 0.2);
+    --color-card-bg: rgba(255, 255, 255, 0.9);
+    --color-bg-alpha: rgba(250, 251, 252, 0.95);
+  }
+
+  * {
+    box-sizing: border-box;
   }
 
   html {
-    font-family: var(--font-main);
+    font-family: var(--font-serif);
     background: var(--color-bg);
     color: var(--color-text);
     scroll-behavior: smooth;
+    font-size: 18px;
+    line-height: 1.6;
   }
 
   body {
@@ -339,8 +356,42 @@ const {
     position: relative;
   }
 
-  * {
-    box-sizing: border-box;
+  /* Subtle grid background for terminal feel */
+  .background-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-image:
+      linear-gradient(rgba(126, 231, 135, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(126, 231, 135, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Noise texture overlay */
+  .background-texture {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.4;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  [data-theme='light'] .background-grid {
+    background-image:
+      linear-gradient(rgba(26, 127, 55, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26, 127, 55, 0.04) 1px, transparent 1px);
+  }
+
+  [data-theme='light'] .background-texture {
+    opacity: 0.15;
   }
 
   a {
@@ -355,34 +406,22 @@ const {
   h5,
   h6 {
     margin: 0;
+    font-family: var(--font-mono);
     font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 
   p {
     color: var(--color-text-muted);
-    line-height: 1.6;
+    line-height: 1.7;
     margin-top: 0;
+    font-family: var(--font-serif);
   }
 
-  .background-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background:
-      radial-gradient(
-        circle at 15% 50%,
-        rgba(139, 92, 246, 0.08),
-        transparent 25%
-      ),
-      radial-gradient(
-        circle at 85% 30%,
-        rgba(59, 130, 246, 0.08),
-        transparent 25%
-      );
-    pointer-events: none;
+  code,
+  pre {
+    font-family: var(--font-mono);
   }
 
   /* Utility classes */
@@ -393,47 +432,59 @@ const {
   }
 
   .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 3rem;
-    background: linear-gradient(to right, #000, #52525b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
+    color: var(--color-text);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
   }
 
-  [data-theme='dark'] .section-title {
-    background: linear-gradient(to right, #fff, #52525b);
-    -webkit-background-clip: text;
+  .section-title::before {
+    content: '//';
+    color: var(--color-primary);
+    font-weight: 400;
   }
 
+  /* Skip link for accessibility */
   .skip-link {
     position: absolute;
     top: -40px;
     left: 0;
     background: var(--color-primary);
-    color: white;
+    color: var(--color-bg);
     padding: 0.5rem 1rem;
     text-decoration: none;
     z-index: 100;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
   }
 
   .skip-link:focus {
     top: 0;
   }
 
+  /* Responsive typography */
   @media (max-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+
     .container {
-      padding: 0 1.5rem;
+      padding: 0 1.25rem;
     }
 
     .section-title {
-      font-size: 2rem;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
     }
   }
 
+  /* View transitions */
   ::view-transition-group(root) {
-    animation-duration: 0.7s;
-    animation-timing-function: var(--expo-out);
+    animation-duration: 0.5s;
+    animation-timing-function: var(--ease-out-expo);
   }
 
   ::view-transition-new(root) {
@@ -447,6 +498,7 @@ const {
     animation-fill-mode: both;
     z-index: -1;
   }
+
   .dark::view-transition-new(root) {
     animation-name: reveal-dark;
     animation-fill-mode: both;
@@ -470,6 +522,7 @@ const {
     }
   }
 
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -479,7 +532,7 @@ const {
     }
   }
 
-  /* Accessibility: Focus styles for keyboard navigation */
+  /* Focus styles */
   button:focus-visible,
   a:focus-visible,
   input:focus-visible,
@@ -495,5 +548,30 @@ const {
   textarea:focus:not(:focus-visible),
   select:focus:not(:focus-visible) {
     outline: none;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-bg);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-emphasis);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-subtle);
   }
 </style>

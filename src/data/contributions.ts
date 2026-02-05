@@ -3,6 +3,8 @@
  * Grouped by project for professional presentation
  */
 
+export type ContributionTier = 'featured' | 'notable' | 'minor';
+
 export interface Contribution {
   title: string;
   description: string;
@@ -10,6 +12,7 @@ export interface Contribution {
   prLink?: string;
   date: string;
   tags?: string[];
+  tier?: ContributionTier; // featured = major new features, notable = enhancements/important fixes, minor = small fixes/refactors
 }
 
 export interface Project {
@@ -22,7 +25,6 @@ export interface Project {
   contributions: Contribution[];
   stats?: {
     stars?: number;
-
     category?: string;
   };
 }
@@ -49,6 +51,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2765',
         date: '2025-02-01',
         tags: ['type-system', 'concurrency', 'futures', 'testing'],
+        tier: 'notable',
       },
       {
         title:
@@ -60,6 +63,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2759',
         date: '2026-01-25',
         tags: ['performance', 'refactor', 'linting'],
+        tier: 'notable',
       },
       {
         title: 'Fix False Positive for Throw with String in CLJS',
@@ -70,6 +74,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2763',
         date: '2026-01-25',
         tags: ['bugfix', 'cljs', 'type-checking'],
+        tier: 'minor',
       },
       {
         title: 'New Linter: aliased-referred-var',
@@ -79,6 +84,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2734',
         date: '2026-01-19',
         tags: ['linter', 'new-feature', 'namespaces'],
+        tier: 'featured',
       },
       {
         title: 'New Linter: is-message-not-string',
@@ -89,6 +95,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2752',
         date: '2026-01-19',
         tags: ['linter', 'new-feature', 'testing'],
+        tier: 'featured',
       },
       {
         title: 'Fix def + defmethod :def-fn Warning Location',
@@ -98,6 +105,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2757',
         date: '2026-01-19',
         tags: ['bugfix', 'linter', 'location'],
+        tier: 'minor',
       },
       {
         title: 'Enhance unused-excluded-var Linter with Location Metadata',
@@ -107,6 +115,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2754',
         date: '2026-01-19',
         tags: ['enhancement', 'linter', 'metadata'],
+        tier: 'minor',
       },
       {
         title: 'Fix Gensym Bindings in Nested Syntax Quotes',
@@ -116,6 +125,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2751',
         date: '2026-01-19',
         tags: ['bugfix', 'macros', 'analysis'],
+        tier: 'minor',
       },
       {
         title: 'Fix Primitive Array Class Syntax Recognition',
@@ -125,6 +135,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2748',
         date: '2026-01-19',
         tags: ['bugfix', 'type-checking', 'clojure-1.12'],
+        tier: 'notable',
       },
       {
         title: 'Extend equals-expected-position Linter to not=',
@@ -134,6 +145,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2740',
         date: '2026-01-19',
         tags: ['enhancement', 'linter', 'equality'],
+        tier: 'minor',
       },
       {
         title: 'Fix False Positive for Throw in CLJS with Non-Throwable Values',
@@ -143,6 +155,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2750',
         date: '2026-01-19',
         tags: ['bugfix', 'cljs', 'throw'],
+        tier: 'minor',
       },
       {
         title: 'Enhance unreachable-code Linter for Reader Conditionals',
@@ -152,6 +165,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2738',
         date: '2026-01-19',
         tags: ['enhancement', 'linter', 'reader-conditionals'],
+        tier: 'notable',
       },
       {
         title: 'Add duplicate refer linter and tests',
@@ -162,6 +176,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2737',
         date: '2026-01-14',
         tags: ['linter', 'new-feature', 'code-quality'],
+        tier: 'featured',
       },
       {
         title: 'New Linter: unused-excluded-var',
@@ -171,6 +186,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2679',
         date: '2025-12-31',
         tags: ['linter', 'code-quality', 'new-feature'],
+        tier: 'featured',
       },
       {
         title: 'New Linter: destructured-or-always-evaluates',
@@ -181,6 +197,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2702',
         date: '2025-12-31',
         tags: ['linter', 'bug-prevention', 'new-feature'],
+        tier: 'featured',
       },
       {
         title: 'New Linter: unquote-not-syntax-quoted',
@@ -191,6 +208,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2681',
         date: '2025-12-18',
         tags: ['linter', 'macros', 'new-feature'],
+        tier: 'featured',
       },
       {
         title: 'New Linter: unresolved-excluded-var',
@@ -200,6 +218,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2675',
         date: '2025-12-22',
         tags: ['linter', 'validation', 'new-feature'],
+        tier: 'featured',
       },
       {
         title: 'Array Type System Support',
@@ -210,6 +229,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2697',
         date: '2025-12-29',
         tags: ['type-system', 'java-interop', 'static-analysis'],
+        tier: 'featured',
       },
       {
         title: 'Enhanced Type Checking for Collections',
@@ -220,6 +240,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2694',
         date: '2025-12-27',
         tags: ['type-system', 'collections'],
+        tier: 'notable',
       },
       {
         title: 'Fix Unexpected Recur False Positive',
@@ -230,6 +251,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2672',
         date: '2025-12-16',
         tags: ['bugfix', 'control-flow'],
+        tier: 'minor',
       },
       {
         title: 'Namespaced Maps Analysis',
@@ -239,6 +261,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2686',
         date: '2025-12-20',
         tags: ['analysis', 'namespaces'],
+        tier: 'notable',
       },
       {
         title:
@@ -250,6 +273,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2684',
         date: '2025-12-20',
         tags: ['type-system', 'ratio', 'static-analysis', 'core-functions'],
+        tier: 'notable',
       },
       {
         title: 'Type Support for repeatedly function',
@@ -258,6 +282,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2674',
         date: '2025-12-16',
         tags: ['type-system', 'core-functions'],
+        tier: 'minor',
       },
       {
         title: 'Fix `:refer-clojure :exclude` handling for ignored vars',
@@ -265,6 +290,7 @@ export const projects: Project[] = [
           'Improved handling of `:refer-clojure :exclude` to properly ignore elements with `#_clj-kondo/ignore` metadata.',
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2717',
         date: '2026-01-08',
+        tier: 'minor',
       },
       {
         title: 'New Linter: Condition Always True for clojure.test/is',
@@ -275,6 +301,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2722',
         date: '2026-01-08',
         tags: ['linter', 'testing', 'new-feature'],
+        tier: 'featured',
       },
       {
         title: 'Type Checking Support for Clojure Test Functions',
@@ -285,6 +312,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2706',
         date: '2026-01-08',
         tags: ['type-system', 'testing', 'static-analysis'],
+        tier: 'notable',
       },
       {
         title: 'New Linter: Redundant Format',
@@ -295,6 +323,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2716',
         date: '2026-01-08',
         tags: ['linter', 'formatting', 'new-feature'],
+        tier: 'featured',
       },
       {
         title: 'Fix regression for unused binding warnings',
@@ -302,6 +331,7 @@ export const projects: Project[] = [
           "Resolved a regression causing false positives for unused binding warnings in `~'~` unquote expressions.",
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2715',
         date: '2026-01-07',
+        tier: 'minor',
       },
       {
         title: 'Fix unused value linter for `defmethod` bodies',
@@ -309,6 +339,7 @@ export const projects: Project[] = [
           'Updated the unused value linter to allow unused values in `defmethod` bodies.',
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2714',
         date: '2026-01-06',
+        tier: 'minor',
       },
       {
         title: 'Add class type and type checking support',
@@ -319,6 +350,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2725',
         date: '2026-01-10',
         tags: ['type-system', 'class', 'static-analysis'],
+        tier: 'featured',
       },
       {
         title: 'Add type inst and support for inst-ms types',
@@ -329,6 +361,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2733',
         date: '2026-01-14',
         tags: ['type-system', 'inst', 'static-analysis', 'bugfix'],
+        tier: 'notable',
       },
       {
         title: 'Rename Linter for Unresolved Excluded Vars',
@@ -339,6 +372,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2705',
         date: '2025-12-31',
         tags: ['refactoring', 'linter', 'naming'],
+        tier: 'minor',
       },
     ],
   },
@@ -362,6 +396,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/weavejester/cljfmt/pull/389',
         date: '2026-01-20',
         tags: ['bugfix', 'sorting', 'case-insensitive'],
+        tier: 'notable',
       },
       {
         title: 'Configurable Column Alignment',
@@ -372,6 +407,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/weavejester/cljfmt/pull/383',
         date: '2025-12-23',
         tags: ['formatting', 'configuration', 'new-feature'],
+        tier: 'featured',
       },
       {
         title: 'Ignore .clj config files by default',
@@ -382,6 +418,7 @@ export const projects: Project[] = [
         date: '2026-01-28',
         tags: ['security', 'configuration', 'compatibility'],
         prLink: 'https://github.com/weavejester/cljfmt/pull/392',
+        tier: 'featured',
       },
       {
         title: 'Add :normalize-newlines-at-file-end? option',
@@ -392,6 +429,7 @@ export const projects: Project[] = [
         date: '2026-01-28',
         tags: ['formatting', 'newline', 'option'],
         prLink: 'https://github.com/weavejester/cljfmt/pull/394',
+        tier: 'featured',
       },
     ],
   },
@@ -421,6 +459,7 @@ export const projects: Project[] = [
           'customization',
           'settings-ui',
         ],
+        tier: 'featured',
       },
       {
         title: 'Refactor Structural Prefix Deletion for Consistency',
@@ -431,6 +470,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3022',
         date: '2026-02-04',
         tags: ['refactoring', 'paredit', 'structural-editing', 'consistency'],
+        tier: 'minor',
       },
       {
         title: 'Fix Quote Prefix Deletion After Quoted Lists',
@@ -441,6 +481,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3023',
         date: '2026-02-04',
         tags: ['bugfix', 'paredit', 'structural-editing', 'quotes'],
+        tier: 'minor',
       },
       {
         title: 'Fix Slurping with Ignored/Commented Expressions',
@@ -451,6 +492,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3024',
         date: '2026-02-04',
         tags: ['bugfix', 'paredit', 'slurp', 'ignore-comments'],
+        tier: 'featured',
       },
       {
         title: 'Fix Slurp Backward with Ignored/Commented Expressions',
@@ -461,6 +503,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3026',
         date: '2026-02-04',
         tags: ['bugfix', 'paredit', 'slurp', 'ignore-comments'],
+        tier: 'minor',
       },
       {
         title: 'Fix Pair Detection in Regular Vectors Inside Let Body',
@@ -471,6 +514,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3028',
         date: '2026-02-04',
         tags: ['bugfix', 'paredit', 'drag-sexp', 'vectors'],
+        tier: 'notable',
       },
       {
         title: 'Add Pair Selection and Drag Support for Threaded cond->',
@@ -481,6 +525,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3019',
         date: '2026-02-02',
         tags: ['enhancement', 'paredit', 'threading', 'pair-forms'],
+        tier: 'notable',
       },
       {
         title:
@@ -492,6 +537,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3002',
         date: '2026-01-30',
         tags: ['enhancement', 'editor', 'reader-macros'],
+        tier: 'minor',
       },
       {
         title: 'Add Drag Sexp Tests for Form Pairs and Triples',
@@ -502,6 +548,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3004',
         date: '2026-01-30',
         tags: ['testing', 'paredit', 'drag-sexp'],
+        tier: 'minor',
       },
       {
         title: 'Add Pair/Triple Selection and Dragging Support for condp',
@@ -518,6 +565,7 @@ export const projects: Project[] = [
           'drag-sexp',
           'conditionals',
         ],
+        tier: 'featured',
       },
       {
         title: 'Add Selection and Dragging Support for case Form Pairs',
@@ -534,6 +582,7 @@ export const projects: Project[] = [
           'drag-sexp',
           'conditionals',
         ],
+        tier: 'notable',
       },
       {
         title: 'Add Selection and Dragging Support for :let Binding Pairs',
@@ -544,6 +593,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2989',
         date: '2026-01-30',
         tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'bindings'],
+        tier: 'notable',
       },
       {
         title: 'Add Selection and Dragging Support for cond Form Pairs',
@@ -560,6 +610,7 @@ export const projects: Project[] = [
           'drag-sexp',
           'conditionals',
         ],
+        tier: 'notable',
       },
       {
         title:
@@ -571,6 +622,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/2996',
         date: '2026-01-30',
         tags: ['enhancement', 'paredit', 'selection', 'drag-sexp', 'threading'],
+        tier: 'notable',
       },
       {
         title: 'Fix: Slurp Forward Empty Form',
@@ -581,6 +633,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3005',
         date: '2026-02-02',
         tags: ['bugfix', 'paredit', 'slurp', 'structural-editing'],
+        tier: 'minor',
       },
       {
         title: 'Fix: Slurp Backward Empty Form',
@@ -591,6 +644,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3006',
         date: '2026-02-02',
         tags: ['bugfix', 'paredit', 'slurp', 'structural-editing'],
+        tier: 'minor',
       },
       {
         title: 'Add Pair-Aware Support for assoc Form',
@@ -607,6 +661,7 @@ export const projects: Project[] = [
           'pair-forms',
           'structural-editing',
         ],
+        tier: 'notable',
       },
       {
         title: 'Add Threading Macro Support for Pair Forms',
@@ -623,6 +678,7 @@ export const projects: Project[] = [
           'pair-forms',
           'structural-editing',
         ],
+        tier: 'notable',
       },
       {
         title: 'Consolidate and Generalize Pair Form Handling in Paredit',
@@ -639,6 +695,7 @@ export const projects: Project[] = [
           'configuration',
           'infrastructure',
         ],
+        tier: 'notable',
       },
     ],
   },
@@ -663,6 +720,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/logseq/logseq/pull/7379',
         date: '2022-11-22',
         tags: ['editor', 'UX', 'input-handling'],
+        tier: 'notable',
       },
       {
         title: 'Fix Task List Checkbox Toggle Behavior',
@@ -673,6 +731,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/logseq/logseq/pull/11079',
         date: '2024-03-06',
         tags: ['bugfix', 'tasks', 'editor'],
+        tier: 'notable',
       },
       {
         title: 'Fix Image Navigation Order in Maximize Mode',
@@ -683,6 +742,7 @@ export const projects: Project[] = [
         prLink: 'https://github.com/logseq/logseq/pull/6068',
         date: '2022-07-26',
         tags: ['bugfix', 'UI', 'images'],
+        tier: 'minor',
       },
     ],
   },
@@ -714,9 +774,41 @@ export function getContributionStats() {
     new Set(projects.flatMap((p) => p.technology)),
   );
 
+  const featured = projects.reduce(
+    (sum, project) =>
+      sum + project.contributions.filter((c) => c.tier === 'featured').length,
+    0,
+  );
+
   return {
     totalProjects,
     totalContributions,
     technologies,
+    featured,
   };
+}
+
+// Helper to get contributions by tier
+export function getContributionsByTier(projectContributions: Contribution[]) {
+  return {
+    featured: projectContributions.filter((c) => c.tier === 'featured'),
+    notable: projectContributions.filter((c) => c.tier === 'notable'),
+    minor: projectContributions.filter((c) => c.tier === 'minor' || !c.tier),
+  };
+}
+
+/*
+ * Sort contributions by tier (featured > notable > minor) and then by date (newest first)
+ * This ensures that featured contributions are always shown at the top, followed by notable and minor contributions, with the most recent contributions appearing first within each tier.
+ */
+export function sortContributionsByDate(contributions: Contribution[]) {
+  const tierOrder = { featured: 1, notable: 2, minor: 3 };
+  return contributions.sort((a, b) => {
+    const tierComparison =
+      (tierOrder[a.tier || 'minor'] || 3) - (tierOrder[b.tier || 'minor'] || 3);
+    if (tierComparison !== 0) {
+      return tierComparison; // Sort by tier first
+    }
+    return new Date(b.date).getTime() - new Date(a.date).getTime(); // Then sort by date
+  });
 }

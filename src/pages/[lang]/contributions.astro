@@ -19,6 +19,7 @@ import GitPullRequestIcon from '@/assets/icons/git-pull-request.svg';
 import cljKondoLogo from '@/assets/clj-kondo.png';
 import calvaLogo from '@/assets/calva.png';
 import logseqLogo from '@/assets/logseq.png';
+import { sortContributionsByDate } from '@/data/contributions';
 
 export async function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({
@@ -161,7 +162,9 @@ const projectLogos: Record<string, any> = {
             projects.map((project) => {
               const INITIAL_COUNT = 5;
               const hasMany = project.contributions.length > INITIAL_COUNT;
-
+              const sortedContributions = sortContributionsByDate(
+                project.contributions,
+              );
               return (
                 <article
                   class="project-card"
@@ -232,7 +235,7 @@ const projectLogos: Record<string, any> = {
                         : t('contributions.card.contributions_plural')}
                     </h4>
                     <div class="contributions-list" data-contributions-list>
-                      {project.contributions.map((contribution, index) => (
+                      {sortedContributions.map((contribution, index) => (
                         <div
                           class={`contribution-item ${index >= INITIAL_COUNT ? 'hidden-contribution' : ''}`}
                           data-search-text={`${contribution.title} ${contribution.description} ${contribution.tags?.join(' ')}`.toLowerCase()}
