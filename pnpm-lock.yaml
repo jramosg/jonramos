@@ -11,7 +11,10 @@ importers:
       '@astrojs/node':
         specifier: ^9.5.2
         version: 9.5.2(astro@5.16.11(@types/node@24.10.2)(jiti@2.4.2)(rollup@4.53.3)(typescript@5.9.3)(yaml@2.8.2))
-      '@fontsource-variable/outfit':
+      '@fontsource-variable/crimson-pro':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/jetbrains-mono':
         specifier: ^5.2.8
         version: 5.2.8
       '@react-email/components':
@@ -342,8 +345,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource-variable/outfit@5.2.8':
-    resolution: {integrity: sha512-4oUDCZx/Tcz6HZP423w/niqEH31Gks5IsqHV2ZZz1qKHaVIZdj2f0/S1IK2n8jl6Xo0o3N+3RjNHlV9R73ozQA==}
+  '@fontsource-variable/crimson-pro@5.2.8':
+    resolution: {integrity: sha512-En4uvz5Wb9gZFi/EVPA9jfC7Bh5NLYwOGc2KhUIT5mPSKrOSCaI1IyvQ3SbUXeHJ04MhWJiRLJSuU9CmyDcOIA==}
+
+  '@fontsource/jetbrains-mono@5.2.8':
+    resolution: {integrity: sha512-6w8/SG4kqvIMu7xd7wt6x3idn1Qux3p9N62s6G3rfldOUYHpWcc2FKrqf+Vo44jRvqWj2oAtTHrZXEP23oSKwQ==}
 
   '@img/colour@1.0.0':
     resolution: {integrity: sha512-A5P/LfWGFSl6nsckYtjw9da+19jB8hkJ6ACTGcDfEJ0aE+l2n2El7dsVM7UVHZQ9s2lmYMWlrS21YLy2IR1LUw==}
@@ -3069,7 +3075,9 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@fontsource-variable/outfit@5.2.8': {}
+  '@fontsource-variable/crimson-pro@5.2.8': {}
+
+  '@fontsource/jetbrains-mono@5.2.8': {}
 
   '@img/colour@1.0.0': {}
 
