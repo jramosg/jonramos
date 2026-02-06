@@ -4,10 +4,11 @@ import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 import './expand.css';
+const { id = 'theme-toggle' } = Astro.props;
 ---
 
 <label
-  id="theme-toggle"
+  id={id}
   class="theme-toggle"
   title={t('themeSwitcher.toggleTheme')}
   aria-label={t('themeSwitcher.toggleTheme')}
@@ -27,12 +28,18 @@ import './expand.css';
   import { getStoredTheme, setTheme } from './theme';
 
   document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggles = [
+      document.getElementById('theme-toggle'),
+      document.getElementById('theme-toggle-mobile'),
+    ];
     const preferedTheme = getStoredTheme();
 
-    if (themeToggle) {
+    themeToggles.forEach((themeToggle) => {
+      if (!themeToggle) return;
+      const checkboxId = themeToggle.id + '-checkbox';
+      const expandCotoutId = themeToggle.id + '-expand-cutout';
       themeToggle.innerHTML = `
-  <input type="checkbox" id='theme-toggle-checkbox' ${preferedTheme === 'dark' ? 'checked' : ''}/>
+  <input type="checkbox" id=${checkboxId} ${preferedTheme === 'dark' ? 'checked' : ''}/>
   <span class="theme-toggle-sr">Toggle theme</span>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -43,24 +50,36 @@ import './expand.css';
     class="theme-toggle__expand"
     viewBox="0 0 32 32"
   >
-    <clipPath id="theme-toggle__expand__cutout">
+    <clipPath id=${expandCotoutId}>
       <path d="M0-11h25a1 1 0 0017 13v30H0Z" />
     </clipPath>
-    <g clip-path="url(#theme-toggle__expand__cutout)">
+    <g clip-path="url(#${expandCotoutId})">
       <circle cx="16" cy="16" r="8.4" />
       <path d="M18.3 3.2c0 1.3-1 2.3-2.3 2.3s-2.3-1-2.3-2.3S14.7.9 16 .9s2.3 1 2.3 2.3zm-4.6 25.6c0-1.3 1-2.3 2.3-2.3s2.3 1 2.3 2.3-1 2.3-2.3 2.3-2.3-1-2.3-2.3zm15.1-10.5c-1.3 0-2.3-1-2.3-2.3s1-2.3 2.3-2.3 2.3 1 2.3 2.3-1 2.3-2.3 2.3zM3.2 13.7c1.3 0 2.3 1 2.3 2.3s-1 2.3-2.3 2.3S.9 17.3.9 16s1-2.3 2.3-2.3zm5.8-7C9 7.9 7.9 9 6.7 9S4.4 8 4.4 6.7s1-2.3 2.3-2.3S9 5.4 9 6.7zm16.3 21c-1.3 0-2.3-1-2.3-2.3s1-2.3 2.3-2.3 2.3 1 2.3 2.3-1 2.3-2.3 2.3zm2.4-21c0 1.3-1 2.3-2.3 2.3S23 7.9 23 6.7s1-2.3 2.3-2.3 2.4 1 2.4 2.3zM6.7 23C8 23 9 24 9 25.3s-1 2.3-2.3 2.3-2.3-1-2.3-2.3 1-2.3 2.3-2.3z" />
     </g>
   </svg>
 `;
-    }
-    const themeToggleCheckbox = document.getElementById(
+    });
+
+    const checkbox1 = document.getElementById(
       'theme-toggle-checkbox',
-    );
-    themeToggleCheckbox?.addEventListener('change', () => {
-      const checkbox = document.getElementById(
-        'theme-toggle-checkbox',
-      ) as HTMLInputElement | null;
-      setTheme(checkbox?.checked ? 'dark' : 'light');
+    ) as HTMLInputElement | null;
+    const checkbox2 = document.getElementById(
+      'theme-toggle-mobile-checkbox',
+    ) as HTMLInputElement | null;
+
+    const syncCheckboxes = (isChecked: boolean) => {
+      if (checkbox1) checkbox1.checked = isChecked;
+      if (checkbox2) checkbox2.checked = isChecked;
+      setTheme(isChecked ? 'dark' : 'light');
+    };
+
+    checkbox1?.addEventListener('change', () => {
+      syncCheckboxes(checkbox1.checked);
+    });
+
+    checkbox2?.addEventListener('change', () => {
+      syncCheckboxes(checkbox2.checked);
     });
   });
 </script>

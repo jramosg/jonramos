@@ -56,7 +56,7 @@ const links = [
 
       <div class="mobile-controls">
         <LanguagePicker />
-        <ThemeSwitcher />
+        <ThemeSwitcher id="theme-toggle-mobile" />
         <button
           class="mobile-menu-btn"
           aria-label="Open navigation menu"
@@ -196,12 +196,6 @@ const links = [
 
   .logo-text {
     color: var(--color-text);
-  }
-
-  .nav-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
   }
 
   .nav-links {
@@ -369,7 +363,7 @@ const links = [
     color: var(--color-text);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 970px) {
     .nav-center {
       display: none;
     }
