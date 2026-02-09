@@ -64,14 +64,15 @@ jobs:
           echo "🚀 Loading Docker image..."
           OLD_IMAGE_ID=$(docker images -q jonramos:latest 2>/dev/null)
           docker load -i jonramos.tar
+
+          echo "🛑 Stopping existing containers..."
+          docker-compose down 2>/dev/null || true
+
           NEW_IMAGE_ID=$(docker images -q jonramos:latest 2>/dev/null)
           if [ -n "$OLD_IMAGE_ID" ] && [ "$OLD_IMAGE_ID" != "$NEW_IMAGE_ID" ]; then
             echo "🧹 Removing previous jonramos image ($OLD_IMAGE_ID)..."
             docker rmi "$OLD_IMAGE_ID" 2>/dev/null || true
           fi
-
-          echo "🛑 Stopping existing containers..."
-          docker-compose down 2>/dev/null || true
 
           echo "🚀 Starting containers with pre-built image..."
           docker-compose up -d
