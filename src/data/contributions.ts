@@ -43,6 +43,17 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'New Linter: redundant-declare',
+        description:
+          'Introduced a new linter :redundant-declare that warns when declare is used after a var is already defined in the same namespace. Updated documentation and configuration to include this new linter with comprehensive tests to ensure correct functionality and behavior.',
+        impact:
+          'Prevents redundant declare statements and improves code clarity',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2769',
+        date: '2026-02-09',
+        tags: ['linter', 'new-feature', 'declarations'],
+        tier: 'featured',
+      },
+      {
         title: 'Add Type Support for Future-Related Functions',
         description:
           'Introduced comprehensive type support for functions related to futures, including future, future-call, future-done?, future-cancel, and future-cancelled?. Added tests to ensure correct linting behavior for these types.',
@@ -444,6 +455,23 @@ export const projects: Project[] = [
       category: 'Developer Tools',
     },
     contributions: [
+      {
+        title: 'Fix Text Garbling When Hitting Key Before Indentation',
+        description:
+          'Fixed a race condition where pressing keys before indentation was applied would cause text to be garbled and cursor position to jump. Introduced calculateIndentEdit() function that returns TextEdit objects instead of performing edits directly, reducing timing conflicts. Increased debounce delay from 250ms to 400ms to give users more time between typing and formatting. Refactored FormatOnTypeEditProvider to use the new indent calculation method while maintaining backward compatibility with the old indent engine.',
+        impact:
+          'Eliminates disruptive text garbling and cursor jumping during fast typing, significantly improving editor experience during indentation',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3034',
+        date: '2026-02-06',
+        tags: [
+          'bugfix',
+          'indentation',
+          'formatting',
+          'race-condition',
+          'cursor-position',
+        ],
+        tier: 'featured',
+      },
       {
         title: 'User Customizable Pair Forms and Threading Macros',
         description:
