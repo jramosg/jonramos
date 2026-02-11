@@ -456,6 +456,84 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Add Default Pair Form Support for js-interop Library',
+        description:
+          'Added comprehensive pair form support for the applied-science/js-interop library, enabling paredit operations (grow selection, drag sexp) for js-interop-specific forms. Introduced vector-binding form support for applied-science.js-interop/let and flat pair form support for applied-science.js-interop/assoc! and applied-science.js-interop/obj. Includes support for aliased forms (e.g., j/let, j/assoc!) with comprehensive test coverage.',
+        impact:
+          'Enables intuitive structural editing for ClojureScript developers using the popular js-interop library, improving productivity when working with JavaScript interop code',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3045',
+        date: '2026-02-11',
+        tags: [
+          'enhancement',
+          'paredit',
+          'js-interop',
+          'pair-forms',
+          'clojurescript',
+        ],
+        tier: 'minor',
+      },
+      {
+        title: 'Threading Macros Alias Resolution and Promesa Pair Defaults',
+        description:
+          'Enhanced threading macro detection to support namespace alias resolution, allowing pair forms and threading macros to work correctly when invoked via aliases (e.g., p/-> for promesa.core/->). Added default pair form support for Promesa library forms including promesa.core/plet, promesa.core/loop, promesa.core/doseq, and promesa.core/with-redefs. Added threading macro support for promesa.core/-> and promesa.core/->>.',
+        impact:
+          'Enables reliable structural editing for aliased threading macros and Promesa async workflows, improving developer experience for async Clojure code',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3032',
+        date: '2026-02-11',
+        tags: [
+          'enhancement',
+          'paredit',
+          'threading',
+          'promesa',
+          'alias-resolution',
+        ],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix Forward Delete for Discard Comment Tokens',
+        description:
+          'Fixed forward delete operation to delete the entire #_ (discard comment) token in a single keypress when cursor is positioned at the start of the token. Previously, forward delete would only remove the # character, requiring two deletions to fully remove the #_ token.',
+        impact:
+          'Improves editing efficiency and consistency when working with discard comments',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3043',
+        date: '2026-02-11',
+        tags: ['bugfix', 'structural-editing', 'discard-comments', 'delete'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Backspace for Discard Comment Tokens',
+        description:
+          'Fixed backspace operation to delete the entire #_ (discard comment) token in a single keypress when cursor is positioned immediately after the token. Previously, backspace would jump over the token instead of deleting it, treating it like structural delimiters.',
+        impact:
+          'Eliminates unexpected jump-over behavior when deleting discard comments',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3042',
+        date: '2026-02-11',
+        tags: ['bugfix', 'structural-editing', 'discard-comments', 'backspace'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Jack-in Dependencies Not Finding Latest Versions',
+        description:
+          'Fixed jack-in dependency version resolution to always refresh from Clojars instead of returning early when dependencies were cached. Removed the early return when all dependencies were cached, ensuring users always see the latest available versions (e.g., nrepl 1.5.2 instead of stale 1.5.1).',
+        impact:
+          'Ensures developers always have access to latest library versions during REPL startup',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3039',
+        date: '2026-02-11',
+        tags: ['bugfix', 'jack-in', 'dependencies', 'clojars'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Deletion After Ctrl+Backspace in Line Comments',
+        description:
+          'Fixed issue where pressing Ctrl+Backspace inside line comments would prevent subsequent deletions from working correctly. Modified the backspace handler to avoid processing Ctrl+Backspace within line comment contexts.',
+        impact:
+          'Restores normal deletion behavior after using Ctrl+Backspace in comments',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3038',
+        date: '2026-02-11',
+        tags: ['bugfix', 'comments', 'keyboard-shortcuts', 'deletion'],
+        tier: 'notable',
+      },
+      {
         title: 'Fix Text Garbling When Hitting Key Before Indentation',
         description:
           'Fixed a race condition where pressing keys before indentation was applied would cause text to be garbled and cursor position to jump. Introduced calculateIndentEdit() function that returns TextEdit objects instead of performing edits directly, reducing timing conflicts. Increased debounce delay from 250ms to 400ms to give users more time between typing and formatting. Refactored FormatOnTypeEditProvider to use the new indent calculation method while maintaining backward compatibility with the old indent engine.',
