@@ -399,6 +399,17 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Add :blank-lines-separate-alignment? option',
+        description:
+          'Adds a new configuration option :blank-lines-separate-alignment? that allows column alignment to treat blank lines as group separators. When enabled, alignment groups are separated by blank lines, allowing independent alignment within each group rather than across the entire form. This refactors the column alignment logic to support both the original behavior (aligning across all lines) and the new grouped behavior.',
+        impact:
+          'Improves readability by visually grouping related items together, allowing independent alignment of related bindings or map entries separately',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/381',
+        date: '2026-02-12',
+        tags: ['formatting', 'alignment', 'new-feature', 'configuration'],
+        tier: 'featured',
+      },
+      {
         title: 'Fix Case-Sensitive Sorting in sort-ns-references',
         description:
           'Fixed the :sort-ns-references? option to perform case-insensitive string sorting, preventing uppercase namespace references from sorting before lowercase ones. Modified the node-sort-string function and added a test case.',
