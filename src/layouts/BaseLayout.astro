@@ -8,8 +8,6 @@ import crimsonProLatin from '@fontsource-variable/crimson-pro/files/crimson-pro-
 import jetbrainsLatinExt400 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-ext-400-normal.woff2?url';
 import jetbrainsLatinExt600 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-ext-600-normal.woff2?url';
 import crimsonProLatinExt from '@fontsource-variable/crimson-pro/files/crimson-pro-latin-ext-wght-normal.woff2?url';
-import '@fontsource/jetbrains-mono';
-import '@fontsource-variable/crimson-pro';
 
 interface Props {
   title?: string;
@@ -33,9 +31,27 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Preload critical fonts to avoid layout shift -->
-    <link rel="preload" href={jetbrainsLatin400} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={jetbrainsLatin600} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={crimsonProLatin} as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      href={jetbrainsLatin400}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={jetbrainsLatin600}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={crimsonProLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <meta name="description" content={description} />
     <meta
       name="keywords"
@@ -273,7 +289,8 @@ const {
         ],
       })}
     />
-    <Fragment set:html={`<style>
+    <Fragment
+      set:html={`<style>
       @font-face {
         font-family: 'JetBrains Mono';
         font-style: normal;
@@ -338,15 +355,15 @@ const {
         descent-override: 30%;
         line-gap-override: 0%;
       }
-    </style>`} />
+    </style>`}
+    />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="background-texture" aria-hidden="true"></div>
     <div class="background-grid" aria-hidden="true"></div>
     <slot />
-  </body>
-  <ThemeProvider />
+  </body><ThemeProvider />
 </html>
 
 <style is:global>
@@ -372,8 +389,8 @@ const {
 
     /* Typography */
     --font-mono:
-      'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace,
-      SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+      'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular,
+      'SF Mono', Menlo, Consolas, monospace;
     --font-serif:
       'Crimson Pro Variable', 'Crimson Pro Fallback', Georgia,
       'Times New Roman', serif;
