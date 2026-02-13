@@ -467,6 +467,23 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Migrate cljfmt 0.16.0',
+        description:
+          "Major migration of Calva's code formatting infrastructure to cljfmt 0.16.0. Updated cljfmt dependency from 0.13.1 to 0.16.0 and migrated formatter to use cljfmt's native alignment capabilities. Removed 4,600+ lines of legacy pez-cljfmt and pez-rewrite-clj code. Added comprehensive tests for align-associative conversion logic to ensure compatibility with new formatting behavior.",
+        impact:
+          'Massive code reduction and modernization - cleaner codebase with better maintenance, improved reliability through proven library functionality, and access to two years of upstream cljfmt improvements',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3048',
+        date: '2026-02-13',
+        tags: [
+          'refactoring',
+          'formatting',
+          'cljfmt',
+          'code-cleanup',
+          'major-upgrade',
+        ],
+        tier: 'featured',
+      },
+      {
         title: 'Add Default Pair Form Support for js-interop Library',
         description:
           'Added comprehensive pair form support for the applied-science/js-interop library, enabling paredit operations (grow selection, drag sexp) for js-interop-specific forms. Introduced vector-binding form support for applied-science.js-interop/let and flat pair form support for applied-science.js-interop/assoc! and applied-science.js-interop/obj. Includes support for aliased forms (e.g., j/let, j/assoc!) with comprehensive test coverage.',
