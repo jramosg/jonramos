@@ -467,6 +467,17 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Improve Jack-in Dependencies Resolution',
+        description:
+          'Enhanced jack-in dependency version resolution to find and display the latest versions (both release and prerelease) instead of stopping at the first cached version. When a prerelease is found, the UI now displays both the latest stable release and prerelease version side by side, giving developers full visibility into available versions.',
+        impact:
+          'Ensures developers see all available dependency versions during REPL startup and can make informed choices between stable and prerelease versions',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3051',
+        date: '2026-02-15',
+        tags: ['enhancement', 'jack-in', 'dependencies', 'version-resolution'],
+        tier: 'notable',
+      },
+      {
         title: 'Migrate cljfmt 0.16.0',
         description:
           "Major migration of Calva's code formatting infrastructure to cljfmt 0.16.0. Updated cljfmt dependency from 0.13.1 to 0.16.0 and migrated formatter to use cljfmt's native alignment capabilities. Removed 4,600+ lines of legacy pez-cljfmt and pez-rewrite-clj code. Added comprehensive tests for align-associative conversion logic to ensure compatibility with new formatting behavior.",
