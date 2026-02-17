@@ -467,6 +467,17 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Fix Undo After Insert Semicolon',
+        description:
+          'Fixed the insertSemiColon function to perform all edits in a single document model transaction, enabling proper undo behavior. Previously, the semicolon insertion required multiple separate edits that could not be undone as a single operation. Now, inserting and undoing semicolons works seamlessly as an atomic operation.',
+        impact:
+          'Improves editor UX by ensuring undo works correctly after inserting semicolons, reducing friction in the editing workflow',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3060',
+        date: '2026-02-17',
+        tags: ['bugfix', 'editor', 'undo', 'semicolon'],
+        tier: 'notable',
+      },
+      {
         title: 'Improve Jack-in Dependencies Resolution',
         description:
           'Enhanced jack-in dependency version resolution to find and display the latest versions (both release and prerelease) instead of stopping at the first cached version. When a prerelease is found, the UI now displays both the latest stable release and prerelease version side by side, giving developers full visibility into available versions.',
