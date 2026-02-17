@@ -478,6 +478,39 @@ export const projects: Project[] = [
         tier: 'notable',
       },
       {
+        title: 'Error Instrumentation via Command Palette',
+        description:
+          'Improved breakpoint instrumentation error reporting with richer context, fixed token cursor initialization, and corrected document symbol handling. Added debugging examples for projectless test data to validate the workflow.',
+        impact:
+          'Reduces friction diagnosing command-palette instrumentation failures with clearer errors and better test coverage',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3058',
+        date: '2026-02-17',
+        tags: ['bugfix', 'debugging', 'breakpoints', 'command-palette'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Projectless REPL deps.edn Discovery',
+        description:
+          'Corrected deps.edn detection for projectless REPLs by fixing the cljCommandLine condition and removing a redundant stat call. Added integration test coverage in projectless fixtures.',
+        impact:
+          'Ensures projectless REPLs find deps.edn reliably, avoiding broken startup configurations',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3057',
+        date: '2026-02-16',
+        tags: ['bugfix', 'repl', 'deps-edn', 'integration-tests'],
+        tier: 'notable',
+      },
+      {
+        title: 'Toggle Line Comments with Indent Preservation',
+        description:
+          'Added a structural toggle comment command that inserts line comments while preserving paredit structure (parentheses and form integrity). Includes command/keybinding integration and integration tests for the new workflow.',
+        impact:
+          'Keeps line comment toggles aligned with expected indentation, improving editing consistency',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3047',
+        date: '2026-02-16',
+        tags: ['enhancement', 'comments', 'indentation', 'editor'],
+        tier: 'featured',
+      },
+      {
         title: 'Migrate cljfmt 0.16.0',
         description:
           "Major migration of Calva's code formatting infrastructure to cljfmt 0.16.0. Updated cljfmt dependency from 0.13.1 to 0.16.0 and migrated formatter to use cljfmt's native alignment capabilities. Removed 4,600+ lines of legacy pez-cljfmt and pez-rewrite-clj code. Added comprehensive tests for align-associative conversion logic to ensure compatibility with new formatting behavior.",
