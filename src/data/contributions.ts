@@ -467,6 +467,34 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Customizable Toggle Comment Shortcuts',
+        description:
+          'Extended the toggleLineCommentCommand to accept arguments so separate keyboard shortcuts can be bound for different commenting styles. This allows users to customize behavior for line comments vs structural ignore commands and resolves issue #3100. Updated associated tests and documentation to reflect new parameters.',
+        impact:
+          'Gives users flexibility in keybinding comment actions and makes comment toggling more intuitive when using multiple styles.',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3101',
+        date: '2026-02-23',
+        tags: ['enhancement', 'comments', 'paredit', 'keybindings'],
+        tier: 'notable',
+      },
+      {
+        title: 'Configurable Toggle Comment Behavior',
+        description:
+          'Added a new configuration option calva.paredit.toggleCommentBehavior with multiple strategies for toggling comments. When text is selected or cursor is in a line comment, toggles line comments as before. When there is no selection, users can choose between: Toggle Ignore (#_) Current Form, Toggle Ignore (#_) Parent Form, or Toggle Comment (;;) Current Line (default). Implemented toggleIgnoreForm function that triggers when appropriate based on user configuration and cursor context. Updated documentation describing all available options.',
+        impact:
+          'Provides users with powerful and configurable comment toggle strategies, enabling structural commenting with #_ instead of just line comments, improving code organization and readability',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3093',
+        date: '2026-02-20',
+        tags: [
+          'enhancement',
+          'paredit',
+          'comments',
+          'configuration',
+          'structural-editing',
+        ],
+        tier: 'featured',
+      },
+      {
         title: 'Fix Undo After Insert Semicolon',
         description:
           'Fixed the insertSemiColon function to perform all edits in a single document model transaction, enabling proper undo behavior. Previously, the semicolon insertion required multiple separate edits that could not be undone as a single operation. Now, inserting and undoing semicolons works seamlessly as an atomic operation.',
