@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import jonRamosImg from '../assets/jonramos.jpeg';
+import jonRamosImg from '../assets/jonramos.webp';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { getNavigationUrl } from '@/utils/navigation';
 
@@ -313,15 +313,13 @@ const t = useTranslations(lang);
 
   .profile-image {
     width: 100%;
-    max-width: 380px;
-    aspect-ratio: 400 / 533;
+    max-width: 400px;
+    aspect-ratio: 1600 / 2133;
     border-radius: 2px;
-    filter: grayscale(20%) contrast(1.05);
-    transition: all 0.4s var(--ease-out-expo);
+    transition: transform 0.4s var(--ease-out-expo);
   }
 
   .profile-image:hover {
-    filter: grayscale(0%) contrast(1);
     transform: scale(1.02);
   }
 
