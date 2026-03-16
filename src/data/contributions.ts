@@ -114,7 +114,7 @@ export const projects: Project[] = [
         description:
           'Implemented a new linter :aliased-referred-var that warns when a var is both referred and accessed via an alias in the same namespace.',
         impact: 'Prevents namespace confusion and improves code clarity',
-        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2734',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2736',
         date: '2026-01-19',
         tags: ['linter', 'new-feature', 'namespaces'],
         tier: 'featured',
