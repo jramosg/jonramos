@@ -43,6 +43,28 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Fix Linter-Specific Ignore for Excluded Vars',
+        description:
+          'Fixed linter-specific ignore metadata (e.g., `#_{:clj-kondo/ignore [:invalid-arity]}`) to correctly respect the specified linters instead of suppressing all linters. Modified `utils/ignored?` to accept an optional linter parameter and updated call sites in `linters.clj` and `analyzer/namespace.clj` to pass linter types. Also extended linter-specific ignore support to inline metadata.',
+        impact:
+          'Allows developers to selectively suppress specific linter warnings on excluded vars without accidentally silencing unrelated linters',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2771',
+        date: '2026-03-03',
+        tags: ['bugfix', 'linter', 'ignore-metadata'],
+        tier: 'notable',
+      },
+      {
+        title: 'Add Type Support for pmap with Arity Checking',
+        description:
+          'Added type support for pmap with proper arity checking, enforcing that pmap receives 2 or more arguments. Also refactored map and mapcat to use a shared type definition for consistency and maintainability in type handling.',
+        impact:
+          'Enables type checking for pmap usage, catching incorrect arities at lint time in parallel map operations',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2766',
+        date: '2026-02-01',
+        tags: ['type-system', 'concurrency', 'arity-checking'],
+        tier: 'notable',
+      },
+      {
         title: 'New Linter: redundant-declare',
         description:
           'Introduced a new linter :redundant-declare that warns when declare is used after a var is already defined in the same namespace. Updated documentation and configuration to include this new linter with comprehensive tests to ensure correct functionality and behavior.',
