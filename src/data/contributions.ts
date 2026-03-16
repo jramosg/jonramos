@@ -522,6 +522,61 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Allow Custom Comment Forms',
+        description:
+          'Added configuration support for custom comment forms, allowing users to define their own comment form patterns that Calva recognizes for structural editing. Resolves issue #3117.',
+        impact:
+          'Enables library and framework authors to configure custom comment forms for project-specific workflows',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3118',
+        date: '2026-03-13',
+        tags: ['enhancement', 'comments', 'configuration', 'structural-editing'],
+        tier: 'notable',
+      },
+      {
+        title: 'Current Form Detection for #_ Commented Forms at All Positions',
+        description:
+          'Extended current form detection to correctly identify `#_` (discard) commented forms regardless of where the cursor is positioned within them. Previously cursor position within the commented form affected whether it was included in the current form selection.',
+        impact:
+          'Ensures evaluate-current-form and other form-based operations work reliably with discard-commented code at any cursor position',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3114',
+        date: '2026-03-03',
+        tags: ['bugfix', 'current-form', 'discard-comments', 'structural-editing'],
+        tier: 'notable',
+      },
+      {
+        title: 'Current Form Includes #_ Commented Forms',
+        description:
+          'Enhanced current form detection to include `#_` (discard) commented forms so that operations like evaluate-current-form correctly identify the full form extent including prefixed discard comments.',
+        impact:
+          'Fixes current form detection to include discard-commented forms, enabling correct evaluation and structural operations on commented code',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3111',
+        date: '2026-03-01',
+        tags: ['bugfix', 'current-form', 'discard-comments'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix: Toggle Comments Structurally with Built-in Formatting',
+        description:
+          'Fixed toggle comment to apply built-in formatting after structurally inserting or removing comment markers, ensuring proper indentation is maintained across the affected form after toggling.',
+        impact:
+          'Eliminates formatting drift when toggling structural comments, keeping code consistently formatted',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3110',
+        date: '2026-02-28',
+        tags: ['bugfix', 'comments', 'formatting', 'structural-editing'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Code Navigation After Starting REPL',
+        description:
+          'Fixed Ctrl+click (go to definition) code navigation that would fail after starting a REPL session. Resolved by correcting the initialization order and state used when resolving navigation targets.',
+        impact:
+          'Restores reliable code navigation for developers who use the REPL as part of their workflow',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3104',
+        date: '2026-02-25',
+        tags: ['bugfix', 'code-navigation', 'repl'],
+        tier: 'notable',
+      },
+      {
         title: 'Customizable Toggle Comment Shortcuts',
         description:
           'Extended the toggleLineCommentCommand to accept arguments so separate keyboard shortcuts can be bound for different commenting styles. This allows users to customize behavior for line comments vs structural ignore commands and resolves issue #3100. Updated associated tests and documentation to reflect new parameters.',
@@ -531,6 +586,105 @@ export const projects: Project[] = [
         date: '2026-02-23',
         tags: ['enhancement', 'comments', 'paredit', 'keybindings'],
         tier: 'notable',
+      },
+      {
+        title: 'Fix Toggle Comment Inside Nested Brackets',
+        description:
+          'Fixed toggle comment behavior when the cursor is positioned inside nested brackets or forms. Previously the comment was applied to the enclosing expression rather than the intended inner form.',
+        impact:
+          'Ensures toggle comment targets the correct form at any nesting level, reducing unexpected behavior in deeply nested code',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3102',
+        date: '2026-02-23',
+        tags: ['bugfix', 'comments', 'structural-editing'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix Uncomment When Comment Not in First Column',
+        description:
+          'Fixed the uncomment operation to correctly handle comment markers that are not in the first column, preserving the proper leading whitespace/indentation when removing `;;` prefixes.',
+        impact:
+          'Ensures uncomment works correctly regardless of indentation level, preventing indentation errors when removing comments from indented code',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3085',
+        date: '2026-02-19',
+        tags: ['bugfix', 'comments', 'indentation'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix Toggle Comment on Unformatted Partial Selection',
+        description:
+          'Fixed toggle comment to work correctly when the selection is a partial, unformatted fragment rather than a complete Clojure form. Previously the operation would produce incorrect results or corrupt indentation in such cases.',
+        impact:
+          'Makes toggle comment reliable for any selection, including partial or unformatted code fragments',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3084',
+        date: '2026-02-19',
+        tags: ['bugfix', 'comments', 'selection'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix Toggle Comment Off Indent Glitch',
+        description:
+          'Fixed an indentation glitch that occurred when toggling line comments off (removing `;;` markers). The indentation would shift incorrectly after comment removal, leaving code mis-aligned.',
+        impact:
+          'Eliminates spurious indentation shifts when removing line comments, keeping code properly formatted',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3082',
+        date: '2026-02-19',
+        tags: ['bugfix', 'comments', 'indentation'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix Insert Semicolon at Start of File',
+        description:
+          'Fixed insert semicolon operation when a multi-line form starts at the very beginning of the file (position 0). Previously this edge case caused incorrect semicolon positioning or an error.',
+        impact:
+          'Ensures insert semicolon works correctly in all file positions including at the start of file',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3075',
+        date: '2026-02-19',
+        tags: ['bugfix', 'editor', 'semicolon'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix Multi-Line Toggle Comment Structure and Indentation',
+        description:
+          'Additional fixes for multi-line toggle comment: prevents breaking code structure during comment insertion and handles the edge case where comments share the same column as subsequent code, preserving correct indentation after toggling.',
+        impact:
+          'Eliminates structural corruption and indentation errors when toggling comments on complex multi-line forms',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3070',
+        date: '2026-02-18',
+        tags: ['bugfix', 'comments', 'indentation', 'structural-editing'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Multi-Line Toggle Comment',
+        description:
+          'Fixed toggle comment operation on multi-line selections to correctly add and remove line comment markers for each selected line, resolving cases where only the first or last line was affected.',
+        impact:
+          'Makes toggle comment reliable across multi-line selections, matching expected behavior from other editors',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3068',
+        date: '2026-02-18',
+        tags: ['bugfix', 'comments', 'selection'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Evaluate Selection in Comment Context Menu',
+        description:
+          'Fixed the "Evaluate selection" option in the editor context menu to work correctly when the selection is within or overlaps a comment form.',
+        impact:
+          'Restores reliable evaluate-selection from the context menu when working with commented code',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3064',
+        date: '2026-02-17',
+        tags: ['bugfix', 'evaluation', 'comments', 'context-menu'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix Insert Semicolon Breaking Code Structure',
+        description:
+          'Fixed the insert semicolon operation to avoid breaking surrounding code structure when the cursor is positioned at a location where naive semicolon insertion would split a form.',
+        impact:
+          'Ensures insert semicolon preserves structural integrity of Clojure forms in all cursor positions',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3062',
+        date: '2026-02-17',
+        tags: ['bugfix', 'editor', 'semicolon', 'structural-editing'],
+        tier: 'minor',
       },
       {
         title: 'Configurable Toggle Comment Behavior',
