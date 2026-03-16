@@ -421,6 +421,39 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Add :max-column-alignment-gap Option',
+        description:
+          'Introduced a new option :max-column-alignment-gap to limit the maximum number of spaces inserted between a key and its aligned value. This prevents excessive horizontal padding in maps that contain outlier keys while still allowing normal alignment for shorter keys.',
+        impact:
+          'Gives developers fine-grained control over alignment padding, avoiding unreadable horizontal stretch in maps with long keys',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/399',
+        date: '2026-02-28',
+        tags: ['formatting', 'alignment', 'new-feature', 'configuration'],
+        tier: 'featured',
+      },
+      {
+        title: 'Improve Performance of Indent Rules',
+        description:
+          'Optimized indent rule processing by compiling indent rules once per file instead of once per node, significantly reducing redundant computation during formatting.',
+        impact:
+          'Substantially improves formatting performance on large files by eliminating repeated rule compilation overhead',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/401',
+        date: '2026-03-11',
+        tags: ['performance', 'indentation', 'optimization'],
+        tier: 'notable',
+      },
+      {
+        title: 'Add Support for :refer Indentation Rules',
+        description:
+          'Added support for indentation rules applied to vars introduced via :refer in namespace declarations. cljfmt now looks up the original module for referred vars and applies any configured indentation rules for the fully-qualified name.',
+        impact:
+          'Enables correct indentation for referred vars, respecting their original module indentation configuration without requiring repeated per-namespace setup',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/393',
+        date: '2026-01-22',
+        tags: ['formatting', 'indentation', 'namespaces', 'new-feature'],
+        tier: 'featured',
+      },
+      {
         title: 'Add :blank-lines-separate-alignment? option',
         description:
           'Adds a new configuration option :blank-lines-separate-alignment? that allows column alignment to treat blank lines as group separators. When enabled, alignment groups are separated by blank lines, allowing independent alignment within each group rather than across the entire form. This refactors the column alignment logic to support both the original behavior (aligning across all lines) and the new grouped behavior.',
