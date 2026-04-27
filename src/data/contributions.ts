@@ -43,6 +43,39 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'New Linter: unimplemented-protocol-method-arity',
+        description:
+          'Introduced a new linter :unimplemented-protocol-method-arity that warns when a protocol or interface method is implemented with an arity that does not match any declared in the protocol. Extended detection to definterface method implementations as well.',
+        impact:
+          'Catches a class of subtle protocol/interface implementation bugs at lint time that would otherwise surface only at call site',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2804',
+        date: '2026-04-14',
+        tags: ['linter', 'new-feature', 'protocols', 'arity-checking'],
+        tier: 'featured',
+      },
+      {
+        title: 'New Linter: not-nil?',
+        description:
+          'Added a new linter :not-nil? that suggests using `(some? x)` instead of `(not (nil? x))` for clearer, more idiomatic Clojure. Includes ClojureScript support, configurable level, ignore handling, tests, and documentation.',
+        impact:
+          'Promotes idiomatic Clojure style and surfaces an easy readability win across codebases',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2789',
+        date: '2026-04-14',
+        tags: ['linter', 'new-feature', 'idiomatic-clojure'],
+        tier: 'featured',
+      },
+      {
+        title: 'Cache Path Separator Regex Pattern',
+        description:
+          'Replaced repeated `re-pattern` calls in `files-count` and `process-file` with a precomputed `path-separator-pat` regex constant, avoiding redundant pattern compilation on every classpath entry processed.',
+        impact:
+          'Reduces overhead during classpath analysis on projects with large dependency trees',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2791',
+        date: '2026-03-17',
+        tags: ['performance', 'classpath'],
+        tier: 'minor',
+      },
+      {
         title: 'Fix Linter-Specific Ignore for Excluded Vars',
         description:
           'Fixed linter-specific ignore metadata (e.g., `#_{:clj-kondo/ignore [:invalid-arity]}`) to correctly respect the specified linters instead of suppressing all linters. Modified `utils/ignored?` to accept an optional linter parameter and updated call sites in `linters.clj` and `analyzer/namespace.clj` to pass linter types. Also extended linter-specific ignore support to inline metadata.',
