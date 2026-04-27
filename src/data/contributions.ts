@@ -454,6 +454,50 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Fix split-keypairs Inserting Newline Before First Map Key',
+        description:
+          'Fixed `:split-keypairs-over-multiple-lines?` to no longer insert a stray newline before the first key in a map. The `map-key-without-line-break?` predicate now also requires the key to have a left sibling, so the leading position is excluded from line-break insertion.',
+        impact:
+          'Eliminates a spurious blank-line artifact when splitting key-pairs, producing the expected map layout',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/409',
+        date: '2026-04-01',
+        tags: ['bugfix', 'formatting', 'split-keypairs'],
+        tier: 'notable',
+      },
+      {
+        title: 'Validate Symbol Key Syntax in Configuration Maps',
+        description:
+          'Added validation for symbol-keyed configuration maps (e.g. `:aligned-forms`, `:extra-blank-line-forms`) so malformed keys are reported with a clear error instead of silently producing wrong output. Resolves issue #405.',
+        impact:
+          'Catches typos and quoting mistakes in cljfmt configuration up front instead of letting them silently disable formatting rules',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/406',
+        date: '2026-04-01',
+        tags: ['validation', 'configuration', 'error-handling'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix README Examples for Symbol-Keyed Configuration Options',
+        description:
+          "Corrected README examples for `:aligned-forms` and `:extra-blank-line-forms` to use bare symbols (`{let #{0}}`, `{cond :all}`) instead of quoted symbols (`{'let #{0}}`), matching the format the configuration loader actually accepts.",
+        impact:
+          'Prevents users from copy-pasting documentation examples that would not parse correctly',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/407',
+        date: '2026-03-27',
+        tags: ['documentation', 'configuration'],
+        tier: 'minor',
+      },
+      {
+        title: 'Cache find-namespace Result Across Formatting Passes',
+        description:
+          'Cached the namespace name under a `::ns-name` opts key so `indent`, `align-form-columns`, and other passes reuse it instead of each re-running `find-namespace` over the same form. Both `indent` and `align-form-columns` now check the cached value first before falling back to discovery.',
+        impact:
+          'Removes redundant namespace lookups from the hot path, speeding up formatting on files where multiple passes touch the same form',
+        prLink: 'https://github.com/weavejester/cljfmt/pull/402',
+        date: '2026-03-18',
+        tags: ['performance', 'optimization', 'namespaces'],
+        tier: 'notable',
+      },
+      {
         title: 'Add :max-column-alignment-gap Option',
         description:
           'Introduced a new option :max-column-alignment-gap to limit the maximum number of spaces inserted between a key and its aligned value. This prevents excessive horizontal padding in maps that contain outlier keys while still allowing normal alignment for shorter keys.',
@@ -555,6 +599,73 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Fix extract-function Command Argument Handling',
+        description:
+          'Fixed the `extract-function` command to always append selection-end coordinates when invoked, since clojure-lsp destructures those args unconditionally. Without them, a 4-arg call would throw IndexOutOfBoundsException, breaking extract-function when no region was selected.',
+        impact:
+          'Restores reliable use of the LSP-backed extract-function refactor regardless of selection state',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3174',
+        date: '2026-04-23',
+        tags: ['bugfix', 'lsp', 'refactoring', 'extract-function'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Status Bar Stuck on "Launching REPL" After Failed Jack-in',
+        description:
+          'Updated the status bar to react to jack-in task execution and interruption events so a failed or cancelled jack-in no longer leaves the status bar stuck displaying "Launching REPL".',
+        impact:
+          'Provides accurate REPL status feedback, eliminating a confusing state that suggested an active connection when none existed',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3177',
+        date: '2026-04-18',
+        tags: ['bugfix', 'jack-in', 'status-bar', 'repl'],
+        tier: 'notable',
+      },
+      {
+        title:
+          'Bump cljfmt to 0.16.4 and Fix Format and Align Current Form on Maps',
+        description:
+          'Updated the `dev.weavejester/cljfmt` dependency to 0.16.4 and fixed Calva\'s "Format and Align Current Form" command for map literals so alignment behaves correctly on top-level maps.',
+        impact:
+          'Brings in upstream cljfmt fixes and restores expected align-on-current-form behavior for maps',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3170',
+        date: '2026-04-16',
+        tags: ['bugfix', 'formatting', 'cljfmt', 'alignment'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Test Name Search Pattern Across nREPL Bencode Transport',
+        description:
+          'Switched `testNameSearchPattern` from backslash-escaped regex special characters to character-class syntax (e.g. `[?]` instead of `\\?`). Backslashes can be lost or misinterpreted across the nREPL bencode transport layer, causing test discovery to fail for test names containing `?`, `*`, etc.',
+        impact:
+          'Restores reliable "Run Test Under Cursor" for Clojure test names containing common predicate punctuation',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3152',
+        date: '2026-03-28',
+        tags: ['bugfix', 'testing', 'nrepl', 'regex'],
+        tier: 'minor',
+      },
+      {
+        title: 'Strip Leading #_ When Evaluating Selection',
+        description:
+          'When the cursor sits at the end of `#_(form)`, evaluate-selection now strips the leading `#_` and sends only `(form)` to the REPL instead of the silently-discarded discard form.',
+        impact:
+          'Eliminates the surprising no-op when evaluating discard-prefixed forms, making evaluation match user intent',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3143',
+        date: '2026-03-17',
+        tags: ['bugfix', 'evaluation', 'discard-comments'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Performance Regression in Rainbow Bracket Highlighting',
+        description:
+          'Hoisted `vscode.workspace.getConfiguration` for comment-form config out of the per-token highlight loop, reading it once before iterating visible ranges instead of on every token. Resolves a multi-second hang on backward navigation and backspace in large files introduced in 2.0.564.',
+        impact:
+          'Restores responsive editing in large files, eliminating the multi-second freezes that made navigation unusable',
+        prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3127',
+        date: '2026-03-14',
+        tags: ['bugfix', 'performance', 'highlighting', 'regression'],
+        tier: 'notable',
+      },
+      {
         title: 'Allow Custom Comment Forms',
         description:
           'Added configuration support for custom comment forms, allowing users to define their own comment form patterns that Calva recognizes for structural editing. Resolves issue #3117.',
@@ -562,7 +673,12 @@ export const projects: Project[] = [
           'Enables library and framework authors to configure custom comment forms for project-specific workflows',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3118',
         date: '2026-03-13',
-        tags: ['enhancement', 'comments', 'configuration', 'structural-editing'],
+        tags: [
+          'enhancement',
+          'comments',
+          'configuration',
+          'structural-editing',
+        ],
         tier: 'notable',
       },
       {
@@ -573,7 +689,12 @@ export const projects: Project[] = [
           'Ensures evaluate-current-form and other form-based operations work reliably with discard-commented code at any cursor position',
         prLink: 'https://github.com/BetterThanTomorrow/calva/pull/3114',
         date: '2026-03-03',
-        tags: ['bugfix', 'current-form', 'discard-comments', 'structural-editing'],
+        tags: [
+          'bugfix',
+          'current-form',
+          'discard-comments',
+          'structural-editing',
+        ],
         tier: 'notable',
       },
       {
