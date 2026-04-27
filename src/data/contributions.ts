@@ -1280,6 +1280,105 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: 'clojure-lsp',
+    description:
+      'A Language Server Protocol implementation for Clojure powering editor features like go-to-definition, refactoring, and code actions across Calva, Emacs, Vim, and more',
+    repository: 'https://github.com/clojure-lsp/clojure-lsp',
+    website: 'https://clojure-lsp.io',
+    technology: ['Clojure', 'Language Server Protocol', 'Developer Tools'],
+    stats: {
+      category: 'Developer Tools',
+    },
+    contributions: [
+      {
+        title: 'Navigate to Existing deftest Instead of Duplicating',
+        description:
+          'Added a `deftest-loc-with-name` helper that locates the first top-level `(deftest <name> ...)` form in the target test file. The "Create test" code action now navigates to an existing deftest with the matching name instead of inserting a duplicate.',
+        impact:
+          'Prevents accidental duplicate test definitions when triggering "Create test" on a function that already has a corresponding deftest',
+        prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2275',
+        date: '2026-04-26',
+        tags: ['bugfix', 'code-actions', 'testing', 'refactoring'],
+        tier: 'notable',
+      },
+      {
+        title: 'Preserve Existing Formatting in add-missing-libspec',
+        description:
+          'Detect when the first child of `:require`/`:import` sits on the same line as the keyword and preserve that style during `add-missing-libspec` so auto-clean no longer re-flows the entire ns block. Adjusted the settings update logic for `ns-inner-blocks-indentation` and `keep-require-at-start` to honor user formatting choices.',
+        impact:
+          'Stops add-missing-libspec from rewriting unrelated namespace formatting, eliminating noisy diffs in PRs',
+        prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2262',
+        date: '2026-04-24',
+        tags: ['bugfix', 'refactoring', 'namespaces', 'formatting'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Require Suggestions Crossing Language Boundaries',
+        description:
+          'Added a language filter to require suggestions so a `.clj` file no longer offers refers defined only in `.cljs` files (and vice versa). `.cljc` files continue to see refers from both. Includes test coverage for each language combination.',
+        impact:
+          'Eliminates invalid require/refer suggestions that would not resolve at runtime in the target dialect',
+        prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2272',
+        date: '2026-04-22',
+        tags: ['bugfix', 'completions', 'clojurescript', 'cljc'],
+        tier: 'notable',
+      },
+      {
+        title: 'Bump clj-kondo to 2026.04.15',
+        description:
+          'Updated the bundled clj-kondo dependency to 2026.04.15 to pull in upstream linter improvements and bug fixes.',
+        impact:
+          'Keeps clojure-lsp users on the latest clj-kondo analysis without manual version pinning',
+        prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2263',
+        date: '2026-04-15',
+        tags: ['dependencies', 'clj-kondo'],
+        tier: 'minor',
+      },
+    ],
+  },
+  {
+    name: 'Kit',
+    description:
+      'A lightweight, modular framework for building scalable Clojure web applications. Contributions span the main framework, the modules registry, and the documentation site.',
+    repository: 'https://github.com/kit-clj/kit',
+    website: 'https://kit-clj.github.io',
+    technology: ['Clojure', 'ClojureScript', 'Web Framework', 'Reagent'],
+    stats: {
+      category: 'Web Framework',
+    },
+    contributions: [
+      {
+        title: 'Reagent Module with React 19 Support',
+        description:
+          'Added a new `:kit/reagent` module to the Kit modules registry that scaffolds Reagent UIs against React 19 via `reagent.dom.client`. Spans three repos: the modules registry (kit-clj/modules#45) adds the module configuration and README entry; the Kit framework (kit-clj/kit#177) bumps React to 19 and Reagent to 2.0.1; and the documentation site (kit-clj/kit-clj.github.io#76) updates the modules page and ClojureScript guide to use the new client-rendering API and notes the legacy `reagent.dom/render` API.',
+        impact:
+          "Brings Kit's ClojureScript story onto the modern React 19 / Reagent 2 stack with first-class scaffolding via the modules system",
+        prLink: 'https://github.com/kit-clj/modules/pull/45',
+        date: '2026-04-17',
+        tags: [
+          'new-feature',
+          'reagent',
+          'react-19',
+          'modules',
+          'clojurescript',
+          'documentation',
+        ],
+        tier: 'featured',
+      },
+      {
+        title: 'Update reitit and ring-core Dependencies',
+        description:
+          'Bumped `reitit` and `ring-core` to current versions in the Kit framework deps.',
+        impact:
+          'Keeps Kit projects on supported releases of core HTTP libraries',
+        prLink: 'https://github.com/kit-clj/kit/pull/176',
+        date: '2026-04-16',
+        tags: ['dependencies', 'reitit', 'ring'],
+        tier: 'minor',
+      },
+    ],
+  },
+  {
     name: 'Logseq',
     description:
       'A privacy-first, open-source knowledge base that works on top of local plain-text Markdown and Org-mode files',
