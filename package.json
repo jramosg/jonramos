@@ -37,5 +37,11 @@
     "pino-pretty": "^11.3.0",
     "prettier": "3.7.4",
     "prettier-plugin-astro": "0.14.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   }
 }
