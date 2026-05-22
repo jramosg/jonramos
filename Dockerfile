@@ -4,21 +4,13 @@ WORKDIR /app
 RUN corepack enable
 ENV PNPM_STORE_PATH=/pnpm/store
 
-# Fetch all dependencies into the pnpm store once.
-# This layer is keyed on pnpm-lock.yaml so it is reused across
-# the prod-deps and build-deps stages instead of downloading twice.
-COPY pnpm-lock.yaml ./
-RUN pnpm fetch
-
-# Copy package.json after fetch so the fetch layer is independent
-# of unrelated package.json edits (scripts, metadata).
-COPY package.json ./
+COPY package.json pnpm-lock.yaml ./
 
 FROM base AS prod-deps
-RUN pnpm install --prod --frozen-lockfile --offline
+RUN pnpm install --prod --frozen-lockfile
 
 FROM base AS build-deps
-RUN pnpm install --frozen-lockfile --offline
+RUN pnpm install --frozen-lockfile
 
 FROM build-deps AS build
 COPY . .
