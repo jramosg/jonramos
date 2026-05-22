@@ -3,20 +3,38 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import GithubIcon from '@/assets/github.svg';
 import LinkedinIcon from '@/assets/linkedin.svg';
 import MailIcon from '@/assets/mail.svg';
-import { github, linkedin, mail } from '@/settings';
+import CoffeeIcon from '@/assets/coffee.svg';
+import { buymeacoffee, github, linkedin, mail } from '@/settings';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const currentYear = new Date().getFullYear();
 
 const socials = [
-  { icon: GithubIcon, href: `https://github.com/${github}`, label: 'GitHub' },
+  {
+    icon: GithubIcon,
+    href: `https://github.com/${github}`,
+    label: 'GitHub',
+    verb: 'Follow',
+  },
   {
     icon: LinkedinIcon,
     href: `https://linkedin.com/in/${linkedin}`,
     label: 'LinkedIn',
+    verb: 'Connect',
   },
-  { icon: MailIcon, href: `mailto:${mail}`, label: 'Email' },
+  {
+    icon: MailIcon,
+    href: `mailto:${mail}`,
+    label: 'Email',
+    verb: 'Email',
+  },
+  {
+    icon: CoffeeIcon,
+    href: `https://www.buymeacoffee.com/${buymeacoffee}`,
+    label: 'Buy Me a Coffee',
+    verb: 'Support',
+  },
 ];
 ---
 
@@ -53,8 +71,8 @@ const socials = [
               target="_blank"
               rel="noopener noreferrer me"
               class="social-icon"
-              aria-label={`Connect on ${social.label}`}
-              title={`Follow Jon Ramos on ${social.label}`}
+              aria-label={`${social.verb} Jon Ramos on ${social.label}`}
+              title={`${social.verb} Jon Ramos on ${social.label}`}
             >
               <social.icon aria-hidden="true" />
             </a>
