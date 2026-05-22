@@ -42,11 +42,13 @@ export const ui = {
     'projects.laguntza_desc':
       'Professional physiotherapy clinic website. Multilingual (Basque/Spanish) with interactive Leaflet maps, GSAP animations, and accessibility-first design.',
     'projects.besaide_desc':
-      'A modern website for a mountaineering club. Features a clean interface and fast loading times using Astro.',
+      'A multilingual (Basque/Spanish) website for Besaide Mendizale Elkartea. Built with Astro and Keystatic CMS, with i18n routing, accessibility-first components and zero-JS navigation.',
     'projects.colortools_desc':
       'A Clojure(Script) library for color manipulation and conversion. Open source contribution.',
     'projects.norwegian_singles_desc':
       'A high-performance training plan generator based on the Norwegian Singles methodology. Built with Astro and React.',
+    'projects.newton_desc':
+      'Educational deep-dive into polynomial interpolation — Newton, Lagrange, barycentric and cubic splines in Python, with an interactive Newton demo in JavaScript. Explores Chebyshev nodes, the Runge phenomenon and benchmarks.',
 
     'contact.title': 'My Contact Details',
     'contact.text':
@@ -132,11 +134,13 @@ export const ui = {
     'projects.laguntza_desc':
       'Sitio web profesional de clínica de fisioterapia. Multilingüe (euskera/español) con mapas interactivos Leaflet, animaciones GSAP y diseño accesible.',
     'projects.besaide_desc':
-      'Sitio web moderno para un club de montañismo. Interfaz limpia y tiempos de carga rápidos usando Astro.',
+      'Sitio web multilingüe (euskera/español) para Besaide Mendizale Elkartea. Construido con Astro y Keystatic CMS, con enrutado i18n, componentes accesibles y navegación sin JavaScript.',
     'projects.colortools_desc':
       'Librería Clojure(Script) para manipulación y conversión de colores. Contribución de código abierto.',
     'projects.norwegian_singles_desc':
       'Generador de planes de entrenamiento de alta eficiencia basado en la metodología Norwegian Singles. Construido con Astro y React.',
+    'projects.newton_desc':
+      'Guía educativa sobre interpolación polinómica: Newton, Lagrange, baricéntrico y splines cúbicos en Python, con una demo interactiva de Newton en JavaScript. Explora los nodos de Chebyshev, el fenómeno de Runge y benchmarks.',
 
     'contact.title': 'Mis datos de contacto',
     'contact.text':
@@ -224,11 +228,13 @@ export const ui = {
     'projects.laguntza_desc':
       'Fisioterapia klinika profesionalaren webgunea. Eleaniztuna (euskera/gaztelania) Leaflet mapa interaktiboekin, GSAP animazioekin eta irisgarritasun-lehentasunezko diseinuarekin.',
     'projects.besaide_desc':
-      'Mendizale klub baten webgune modernoa. Interfaze garbia eta karga-denbora azkarrak Astro erabiliz.',
+      'Besaide Mendizale Elkartearen webgune eleaniztuna (euskara/gaztelania). Astro eta Keystatic CMS-rekin eraikia, i18n bideratzearekin, irisgarritasunean oinarritutako osagaiekin eta JavaScript gabeko nabigazioarekin.',
     'projects.colortools_desc':
       'Koloreen manipulazio eta bihurketarako Clojure(Script) liburutegia. Kode irekiko ekarpena.',
     'projects.norwegian_singles_desc':
       'Entrenamendu planak sortzeko aplikazioa, Norwegian Singles metodologian oinarritua. Astro eta React bidez eraikia.',
+    'projects.newton_desc':
+      'Interpolazio polinomikoaren gida hezitzailea: Newton, Lagrange, barizentriko eta spline kubikoak Python-en, Newton-en demo interaktiboarekin JavaScript-en. Chebyshev nodoak, Runge fenomenoa eta benchmark-ak aztertzen ditu.',
 
     'contact.title': 'Nire harremanetarako datuak',
     'contact.text':
