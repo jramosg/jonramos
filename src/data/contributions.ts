@@ -43,6 +43,61 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'New Linter: if-x-x-y',
+        description:
+          'Introduced a new linter `:if-x-x-y` that suggests replacing `(if x x y)` with `(or x y)` when the condition is a simple symbol. Disabled by default; ships with documentation, configuration entry, and tests covering the pattern as well as false-positive guards. Resolves #2062.',
+        impact:
+          'Surfaces an idiomatic-Clojure simplification across codebases — turning a common defensive `(if x x default)` pattern into the equivalent but clearer `(or x default)`',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2831',
+        date: '2026-05-21',
+        tags: ['linter', 'new-feature', 'idiomatic-clojure'],
+        tier: 'featured',
+      },
+      {
+        title: 'Remove Redundant Ignore for Discouraged Var',
+        description:
+          'Removed an unnecessary `#_:clj-kondo/ignore` directive on the regex memoization helper. The discouraged-var warning it suppressed no longer applies, so the ignore was dead code.',
+        impact:
+          'Cleans up dead lint suppression and prevents the ignore from masking future discouraged-var regressions in that helper',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2820',
+        date: '2026-05-21',
+        tags: ['cleanup', 'lint-suppression'],
+        tier: 'minor',
+      },
+      {
+        title: 'Document Missing :off Linters in Optional Linters Section',
+        description:
+          'Audited the optional-linters documentation and added the entries that were off-by-default but missing from the docs, so every optional linter is now discoverable from the configuration reference.',
+        impact:
+          'Makes it easier for users to find and opt into all available linters instead of relying on changelog spelunking',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2832',
+        date: '2026-05-06',
+        tags: ['documentation', 'linter', 'configuration'],
+        tier: 'minor',
+      },
+      {
+        title: 'Fix :unused-excluded-var False Positive with :refer + :rename',
+        description:
+          'Fixed a false positive where `:refer-clojure :exclude` combined with a `:refer` `:rename` would incorrectly flag the excluded var as unused. The referred-vars map keys by the renamed name while `:name` keeps the original, so the excluded symbol never appeared in the used-vars set. Resolves #2813.',
+        impact:
+          'Eliminates spurious warnings when shadowing a core var via :exclude and reintroducing it under a different name via :refer + :rename — a common pattern for working around core/library name clashes',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2816',
+        date: '2026-04-18',
+        tags: ['bugfix', 'linter', 'refer-rename', 'false-positive'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix definterface Methods with Multiple Arities',
+        description:
+          'Refactored `analyze-defn` to extract a `method-arities-by-name` helper that accumulates all arities per method name and folds the definterface +1 (target object) adjustment inline with `cond->>`. The previous `(into {} meths)` silently dropped earlier entries when a `definterface` declared the same method name with different arities, so only the last arity survived for arity checks. Resolves #2814.',
+        impact:
+          'Fixes silent loss of arity information for multi-arity definterface methods, restoring accurate arity warnings for the protocol-method-arity linter',
+        prLink: 'https://github.com/clj-kondo/clj-kondo/pull/2815',
+        date: '2026-04-18',
+        tags: ['bugfix', 'definterface', 'arity-checking', 'protocols'],
+        tier: 'notable',
+      },
+      {
         title: 'New Linter: unimplemented-protocol-method-arity',
         description:
           'Introduced a new linter :unimplemented-protocol-method-arity that warns when a protocol or interface method is implemented with an arity that does not match any declared in the protocol. Extended detection to definterface method implementations as well.',
