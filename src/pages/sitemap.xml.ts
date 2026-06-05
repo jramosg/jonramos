@@ -56,6 +56,28 @@ export async function GET(context: APIContext) {
     });
   });
 
+  // Demo pages (language-neutral)
+  urls.push(
+    {
+      loc: `${site}demos/jon-nested-menu`,
+      lastmod: currentDate,
+      changefreq: 'weekly',
+      priority: 0.7,
+    },
+    {
+      loc: `${site}demos/jon-nested-menu/cljs/`,
+      lastmod: currentDate,
+      changefreq: 'weekly',
+      priority: 0.7,
+    },
+    {
+      loc: `${site}demos/jon-nested-menu/react/`,
+      lastmod: currentDate,
+      changefreq: 'weekly',
+      priority: 0.7,
+    },
+  );
+
   // Generate sitemap XML
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
