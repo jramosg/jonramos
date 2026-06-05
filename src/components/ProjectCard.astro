@@ -1,14 +1,20 @@
 ---
 import TechIcon from './TechIcon.astro';
 
+interface Demo {
+  label: string;
+  href: string;
+}
+
 interface Props {
   title: string;
   description: string;
   href: string;
   tags: string[];
+  demos?: Demo[];
 }
 
-const { title, description, href, tags } = Astro.props;
+const { title, description, href, tags, demos } = Astro.props;
 ---
 
 <article class="card">
@@ -56,11 +62,42 @@ const { title, description, href, tags } = Astro.props;
       </ul>
     </div>
   </a>
+
+  {
+    demos && demos.length > 0 && (
+      <div class="card-demos">
+        <span class="demos-label">demos</span>
+        {demos.map((demo) => (
+          <a
+            class="demo-link"
+            href={demo.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${title} ${demo.label} demo (opens in new tab)`}
+          >
+            <span>{demo.label}</span>
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </a>
+        ))}
+      </div>
+    )
+  }
 </article>
 
 <style>
   .card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: relative;
     background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
@@ -72,7 +109,7 @@ const { title, description, href, tags } = Astro.props;
   .card-link {
     display: block;
     padding: 1.5rem;
-    height: 100%;
+    flex: 1 1 auto;
     text-decoration: none;
     color: inherit;
   }
@@ -164,5 +201,49 @@ const { title, description, href, tags } = Astro.props;
 
   .tag-text {
     line-height: 1;
+  }
+
+  /* demo links — sit below the main card link (no nested anchors) */
+  .card-demos {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1.5rem 1.25rem;
+  }
+
+  .demos-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-subtle);
+  }
+
+  .demo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.55rem;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: all 0.2s var(--ease-out-expo);
+  }
+
+  .demo-link:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: var(--color-primary-muted);
+  }
+
+  .demo-link svg {
+    opacity: 0.7;
   }
 </style>
