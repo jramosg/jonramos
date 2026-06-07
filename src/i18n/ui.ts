@@ -46,7 +46,7 @@ export const ui = {
     'projects.colortools_desc':
       'A Clojure(Script) library for color manipulation and conversion. Open source contribution.',
     'projects.jon_nested_menu_desc':
-      'A nested MUI menu library for Reagent/ClojureScript and React — dropdowns, a right-click context menu, per-item icons, custom labels and keyboard navigation. Published to Clojars and npm.',
+      'A nested MUI menu library for Reagent/ClojureScript and React: dropdowns, a right-click context menu, per-item icons, custom labels and keyboard navigation. Published to Clojars and npm.',
     'projects.norwegian_singles_desc':
       'A high-performance training plan generator based on the Norwegian Singles methodology. Built with Astro and React.',
     'projects.newton_desc':
