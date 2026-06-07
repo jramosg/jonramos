@@ -1480,6 +1480,30 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    name: 'cljdoc-analyzer',
+    description:
+      'The analyzer behind cljdoc that reads a library namespaces and docstrings to build its documentation',
+    repository: 'https://github.com/cljdoc/cljdoc-analyzer',
+    website: 'https://cljdoc.org',
+    technology: ['Clojure', 'ClojureScript', 'Documentation'],
+    stats: {
+      category: 'Developer Tools',
+    },
+    contributions: [
+      {
+        title: 'Support npm default-export requires in CLJS analysis',
+        description:
+          'Stubbed the base module for string requires that reach a JS module member with the `module$default` form, so a ClojureScript library that wraps npm packages no longer fails analysis. Added a fixture and a regression test. Resolves #135.',
+        impact:
+          'Lets ClojureScript libraries that import npm default exports publish browsable docs on cljdoc',
+        prLink: 'https://github.com/cljdoc/cljdoc-analyzer/pull/135',
+        date: '2026-06-07',
+        tags: ['clojurescript', 'bugfix', 'npm-interop'],
+        tier: 'notable',
+      },
+    ],
+  },
 ];
 
 // Helper function to get all contributions sorted by date
