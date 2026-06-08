@@ -1346,6 +1346,39 @@ export const projects: Project[] = [
     },
     contributions: [
       {
+        title: 'Fix Cyclic Dependency Check for :as-alias',
+        description:
+          '`:as-alias` creates a namespace alias without loading the target namespace, so it cannot form a runtime dependency. The cyclic-dependencies linter was treating `:as-alias` requires as real edges, producing false cycle reports. This change excludes them from the dependency graph.',
+        impact:
+          'Eliminates false cyclic-dependency errors for code that uses :as-alias for type hints or spec aliases without requiring the namespace',
+        prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2294',
+        date: '2026-05-27',
+        tags: ['bugfix', 'linter', 'cyclic-dependencies', 'as-alias'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Cyclic Dependencies Linter for comment Forms',
+        description:
+          '`(require ...)` calls inside `(comment ...)` forms are never evaluated, so they cannot create real namespace dependencies. The linter was walking those calls and adding edges to the dependency graph, causing false cycle reports. This change excludes usages that fall within a `comment` boundary.',
+        impact:
+          'Stops the cyclic-dependencies linter from firing on require calls used only for REPL convenience inside comment blocks',
+        prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2280',
+        date: '2026-04-28',
+        tags: ['bugfix', 'linter', 'cyclic-dependencies', 'comment-forms'],
+        tier: 'notable',
+      },
+      {
+        title: 'Find Definition for Fully Qualified Vars Without Explicit Require',
+        description:
+          'Go-to-definition previously failed for fully qualified symbols like `clojure.string/join` when the namespace was not in the file\'s `:require` block. Added a resolver that looks up unknown namespace usages against the loaded analysis, enabling definition lookup for any qualified var reachable on the classpath.',
+        impact:
+          'Makes go-to-definition work for inlined qualified calls and potemkin-imported vars that have no corresponding require in the current file',
+        prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2278',
+        date: '2026-04-27',
+        tags: ['bugfix', 'find-definition', 'navigation', 'namespaces'],
+        tier: 'notable',
+      },
+      {
         title: 'Navigate to Existing deftest Instead of Duplicating',
         description:
           'Added a `deftest-loc-with-name` helper that locates the first top-level `(deftest <name> ...)` form in the target test file. The "Create test" code action now navigates to an existing deftest with the matching name instead of inserting a duplicate.',
