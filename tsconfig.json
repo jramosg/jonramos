@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*", "react-email/**/*.tsx"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "design-system"],
   "strictNullChecks": true,
   "allowJs": true,
   "compilerOptions": {
