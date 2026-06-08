@@ -1,4 +1,5 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jon Ramos">
-  <text x="30" y="46" text-anchor="middle" font-family="&#39;Crimson Pro Variable&#39;, &#39;Crimson Pro&#39;, &#39;Crimson Text&#39;, Georgia, &#39;Times New Roman&#39;, serif" font-weight="700" font-style="italic" font-size="40" letter-spacing="-2" fill="currentColor">JR</text>
-  <rect x="50" y="40" width="4" height="8" rx="1" fill="#e0b25e"></rect>
+  <text x="32" y="40" text-anchor="middle" font-family="&#39;JetBrains Mono&#39;, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-weight="700" font-size="13" letter-spacing="0">
+    <tspan fill="currentColor">{</tspan><tspan fill="#5CB6B8">:J</tspan><tspan fill="currentColor"> </tspan><tspan fill="#F4BDCE">&#34;R&#34;</tspan><tspan fill="currentColor">}</tspan>
+  </text>
 </svg>

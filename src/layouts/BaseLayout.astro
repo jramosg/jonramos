@@ -77,7 +77,7 @@ const {
     <meta name="ICBM" content="43.2333, -1.9167" />
 
     <!-- Mobile and PWA optimization -->
-    <meta name="theme-color" content="#0c0e0d" />
+    <meta name="theme-color" content="#0a1020" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Jon Ramos" />
@@ -136,7 +136,8 @@ const {
     />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
@@ -376,72 +377,90 @@ const {
      tokens so every component inherits the new palette unchanged.
      ============================================================ */
   :root {
-    /* ---------- Raw scales (theme-agnostic) ---------- */
-    --ink-950: #0c0e0d;
-    --ink-900: #121615;
-    --ink-850: #181d1b;
-    --ink-800: #1f2622;
-    --ink-700: #2a332e;
-    --ink-600: #3a453e;
-    --ink-500: #586259;
-    --ink-400: #7a857c;
+    /* ---------- Raw scales (theme-agnostic) — coastal/spa ---------- */
 
-    --paper-50: #faf8f1;
-    --paper-100: #f4f1e7;
-    --paper-200: #ece8da;
-    --paper-300: #ddd8c6;
-    --paper-400: #c4bda7;
+    /* Ink — deep navy near-blacks that harmonise with teal + haze */
+    --ink-950: #0a1020;
+    --ink-900: #0e1626;
+    --ink-850: #131c2e;
+    --ink-800: #182338;
+    --ink-700: #1f2c44;
+    --ink-600: #2c3a55;
+    --ink-500: #4a5878;
+    --ink-400: #6c7a9a;
 
-    --jade-300: #6fe9b6;
-    --jade-400: #4fdca0;
-    --jade-500: #1fb47e;
-    --jade-600: #0e7a57;
-    --jade-700: #0a5d43;
-    --jade-900: #06301f;
+    /* Sky — pale-blue parchment, the light ground */
+    --sky-50: #f1f8fb;
+    --sky-100: #e8f2f7;
+    --sky-200: #d6e9f0;
+    --sky-300: #b9d6e2;
+    --sky-400: #94bcce;
 
-    --brass-300: #ecc985;
-    --brass-400: #e0b25e;
-    --brass-500: #c4922f;
-    --brass-600: #9a6b14;
-    --brass-700: #6f4c0e;
+    /* Teal — the signature lagoon (built around #31999b) */
+    --teal-300: #8fd0d2;
+    --teal-400: #5cb6b8;
+    --teal-500: #31999b;
+    --teal-600: #267879;
+    --teal-700: #1c5c5d;
+    --teal-800: #133f40;
+    --teal-900: #082121;
+
+    /* Haze — periwinkle secondary accent (built around #8e98c2) */
+    --haze-300: #c4cae0;
+    --haze-400: #a9b1d1;
+    --haze-500: #8e98c2;
+    --haze-600: #6e7aa6;
+    --haze-700: #525d85;
+
+    /* Shell — soft pink highlight (built around #f4bdce) */
+    --shell-200: #fbdde6;
+    --shell-300: #f4bdce;
+    --shell-400: #ec96ae;
+    --shell-500: #d96e8c;
+    --shell-600: #b34d6c;
+    --shell-700: #823850;
 
     --clay-400: #f08562;
     --clay-500: #d65b39;
     --clay-600: #b8472b;
 
-    /* ---------- Semantic aliases — DEFAULT = INK (dark) ---------- */
+    /* ---------- Semantic aliases — DEFAULT = INK (dark navy) ---------- */
     --surface-base: var(--ink-950);
     --surface-raised: var(--ink-900);
-    --surface-sunken: #090b0a;
+    --surface-sunken: #06091a;
     --surface-overlay: var(--ink-850);
     --surface-inset: var(--ink-850);
 
-    --hairline: rgba(233, 239, 234, 0.09);
-    --hairline-strong: rgba(233, 239, 234, 0.16);
-    --hairline-jade: rgba(79, 220, 160, 0.28);
+    --hairline: rgba(214, 233, 240, 0.1);
+    --hairline-strong: rgba(214, 233, 240, 0.2);
+    --hairline-teal: rgba(92, 182, 184, 0.3);
 
-    --text-strong: #f1f5ef;
-    --text: #e2e8e1;
-    --text-muted: #9faea4;
-    --text-subtle: #6a766e;
-    --text-faint: #4b554e;
+    --text-strong: #f1f7fb;
+    --text: #dde7ee;
+    --text-muted: #a3b0c4;
+    --text-subtle: #7384a0;
+    --text-faint: #4e5c78;
 
-    --accent: var(--jade-400);
-    --accent-hover: var(--jade-300);
-    --accent-press: var(--jade-500);
-    --accent-soft: rgba(79, 220, 160, 0.13);
-    --accent-line: rgba(79, 220, 160, 0.32);
-    --on-accent: #06140d;
+    --accent: var(--teal-400);
+    --accent-hover: var(--teal-300);
+    --accent-press: var(--teal-500);
+    --accent-soft: rgba(92, 182, 184, 0.13);
+    --accent-line: rgba(92, 182, 184, 0.32);
+    --on-accent: #06181a;
 
-    --brass: var(--brass-400);
-    --brass-soft: rgba(224, 178, 94, 0.13);
-    --brass-line: rgba(224, 178, 94, 0.34);
+    --shell: var(--shell-300);
+    --shell-soft: rgba(244, 189, 206, 0.1);
+    --shell-line: rgba(244, 189, 206, 0.3);
+
+    --haze: var(--haze-400);
+    --haze-soft: rgba(169, 177, 209, 0.12);
+    --haze-line: rgba(169, 177, 209, 0.32);
 
     --clay: var(--clay-400);
     --clay-soft: rgba(240, 133, 98, 0.13);
 
-    --focus-ring: var(--jade-400);
-    --selection-bg: rgba(79, 220, 160, 0.26);
+    --focus-ring: var(--teal-400);
+    --selection-bg: rgba(92, 182, 184, 0.28);
 
     color-scheme: dark;
 
@@ -485,8 +504,8 @@ const {
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
     --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.55);
     --shadow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
-    --glow-jade:
-      0 0 0 1px var(--accent-line), 0 12px 36px -16px rgba(31, 180, 126, 0.45);
+    --glow-teal:
+      0 0 0 1px var(--accent-line), 0 12px 36px -16px rgba(49, 153, 155, 0.45);
 
     /* ---------- Typography families ---------- */
     --font-mono:
@@ -517,57 +536,61 @@ const {
     --color-text-subtle: var(--text-subtle);
     --color-primary: var(--accent);
     --color-primary-muted: var(--accent-soft);
-    --color-secondary: var(--brass);
+    --color-secondary: var(--haze);
     --color-accent: var(--clay);
-    --color-featured: var(--brass);
+    --color-featured: var(--haze);
     --color-border: var(--hairline);
     --color-border-emphasis: var(--hairline-strong);
     --color-card-bg: var(--surface-raised);
-    --color-bg-alpha: rgba(12, 14, 13, 0.72);
+    --color-bg-alpha: rgba(10, 16, 32, 0.72);
   }
 
-  /* ---------- PAPER (light) theme ---------- */
+  /* ---------- SKY (light) theme ---------- */
   [data-theme='light'] {
-    --surface-base: var(--paper-100);
-    --surface-raised: var(--paper-50);
-    --surface-sunken: var(--paper-200);
+    --surface-base: var(--sky-100);
+    --surface-raised: var(--sky-50);
+    --surface-sunken: var(--sky-200);
     --surface-overlay: #ffffff;
-    --surface-inset: var(--paper-200);
+    --surface-inset: var(--sky-200);
 
-    --hairline: rgba(24, 28, 25, 0.1);
-    --hairline-strong: rgba(24, 28, 25, 0.2);
-    --hairline-jade: rgba(14, 122, 87, 0.3);
+    --hairline: rgba(14, 22, 38, 0.1);
+    --hairline-strong: rgba(14, 22, 38, 0.2);
+    --hairline-teal: rgba(38, 120, 121, 0.32);
 
-    --text-strong: #131715;
-    --text: #232a25;
-    --text-muted: #555e57;
-    --text-subtle: #8b938c;
-    --text-faint: #a7ada3;
+    --text-strong: #0e1626;
+    --text: #1f2c44;
+    --text-muted: #525d85;
+    --text-subtle: #6e7aa6;
+    --text-faint: #94bcce;
 
-    --accent: var(--jade-600);
-    --accent-hover: var(--jade-700);
-    --accent-press: var(--jade-700);
-    --accent-soft: rgba(14, 122, 87, 0.1);
-    --accent-line: rgba(14, 122, 87, 0.26);
-    --on-accent: #f7faf4;
+    --accent: var(--teal-600);
+    --accent-hover: var(--teal-700);
+    --accent-press: var(--teal-700);
+    --accent-soft: rgba(38, 120, 121, 0.1);
+    --accent-line: rgba(38, 120, 121, 0.28);
+    --on-accent: #f1f8fb;
 
-    --brass: var(--brass-600);
-    --brass-soft: rgba(154, 107, 20, 0.1);
-    --brass-line: rgba(154, 107, 20, 0.3);
+    --shell: var(--shell-600);
+    --shell-soft: rgba(179, 77, 108, 0.1);
+    --shell-line: rgba(179, 77, 108, 0.3);
+
+    --haze: var(--haze-600);
+    --haze-soft: rgba(110, 122, 166, 0.1);
+    --haze-line: rgba(110, 122, 166, 0.32);
 
     --clay: var(--clay-600);
     --clay-soft: rgba(184, 71, 43, 0.1);
 
-    --focus-ring: var(--jade-600);
-    --selection-bg: rgba(14, 122, 87, 0.18);
+    --focus-ring: var(--teal-600);
+    --selection-bg: rgba(38, 120, 121, 0.18);
 
-    --shadow-sm: 0 1px 2px rgba(40, 38, 28, 0.08);
-    --shadow-md: 0 10px 30px -16px rgba(40, 38, 28, 0.22);
-    --shadow-lg: 0 28px 64px -28px rgba(40, 38, 28, 0.26);
+    --shadow-sm: 0 1px 2px rgba(14, 22, 38, 0.08);
+    --shadow-md: 0 10px 30px -16px rgba(14, 22, 38, 0.22);
+    --shadow-lg: 0 28px 64px -28px rgba(14, 22, 38, 0.26);
 
     color-scheme: light;
 
-    --color-bg-alpha: rgba(244, 241, 231, 0.78);
+    --color-bg-alpha: rgba(232, 242, 247, 0.78);
   }
 
   * {
@@ -629,7 +652,7 @@ const {
     background-image: repeating-linear-gradient(
       45deg,
       transparent 0 6px,
-      rgba(31, 180, 126, 0.018) 6px 7px
+      rgba(49, 153, 155, 0.018) 6px 7px
     );
   }
 
