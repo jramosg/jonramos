@@ -1,0 +1,52 @@
+<!-- @dsCard group="Brand" viewport="700x210" name="Logo — the live form" subtitle="Clojure parens framing a prompt + shell cursor" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 32px 36px; display: grid; grid-template-columns: auto 1px 1fr; gap: 36px; align-items: center; }
+  .marks { display: flex; gap: 18px; align-items: center; }
+  .tile { width: 84px; height: 84px; display: block; }
+  .tile.sm { width: 52px; height: 52px; }
+  .divider { background: var(--hairline); align-self: stretch; }
+  .lockups { display: flex; flex-direction: column; gap: 22px; }
+  .lockup { display: flex; align-items: center; gap: 14px; }
+  .lockup .glyph { width: 44px; height: 44px; color: var(--accent); flex: none; }
+  .name { font-family: var(--font-serif); font-size: 30px; font-weight: 600; letter-spacing: -0.02em; color: var(--text-strong); line-height: 1; white-space: nowrap; }
+  .name .cur { color: var(--accent); font-family: var(--font-mono); font-weight: 400; }
+  .handle { font-family: var(--font-mono); font-size: 21px; font-weight: 600; color: var(--text-strong); letter-spacing: -0.01em; }
+  .handle .dev { color: var(--shell); }
+  .role { display:block; margin-top: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  .cap { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-top: 10px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div>
+      <div class="marks">
+        <img class="tile" src="../../assets/logo/mark-ink.svg" alt="Mark on ink">
+        <img class="tile sm" src="../../assets/logo/mark-paper.svg" alt="Mark on paper">
+      </div>
+      <div class="cap">App mark · favicon</div>
+    </div>
+    <div class="divider"></div>
+    <div class="lockups">
+      <div class="lockup">
+        <img class="glyph" src="../../assets/logo/mark-mono.svg" alt="">
+        <div>
+          <div class="name">Jon Ramos<span class="cur">_</span></div>
+        </div>
+      </div>
+      <div class="lockup">
+        <img class="glyph" src="../../assets/logo/mark-mono.svg" alt="">
+        <div>
+          <div class="handle">jonramos<span class="dev">.dev</span></div>
+          <span class="role">Software Engineer · Euskal Herria</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

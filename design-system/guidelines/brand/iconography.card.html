@@ -1,0 +1,56 @@
+<!-- @dsCard group="Brand" viewport="700x230" name="Iconography & stack marks" subtitle="Lucide-idiom line icons + vendored technology logos" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 24px 30px; display: flex; flex-direction: column; gap: 18px; }
+  .lead { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); display: inline-flex; gap: 8px; }
+  .lead::before { content: ';;'; color: var(--accent); }
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+  /* Line-icon chip: dark ink chip, icons recoloured to MOSS so the brand palette shows */
+  .ic { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+        border: 1px solid var(--accent-line); border-radius: var(--radius-sm);
+        background: var(--accent-soft); }
+  .ic img { width: 20px; height: 20px; display: block;
+            /* CSS filter recipe to tint black SVGs to teal #5CB6B8 */
+            filter: invert(72%) sepia(30%) saturate(560%) hue-rotate(132deg) brightness(92%) contrast(86%); }
+
+  /* Tech-logo chip: sky chip with a quiet shell border, so the brand palette shows here too */
+  .tch { height: 44px; min-width: 44px; padding: 6px 10px; display: inline-flex; align-items: center; justify-content: center;
+         background: var(--sky-50); border: 1px solid var(--shell-line); border-radius: var(--radius-sm); }
+  /* Some marks (GSAP) are designed for dark grounds — give them an ink chip instead. */
+  .tch--dark { background: var(--ink-700); border-color: var(--accent-line); }
+  .tch img { height: 26px; display: block; }
+  .tch img.tall { height: 30px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="lead">line icons · lucide idiom · 2px stroke · currentColor</span>
+    <div class="row">
+      <span class="ic"><img src="../../assets/social/github.svg" alt="github"></span>
+      <span class="ic"><img src="../../assets/social/linkedin.svg" alt="linkedin"></span>
+      <span class="ic"><img src="../../assets/social/mail.svg" alt="mail"></span>
+      <span class="ic"><img src="../../assets/icons/external-link.svg" alt="external"></span>
+      <span class="ic"><img src="../../assets/icons/git-pull-request.svg" alt="pr"></span>
+      <span class="ic"><img src="../../assets/icons/search.svg" alt="search"></span>
+      <span class="ic"><img src="../../assets/icons/chevron-down.svg" alt="chevron"></span>
+      <span class="ic"><img src="../../assets/icons/arrow-right.svg" alt="arrow"></span>
+    </div>
+    <span class="lead">vendored technology marks · copy, don't redraw</span>
+    <div class="row">
+      <span class="tch"><img class="tall" src="../../assets/tech/clojure.svg" alt="Clojure"></span>
+      <span class="tch"><img class="tall" src="../../assets/tech/clojurescript.svg" alt="ClojureScript"></span>
+      <span class="tch"><img class="tall" src="../../assets/tech/typescript.svg" alt="TypeScript"></span>
+      <span class="tch"><img class="tall" src="../../assets/tech/astro.svg" alt="Astro"></span>
+      <span class="tch tch--dark"><img class="tall" src="../../assets/tech/gsap.svg" alt="GSAP"></span>
+      <span class="tch"><img src="../../assets/tech/datomic.png" alt="Datomic"></span>
+      <span class="tch"><img src="../../assets/tech/calva.png" alt="Calva"></span>
+    </div>
+  </div>
+</body>
+</html>

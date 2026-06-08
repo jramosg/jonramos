@@ -1,0 +1,46 @@
+<!-- @dsCard group="Colors" viewport="700x250" name="Semantic — surfaces & text" subtitle="How the grounds and ink stack into a real surface" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 24px 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stack { display: flex; flex-direction: column; gap: 10px; }
+  .panel { padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--hairline); }
+  .base { background: var(--surface-base); }
+  .raised { background: var(--surface-raised); }
+  .sunken { background: var(--surface-sunken); }
+  .lbl { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-subtle); }
+  .strong { color: var(--text-strong); font-size: 14px; }
+  .muted { color: var(--text-muted); font-size: 13px; font-family: var(--font-serif); }
+  .subtle { color: var(--text-subtle); font-size: 12px; }
+  .faint { color: var(--text-faint); font-size: 12px; }
+  .swrow { display: flex; gap: 8px; margin-top: 6px; }
+  .dot { width: 22px; height: 22px; border-radius: var(--radius-sm); border: 1px solid var(--hairline); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="stack">
+      <div class="panel base"><div class="lbl">surface-base</div></div>
+      <div class="panel raised"><div class="lbl">surface-raised</div><div class="swrow">
+        <span class="dot" style="background:var(--accent)"></span>
+        <span class="dot" style="background:var(--shell)"></span>
+        <span class="dot" style="background:var(--accent-soft)"></span>
+        <span class="dot" style="background:var(--shell-soft)"></span>
+      </div></div>
+      <div class="panel sunken"><div class="lbl">surface-sunken</div></div>
+    </div>
+    <div class="stack">
+      <div class="strong">text-strong — headlines &amp; numbers</div>
+      <div class="muted">text-muted — this is body prose, set in the serif voice for long-form reading.</div>
+      <div class="subtle">text-subtle — captions &amp; metadata</div>
+      <div class="faint">text-faint — gutters &amp; line numbers</div>
+      <div style="height:1px;background:var(--hairline);margin:4px 0"></div>
+      <div class="subtle">hairline · hairline-strong · accent-line</div>
+    </div>
+  </div>
+</body>
+</html>

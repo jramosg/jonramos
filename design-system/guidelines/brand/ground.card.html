@@ -1,0 +1,30 @@
+<!-- @dsCard group="Brand" viewport="700x240" name="The ground" subtitle="Engineering grid + paper wash — the .ds-ground surface" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .ds-ground::before, .ds-ground::after { position: absolute; }
+  .stage { position: relative; height: 240px; overflow: hidden; }
+  .note { position: absolute; left: 32px; bottom: 28px; }
+  .note .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); display: inline-flex; gap: 8px; }
+  .note .k::before { content: ';;'; color: var(--accent); }
+  .note .d { font-family: var(--font-serif); font-size: 24px; color: var(--text-strong); margin-top: 8px; font-weight: 600; letter-spacing: -0.01em; }
+  .corner { position: absolute; width: 18px; height: 18px; border-color: var(--accent); border-style: solid; }
+  .tl { top: 18px; left: 18px; border-width: 2px 0 0 2px; }
+  .tr { top: 18px; right: 18px; border-width: 2px 2px 0 0; }
+</style>
+</head>
+<body class="ds-ground">
+  <div class="stage">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <div class="note">
+      <span class="k">surface · .ds-ground</span>
+      <div class="d">A sheet of engineering paper.</div>
+    </div>
+  </div>
+</body>
+</html>

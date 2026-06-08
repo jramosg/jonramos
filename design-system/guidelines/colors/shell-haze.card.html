@@ -1,0 +1,33 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Shell + Haze" subtitle="Soft pink highlight + periwinkle secondary" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 26px 30px; }
+  .row { display: flex; gap: 10px; }
+  .sw { flex: 1; }
+  .chip { height: 64px; border-radius: var(--radius-md); border: 1px solid var(--hairline); }
+  .meta { margin-top: 8px; display: flex; flex-direction: column; gap: 2px; }
+  .tok { font-size: 11px; color: var(--text); }
+  .hex { font-size: 10.5px; color: var(--text-subtle); text-transform: uppercase; }
+  .lead { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); margin-bottom: 16px; display: inline-flex; gap: 8px; }
+  .lead::before { content: ';;'; color: var(--shell); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="lead">shell · pink &nbsp;/&nbsp; haze · periwinkle secondary</div>
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:var(--shell-200)"></div><div class="meta"><span class="tok">shell-200</span><span class="hex">#FBDDE6</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--shell-300)"></div><div class="meta"><span class="tok">shell-300 · brand</span><span class="hex">#F4BDCE</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--shell-400)"></div><div class="meta"><span class="tok">shell-400</span><span class="hex">#EC96AE</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--haze-300)"></div><div class="meta"><span class="tok">haze-300</span><span class="hex">#C4CAE0</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--haze-500)"></div><div class="meta"><span class="tok">haze-500 · brand</span><span class="hex">#8E98C2</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--haze-700)"></div><div class="meta"><span class="tok">haze-700</span><span class="hex">#525D85</span></div></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* ============================================================
+   FONTS — Jon Ramos Design System
+   Two voices: a HUMAN voice (Crimson Pro, serif, editorial) and
+   a MACHINE voice (JetBrains Mono). Both self-hosted as variable
+   fonts so consuming projects ship them without a CDN round-trip.
+   ============================================================ */
+
+/* ---- Human voice: Crimson Pro (high-contrast editorial serif) ---- */
+@font-face {
+  font-family: 'Crimson Pro';
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('../assets/fonts/CrimsonPro-Variable.ttf') format('truetype-variations');
+}
+@font-face {
+  font-family: 'Crimson Pro';
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('../assets/fonts/CrimsonPro-Italic-Variable.ttf') format('truetype-variations');
+}
+
+/* ---- Machine voice: JetBrains Mono ---- */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('../assets/fonts/JetBrainsMono-Variable.ttf') format('truetype-variations');
+}
+
+/* ---- Metric-matched fallbacks to minimise layout shift ---- */
+@font-face {
+  font-family: 'Crimson Pro Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 97%;
+  ascent-override: 96%;
+  descent-override: 27%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'JetBrains Mono Fallback';
+  src: local('ui-monospace'), local('SFMono-Regular'), local('Menlo'), local('Consolas');
+  size-adjust: 101%;
+  ascent-override: 102%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}

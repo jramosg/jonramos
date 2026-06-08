@@ -1,0 +1,26 @@
+<!-- @dsCard group="Spacing" viewport="700x190" name="Radii — crisp corners" subtitle="A terminal keeps its corners; radii stay small" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 26px 30px; display: flex; gap: 18px; align-items: flex-end; }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .box { width: 76px; height: 60px; background: var(--surface-raised); border: 1px solid var(--hairline-strong); border-top: 2px solid var(--accent); }
+  .v { font-size: 10.5px; color: var(--text-subtle); }
+  .k { font-size: 10.5px; color: var(--text-faint); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="col"><div class="box" style="border-radius:var(--radius-xs)"></div><span class="v">--radius-xs</span><span class="k">3px</span></div>
+    <div class="col"><div class="box" style="border-radius:var(--radius-sm)"></div><span class="v">--radius-sm</span><span class="k">5px</span></div>
+    <div class="col"><div class="box" style="border-radius:var(--radius-md)"></div><span class="v">--radius-md</span><span class="k">8px</span></div>
+    <div class="col"><div class="box" style="border-radius:var(--radius-lg)"></div><span class="v">--radius-lg</span><span class="k">12px</span></div>
+    <div class="col"><div class="box" style="border-radius:var(--radius-xl)"></div><span class="v">--radius-xl</span><span class="k">18px</span></div>
+    <div class="col"><div class="box" style="border-radius:var(--radius-pill);width:60px"></div><span class="v">--radius-pill</span><span class="k">999</span></div>
+  </div>
+</body>
+</html>

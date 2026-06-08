@@ -1,0 +1,29 @@
+<!-- @dsCard group="Type" viewport="700x230" name="Mono — the machine voice" subtitle="JetBrains Mono: labels, metadata, code, terminal" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 26px 30px; display: flex; flex-direction: column; gap: 16px; }
+  .big { font-size: 30px; font-weight: 600; letter-spacing: -0.01em; color: var(--text-strong); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  .tag { font-size: 12px; padding: 4px 10px; border: 1px solid var(--hairline); border-radius: var(--radius-sm); color: var(--text-muted); background: var(--surface-sunken); }
+  .num { font-size: 13px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+  .spec { font-size: 11px; color: var(--text-faint); letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="big">JetBrains&nbsp;Mono 0123456789</div>
+    <div class="row">
+      <span class="label">eyebrow / label</span>
+      <span class="tag">Clojure</span><span class="tag">ClojureScript</span><span class="tag">Datomic</span>
+      <span class="num">01 · 02 · 03</span>
+    </div>
+    <div class="spec">var(--font-mono) · 400 / 500 / 600 · tracking +0.14em for labels · tabular-nums</div>
+  </div>
+</body>
+</html>

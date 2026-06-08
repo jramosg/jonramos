@@ -1,0 +1,36 @@
+<!-- @dsCard group="Brand" viewport="700x300" name="Voice & motifs" subtitle="The REPL grammar: ;; eyebrows, // titles, $ prompts, indices" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); }
+  .wrap { padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; }
+  .prompt { display: inline-flex; align-items: center; gap: 0.6ch; font-family: var(--font-mono); font-size: 14px; color: var(--text-muted); background: var(--surface-sunken); border: 1px solid var(--hairline); padding: 9px 14px; border-radius: var(--radius-sm); width: fit-content; box-shadow: var(--shadow-inset); }
+  .prompt .sig { color: var(--accent); }
+  .prompt .cmd::after { content: '_'; color: var(--accent); animation: blink 1.1s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .idxrow { display: flex; gap: 18px; }
+  .idx { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); display: flex; gap: 10px; align-items: baseline; }
+  .idx b { color: var(--text-faint); font-weight: 400; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="ds-eyebrow">selected work</span>
+    <span class="ds-section-title">Things I have built</span>
+    <div class="prompt"><span class="sig">$</span> <span class="cmd">whoami</span></div>
+    <div class="idxrow">
+      <span class="idx"><b>01</b> Home</span>
+      <span class="idx"><b>02</b> Experience</span>
+      <span class="idx"><b>03</b> Projects</span>
+      <span class="idx"><b>04</b> Contact</span>
+    </div>
+    <hr class="ds-rule" style="margin:2px 0">
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-faint);letter-spacing:0.06em">
+      .ds-eyebrow &nbsp;·&nbsp; .ds-section-title &nbsp;·&nbsp; .ds-prompt &nbsp;·&nbsp; .ds-index &nbsp;·&nbsp; .ds-rule
+    </div>
+  </div>
+</body>
+</html>

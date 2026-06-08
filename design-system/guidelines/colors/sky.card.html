@@ -1,0 +1,33 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Sky — the light ground" subtitle="Pale-blue parchment built around #D6E9F0" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 26px 30px; }
+  .row { display: flex; gap: 10px; }
+  .sw { flex: 1; }
+  .chip { height: 64px; border-radius: var(--radius-md); border: 1px solid var(--hairline-strong); }
+  .meta { margin-top: 8px; display: flex; flex-direction: column; gap: 2px; }
+  .tok { font-size: 11px; color: var(--text); }
+  .hex { font-size: 10.5px; color: var(--text-subtle); text-transform: uppercase; }
+  .lead { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); margin-bottom: 16px; display: inline-flex; gap: 8px; }
+  .lead::before { content: ';;'; color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="lead">sky · pale-blue parchment</div>
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:var(--sky-50)"></div><div class="meta"><span class="tok">sky-50 · raised</span><span class="hex">#F1F8FB</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--sky-100)"></div><div class="meta"><span class="tok">sky-100 · base</span><span class="hex">#E8F2F7</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--sky-200)"></div><div class="meta"><span class="tok">sky-200 · brand</span><span class="hex">#D6E9F0</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--sky-300)"></div><div class="meta"><span class="tok">sky-300</span><span class="hex">#B9D6E2</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--sky-400)"></div><div class="meta"><span class="tok">sky-400</span><span class="hex">#94BCCE</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ink-700)"></div><div class="meta"><span class="tok">ink-700 · text</span><span class="hex">#1F2C44</span></div></div>
+    </div>
+  </div>
+</body>
+</html>

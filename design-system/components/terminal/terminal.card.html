@@ -1,0 +1,40 @@
+<!-- @dsCard group="Components" viewport="700x320" name="Prompt & CodeBlock" subtitle="Terminal line + REPL window with line numbers" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 26px 30px; display: flex; flex-direction: column; gap: 18px; }
+  .row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .cap { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); width: 100%; }
+</style>
+</head>
+<body>
+  <div id="root" class="wrap"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { Prompt, CodeBlock } = window.JonRamosDesignSystem_d2a695;
+    const code = `;; a small form, lit by the brand
+(defn greet [name]
+  (str "kaixo, " name "!"))
+
+(greet "Euskal Herria")`;
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <React.Fragment>
+        <div className="row">
+          <span className="cap">prompt</span>
+          <Prompt sigil="$" cursor boxed>whoami</Prompt>
+          <Prompt sigil="›">git push origin master</Prompt>
+        </div>
+        <span className="cap">codeblock</span>
+        <CodeBlock title={<>~/ <b>core.clj</b></>} dots lineNumbers>{code}</CodeBlock>
+      </React.Fragment>
+    );
+  </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+/* ============================================================
+   Portfolio UI kit — layout styles. Composes the DS tokens.
+   The components themselves are styled by the design system;
+   this file only does page-level composition & section layout.
+   ============================================================ */
+
+.pf-root { min-height: 100vh; }
+.pf-container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--gutter); }
+.pf-accent { color: var(--accent); }
+.pf-link { color: var(--accent); border-bottom: 1px solid var(--accent-line); transition: border-color var(--dur-base) var(--ease-out-expo); }
+.pf-link:hover { border-bottom-color: var(--accent); }
+
+/* ---------- Nav ---------- */
+.pf-nav {
+  position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height); z-index: 50;
+  background: color-mix(in srgb, var(--surface-base) 82%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hairline);
+}
+.pf-nav__inner {
+  max-width: var(--container-max); margin: 0 auto; height: 100%;
+  padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
+}
+.pf-logo { display: inline-flex; align-items: center; gap: 0.6rem; }
+.pf-logo__mark { width: 26px; height: 26px; color: var(--accent); }
+.pf-logo__name { font-family: var(--font-serif); font-size: 1.18rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text-strong); }
+.pf-nav__links { display: flex; align-items: center; gap: 0.15rem; }
+.pf-nav__link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: var(--text-muted);
+  padding: 0.45rem 0.7rem; border-radius: var(--radius-sm);
+  transition: color var(--dur-base) var(--ease-out-expo), background var(--dur-base) var(--ease-out-expo);
+}
+.pf-nav__idx { font-size: 0.66rem; color: var(--text-faint); }
+.pf-nav__link:hover { color: var(--text-strong); background: var(--accent-soft); }
+.pf-nav__link:hover .pf-nav__idx { color: var(--accent); }
+.pf-nav__link.is-active { color: var(--accent); }
+.pf-nav__link.is-active .pf-nav__idx { color: var(--accent); }
+.pf-nav__right { display: flex; align-items: center; gap: 0.75rem; }
+.pf-langs { display: inline-flex; border: 1px solid var(--hairline); border-radius: var(--radius-sm); overflow: hidden; }
+.pf-lang {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; padding: 0.35rem 0.55rem;
+  background: transparent; color: var(--text-subtle); border: 0; cursor: pointer;
+  transition: color var(--dur-fast), background var(--dur-fast);
+}
+.pf-lang:hover { color: var(--text); }
+.pf-lang.is-on { background: var(--accent-soft); color: var(--accent); }
+
+/* ---------- Hero ---------- */
+.pf-hero {
+  min-height: 90vh; display: flex; align-items: center;
+  padding-top: calc(var(--nav-height) + 2rem); padding-bottom: var(--space-9);
+}
+.pf-hero__grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--space-9); align-items: center; width: 100%; }
+.pf-hero__content { display: flex; flex-direction: column; align-items: flex-start; }
+.pf-hero__prompt { margin-bottom: var(--space-5); }
+.pf-hero__name {
+  font-family: var(--font-serif); font-weight: 600; line-height: 0.98; letter-spacing: -0.025em;
+  font-size: clamp(3.25rem, 1.8rem + 6vw, 5.5rem); color: var(--text-strong); margin-bottom: var(--space-4);
+}
+.pf-hero__title { font-family: var(--font-serif); font-style: italic; font-size: var(--text-lg); color: var(--text-muted); margin: 0 0 var(--space-5); font-weight: 500; }
+.pf-hero__desc { font-family: var(--font-serif); font-size: var(--text-md); color: var(--text-muted); max-width: 34rem; line-height: 1.7; margin: 0 0 var(--space-6); }
+.pf-hero__actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.pf-hero__media { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
+.pf-hero__avail { margin-top: 0.25rem; }
+
+/* ---------- Sections ---------- */
+.pf-section { padding: var(--space-10) 0; scroll-margin-top: var(--nav-height); }
+.pf-section__title { margin-bottom: var(--space-6); }
+.pf-section__head { margin-bottom: var(--space-7); }
+.pf-section__head .pf-section__title { margin-bottom: var(--space-2); }
+.pf-section__sub { font-family: var(--font-serif); font-size: var(--text-md); color: var(--text-muted); margin: 0; }
+
+/* ---------- Experience timeline ---------- */
+.pf-timeline { display: flex; gap: var(--space-5); max-width: 720px; }
+.pf-timeline__rail { display: flex; flex-direction: column; align-items: center; padding-top: 0.4rem; }
+.pf-timeline__dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); flex: none; }
+.pf-timeline__line { width: 2px; flex: 1; margin-top: 0.5rem; background: linear-gradient(var(--accent-line), transparent); }
+.pf-timeline__card { flex: 1; }
+.pf-company { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent); margin: 0.1rem 0 0.9rem; }
+.pf-company__at { color: var(--text-subtle); }
+.pf-company__arr { display: inline-flex; opacity: 0; transform: translateX(-4px); transition: all var(--dur-base) var(--ease-out-expo); }
+.pf-company:hover .pf-company__arr { opacity: 1; transform: translateX(0); }
+.pf-timeline__desc { font-family: var(--font-serif); color: var(--text-muted); line-height: 1.7; margin: 0; }
+
+/* ---------- Projects ---------- */
+.pf-proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: var(--space-4); }
+
+/* ---------- Open source ---------- */
+.pf-os__head { margin-bottom: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+.pf-os__grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--space-6); align-items: stretch; }
+.pf-os__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+.pf-stat { border: 1px solid var(--hairline); border-top: 2px solid var(--shell); border-radius: var(--radius-md); padding: var(--space-4); background: var(--surface-raised); }
+.pf-stat__n { font-family: var(--font-mono); font-size: 2.1rem; font-weight: 600; color: var(--text-strong); line-height: 1; }
+.pf-stat__l { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-subtle); margin-top: 0.6rem; }
+.pf-os__repos { border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5); background: var(--surface-sunken); }
+.pf-os__cmd { margin-bottom: var(--space-3); }
+.pf-os__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.pf-os__repo { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0; border-bottom: 1px solid var(--hairline); font-family: var(--font-mono); font-size: 0.9rem; color: var(--text); cursor: pointer; transition: color var(--dur-fast); }
+.pf-os__repo:last-child { border-bottom: 0; }
+.pf-os__repo:hover { color: var(--accent); }
+.pf-os__repo-icon { color: var(--accent); display: inline-flex; }
+.pf-os__repo-name { flex: 1; }
+.pf-os__repo-arr { color: var(--text-faint); display: inline-flex; }
+.pf-os__repo:hover .pf-os__repo-arr { color: var(--accent); }
+
+/* ---------- Contact ---------- */
+.pf-contact { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+.pf-contact__text { font-family: var(--font-serif); font-size: var(--text-lg); color: var(--text-strong); line-height: 1.5; margin: 0 0 var(--space-5); font-weight: 500; }
+.pf-contact__links { display: flex; flex-direction: column; gap: var(--space-3); }
+.pf-link-card { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4); background: var(--surface-raised); border: 1px solid var(--hairline); border-radius: var(--radius-md); transition: border-color var(--dur-base) var(--ease-out-expo), transform var(--dur-base) var(--ease-out-expo); }
+.pf-link-card:hover { border-color: var(--accent-line); transform: translateX(4px); }
+.pf-link-card__icon { width: 42px; height: 42px; flex: none; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--accent-soft); color: var(--accent); }
+.pf-link-card__body { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
+.pf-link-card__label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-subtle); }
+.pf-link-card__value { font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-strong); }
+.pf-link-card__arr { color: var(--text-faint); }
+.pf-link-card:hover .pf-link-card__arr { color: var(--accent); }
+.pf-form-card { gap: 0; }
+.pf-form__title { font-family: var(--font-serif); font-size: var(--text-lg); color: var(--text-strong); margin: 0 0 0.4rem; font-weight: 600; }
+.pf-form__desc { font-family: var(--font-serif); color: var(--text-muted); margin: 0 0 var(--space-5); font-size: 0.98rem; }
+.pf-form { display: flex; flex-direction: column; gap: var(--space-4); }
+.pf-form__foot { display: flex; align-items: center; gap: var(--space-4); margin-top: 0.4rem; }
+.pf-form__ok { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); }
+
+/* ---------- Footer ---------- */
+.pf-footer { border-top: 1px solid var(--hairline); padding: var(--space-6) 0; margin-top: var(--space-8); }
+.pf-footer__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.pf-footer__sig { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-weight: 600; color: var(--text-strong); }
+.pf-footer__mark { width: 20px; height: 20px; color: var(--accent); }
+.pf-footer__meta { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-subtle); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 940px) {
+  .pf-nav__links { display: none; }
+  .pf-hero__grid { grid-template-columns: 1fr; gap: var(--space-7); }
+  .pf-hero__media { order: -1; }
+  .pf-os__grid { grid-template-columns: 1fr; }
+  .pf-contact { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .pf-langs { display: none; }
+  .pf-os__stats { grid-template-columns: 1fr; }
+  .pf-footer__inner { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+}

@@ -1,0 +1,7 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jon Ramos">
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="#E8F2F7"></rect>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" stroke="#267879" stroke-opacity="0.36"></rect>
+  <text x="32" y="40" text-anchor="middle" font-family="&#39;JetBrains Mono&#39;, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-weight="700" font-size="13" letter-spacing="0">
+    <tspan fill="#6E7AA6">{</tspan><tspan fill="#267879">:J</tspan><tspan> </tspan><tspan fill="#B34D6C">&#34;R&#34;</tspan><tspan fill="#6E7AA6">}</tspan>
+  </text>
+</svg>

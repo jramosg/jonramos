@@ -1,0 +1,36 @@
+<!-- @dsCard group="Colors" viewport="700x220" name="Code tokens — the REPL palette" subtitle="Syntax colours that match the brand, not a stock theme" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 24px 30px; }
+  pre { margin: 0; background: var(--surface-sunken); border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 18px 20px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; overflow: hidden; }
+  .cm { color: var(--code-comment); }
+  .kw { color: var(--code-keyword); }
+  .sy { color: var(--code-symbol); }
+  .st { color: var(--code-string); }
+  .pn { color: var(--code-paren); }
+  .nm { color: var(--code-number); }
+  .legend { display: flex; gap: 18px; margin-top: 14px; font-size: 10.5px; color: var(--text-subtle); letter-spacing: 0.08em; text-transform: uppercase; flex-wrap: wrap; }
+  .legend span::before { content: ''; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .l-kw::before { background: var(--code-keyword); } .l-st::before { background: var(--code-string); }
+  .l-nm::before { background: var(--code-number); } .l-cm::before { background: var(--code-comment); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+<pre><span class="cm">;; a small form, lit by the brand</span>
+<span class="pn">(</span><span class="kw">defn</span> <span class="sy">greet</span> <span class="pn">[</span><span class="sy">name</span><span class="pn">]</span>
+  <span class="pn">(</span><span class="kw">str</span> <span class="st">"kaixo, "</span> <span class="sy">name</span> <span class="st">"!"</span><span class="pn">))</span>
+
+<span class="pn">(</span><span class="sy">greet</span> <span class="st">"Euskal Herria"</span><span class="pn">)</span> <span class="cm">;; =&gt; </span><span class="st">"kaixo, Euskal Herria!"</span>
+<span class="pn">(</span><span class="kw">take</span> <span class="nm">3</span> <span class="pn">(</span><span class="kw">range</span> <span class="nm">100</span><span class="pn">))</span> <span class="cm">;; =&gt; </span><span class="pn">(</span><span class="nm">0 1 2</span><span class="pn">)</span></pre>
+    <div class="legend">
+      <span class="l-kw">keyword</span><span class="l-st">string</span><span class="l-nm">number</span><span class="l-cm">comment</span>
+    </div>
+  </div>
+</body>
+</html>

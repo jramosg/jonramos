@@ -1,0 +1,24 @@
+<!-- @dsCard group="Type" viewport="700x260" name="Type scale" subtitle="From hero display down to gutter micro-labels" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); }
+  .wrap { padding: 22px 30px; display: flex; flex-direction: column; gap: 4px; }
+  .line { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--hairline); padding: 6px 0; }
+  .s { font-family: var(--font-serif); color: var(--text-strong); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; white-space: nowrap; }
+  .t { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-faint); margin-left: auto; letter-spacing: 0.04em; white-space: nowrap; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="line"><span class="s" style="font-size:44px">Display</span><span class="t">--text-4xl · 80px clamp</span></div>
+    <div class="line"><span class="s" style="font-size:34px">Section title</span><span class="t">--text-2xl · 36px</span></div>
+    <div class="line"><span class="s" style="font-size:24px">Subhead / lead</span><span class="t">--text-lg · 22px</span></div>
+    <div class="line"><span class="s" style="font-size:18px">Body prose</span><span class="t">--text-md · 18px</span></div>
+    <div class="line"><span class="s" style="font-family:var(--font-mono);font-size:13px;font-weight:500">Caption · metadata</span><span class="t">--text-sm · 13px</span></div>
+  </div>
+</body>
+</html>

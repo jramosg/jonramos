@@ -1,0 +1,33 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Ink — the dark ground" subtitle="Deep navy near-blacks, the default mode" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--surface-base); color: var(--text); font-family: var(--font-mono); }
+  .wrap { padding: 26px 30px; }
+  .row { display: flex; gap: 10px; }
+  .sw { flex: 1; }
+  .chip { height: 64px; border-radius: var(--radius-md); border: 1px solid var(--hairline); }
+  .meta { margin-top: 8px; display: flex; flex-direction: column; gap: 2px; }
+  .tok { font-size: 11px; color: var(--text); }
+  .hex { font-size: 10.5px; color: var(--text-subtle); text-transform: uppercase; }
+  .lead { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); margin-bottom: 16px; display: inline-flex; gap: 8px; }
+  .lead::before { content: ';;'; color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="lead">ink · deep navy</div>
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:var(--ink-950)"></div><div class="meta"><span class="tok">ink-950 · base</span><span class="hex">#0A1020</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ink-900)"></div><div class="meta"><span class="tok">ink-900 · raised</span><span class="hex">#0E1626</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ink-850)"></div><div class="meta"><span class="tok">ink-850</span><span class="hex">#131C2E</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ink-700)"></div><div class="meta"><span class="tok">ink-700</span><span class="hex">#1F2C44</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ink-500)"></div><div class="meta"><span class="tok">ink-500</span><span class="hex">#4A5878</span></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ink-400)"></div><div class="meta"><span class="tok">ink-400</span><span class="hex">#6C7A9A</span></div></div>
+    </div>
+  </div>
+</body>
+</html>

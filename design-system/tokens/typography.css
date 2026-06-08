@@ -1,0 +1,46 @@
+/* ============================================================
+   TYPOGRAPHY — Jon Ramos Design System
+   Two families, two roles:
+     · Crimson Pro  — the HUMAN voice. Prose, headlines, quotes.
+                      Editorial, high-contrast, set large & airy.
+     · JetBrains Mono — the MACHINE voice. Labels, metadata, code,
+                      indices, tags, terminal motifs. Tracked +0.
+   ============================================================ */
+
+:root {
+  /* ---------- Families ---------- */
+  --font-serif: 'Crimson Pro', 'Crimson Pro Fallback', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* ---------- Type scale (fluid where it earns it) ---------- */
+  --text-2xs: 0.6875rem;  /* 11px — micro labels, gutters */
+  --text-xs: 0.75rem;     /* 12px — mono metadata */
+  --text-sm: 0.8125rem;   /* 13px — tags, captions */
+  --text-base: 1rem;      /* 16px — UI baseline */
+  --text-md: 1.125rem;    /* 18px — body prose */
+  --text-lg: 1.375rem;    /* 22px — lead / subhead */
+  --text-xl: 1.75rem;     /* 28px */
+  --text-2xl: 2.25rem;    /* 36px — section titles */
+  --text-3xl: 3.25rem;    /* display — apply clamp() inline for fluid */
+  --text-4xl: 5rem;       /* hero — apply clamp() inline for fluid */
+
+  /* ---------- Weights ---------- */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---------- Line heights ---------- */
+  --leading-solid: 1;
+  --leading-tight: 1.12;
+  --leading-snug: 1.32;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* ---------- Tracking ---------- */
+  --tracking-tight: -0.02em;   /* display serif */
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.14em;    /* mono eyebrows / labels */
+}
