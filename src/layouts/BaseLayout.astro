@@ -591,6 +591,11 @@ const {
     position: relative;
   }
 
+  /* Anchor jumps and the scroll-spy land below the fixed nav. */
+  :where(section[id]) {
+    scroll-margin-top: var(--nav-height);
+  }
+
   /* Signature ground: a sheet of engineering paper — a fine
      hairline grid faded out with a radial mask from the top. */
   .background-grid {

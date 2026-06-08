@@ -122,7 +122,9 @@ const onCurrentPage = (link: (typeof links)[number]) =>
               href={link.href}
               tabindex="-1"
               aria-hidden="true"
-              class="drawer-link"
+              data-section={link.spy ? link.id : undefined}
+              class={`drawer-link${onCurrentPage(link) ? ' is-active' : ''}`}
+              aria-current={onCurrentPage(link) ? 'page' : undefined}
               role="menuitem"
               style={`animation-delay: ${index * 0.05}s`}
             >
@@ -178,6 +180,54 @@ const onCurrentPage = (link: (typeof links)[number]) =>
     drawerLinks.forEach((link) => {
       link.addEventListener('click', toggleDrawer);
     });
+
+    // Scroll-spy: flag the nav link whose section is currently in view.
+    const spyLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('a[data-section]'),
+    );
+    const sections = spyLinks
+      .map((link) => document.getElementById(link.dataset.section ?? ''))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length > 0) {
+      const navHeight =
+        parseInt(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            '--nav-height',
+          ),
+        ) || 72;
+
+      let ticking = false;
+      const updateActive = () => {
+        ticking = false;
+        const line = window.scrollY + navHeight + 48;
+        let current = sections[0].id;
+        for (const section of sections) {
+          if (section.offsetTop <= line) current = section.id;
+        }
+        // Near the bottom of the page, force the last section active so
+        // short trailing sections (e.g. contact) still light up.
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 2
+        ) {
+          current = sections[sections.length - 1].id;
+        }
+        spyLinks.forEach((link) =>
+          link.classList.toggle('is-active', link.dataset.section === current),
+        );
+      };
+
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateActive);
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      updateActive();
+    }
   });
 </script>
 
@@ -264,6 +314,15 @@ const onCurrentPage = (link: (typeof links)[number]) =>
 
   .nav-links a:hover .link-index {
     color: var(--color-primary);
+  }
+
+  .nav-links a.is-active {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .nav-links a.is-active .link-index {
+    color: var(--accent);
   }
 
   .nav-right {
@@ -393,6 +452,15 @@ const onCurrentPage = (link: (typeof links)[number]) =>
   .drawer-link:hover {
     background: var(--color-primary-muted);
     color: var(--color-text);
+  }
+
+  .drawer-link.is-active {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .drawer-link.is-active .drawer-link-index {
+    color: var(--accent);
   }
 
   @media (max-width: 970px) {
