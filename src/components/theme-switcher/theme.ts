@@ -2,9 +2,14 @@ type Theme = string | null;
 
 export function getStoredTheme() {
   const localStorageTheme = localStorage.getItem('theme');
+  // INK (dark) is the signature default ground for the design system.
+  // Honour an explicit stored choice; otherwise respect a light OS
+  // preference, falling back to dark.
   return (
     localStorageTheme ??
-    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : null)
+    (window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark')
   );
 }
 

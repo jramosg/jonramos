@@ -1368,9 +1368,10 @@ export const projects: Project[] = [
         tier: 'notable',
       },
       {
-        title: 'Find Definition for Fully Qualified Vars Without Explicit Require',
+        title:
+          'Find Definition for Fully Qualified Vars Without Explicit Require',
         description:
-          'Go-to-definition previously failed for fully qualified symbols like `clojure.string/join` when the namespace was not in the file\'s `:require` block. Added a resolver that looks up unknown namespace usages against the loaded analysis, enabling definition lookup for any qualified var reachable on the classpath.',
+          "Go-to-definition previously failed for fully qualified symbols like `clojure.string/join` when the namespace was not in the file's `:require` block. Added a resolver that looks up unknown namespace usages against the loaded analysis, enabling definition lookup for any qualified var reachable on the classpath.",
         impact:
           'Makes go-to-definition work for inlined qualified calls and potemkin-imported vars that have no corresponding require in the current file',
         prLink: 'https://github.com/clojure-lsp/clojure-lsp/pull/2278',

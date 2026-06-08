@@ -114,20 +114,23 @@ const projects = [
   }
 
   .section-title {
-    font-family: var(--font-mono);
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--color-text);
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-strong);
     margin-bottom: 0.75rem;
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    align-items: baseline;
+    gap: 0.5rem;
   }
 
   .section-title::before {
     content: '//';
-    color: var(--color-primary);
-    font-weight: 400;
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    color: var(--accent);
+    font-weight: var(--weight-regular);
   }
 
   .section-subtitle {

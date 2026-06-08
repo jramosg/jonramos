@@ -3,17 +3,50 @@ import LanguagePicker from './LanguagePicker.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import ThemeSwitcher from './theme-switcher/ThemeSwitcher.astro';
 import { getNavigationUrl } from '@/utils/navigation';
+import LogoMark from '@/assets/logo/mark-mono.svg';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+// `id` ties each link to an in-page section so the scroll-spy can flag
+// the section in view. `spy: false` links are separate routes (e.g.
+// contributions) — they go active by matching the current path instead.
 const links = [
-  { name: t('nav.home'), href: getNavigationUrl(lang, '#home') },
-  { name: t('nav.experience'), href: getNavigationUrl(lang, '#experience') },
-  { name: t('nav.projects'), href: getNavigationUrl(lang, '#projects') },
-  { name: t('nav.contributions'), href: `/${lang}/contributions` },
-  { name: t('nav.contact'), href: getNavigationUrl(lang, '#contact') },
+  {
+    id: 'home',
+    name: t('nav.home'),
+    href: getNavigationUrl(lang, '#home'),
+    spy: true,
+  },
+  {
+    id: 'experience',
+    name: t('nav.experience'),
+    href: getNavigationUrl(lang, '#experience'),
+    spy: true,
+  },
+  {
+    id: 'projects',
+    name: t('nav.projects'),
+    href: getNavigationUrl(lang, '#projects'),
+    spy: true,
+  },
+  {
+    id: 'contributions',
+    name: t('nav.contributions'),
+    href: `/${lang}/contributions`,
+    spy: false,
+  },
+  {
+    id: 'contact',
+    name: t('nav.contact'),
+    href: getNavigationUrl(lang, '#contact'),
+    spy: true,
+  },
 ];
+
+const trim = (p: string) => p.replace(/\/+$/, '');
+const onCurrentPage = (link: (typeof links)[number]) =>
+  !link.spy && trim(Astro.url.pathname) === trim(link.href);
 ---
 
 <>
@@ -28,8 +61,7 @@ const links = [
           aria-label="Jon Ramos - Home"
           title="Go to homepage"
         >
-          <span class="logo-symbol">&lt;/&gt;</span>
-          <span class="logo-text">jr</span>
+          <LogoMark class="logo-mark" aria-hidden="true" />
           <span class="visually-hidden">Jon Ramos - Software Engineer</span>
         </a>
 
@@ -38,7 +70,13 @@ const links = [
             {
               links.map((link, i) => (
                 <li role="none">
-                  <a href={link.href} role="menuitem">
+                  <a
+                    href={link.href}
+                    role="menuitem"
+                    data-section={link.spy ? link.id : undefined}
+                    class={onCurrentPage(link) ? 'is-active' : undefined}
+                    aria-current={onCurrentPage(link) ? 'page' : undefined}
+                  >
                     <span class="link-index">0{i + 1}</span>
                     {link.name}
                   </a>
@@ -178,24 +216,18 @@ const links = [
   .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-weight: 600;
-    font-size: 1rem;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s var(--ease-out-expo);
+    color: var(--text-strong);
   }
 
   .logo:hover {
     opacity: 0.8;
   }
 
-  .logo-symbol {
-    color: var(--color-primary);
-    font-size: 0.9rem;
-  }
-
-  .logo-text {
-    color: var(--color-text);
+  .logo :global(.logo-mark) {
+    width: 34px;
+    height: 34px;
+    display: block;
   }
 
   .nav-links {

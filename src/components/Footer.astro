@@ -127,16 +127,16 @@ const socials = [
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface-overlay);
     border: 1px solid var(--color-border);
     color: var(--color-text-muted);
-    transition: all 0.2s;
+    transition: all 0.2s var(--ease-out-expo);
   }
 
   .social-icon:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-text);
-    color: var(--color-text);
+    background: var(--accent-soft);
+    border-color: var(--accent-line);
+    color: var(--accent);
     transform: translateY(-2px);
   }
 

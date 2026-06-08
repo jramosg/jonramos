@@ -77,7 +77,7 @@ const {
     <meta name="ICBM" content="43.2333, -1.9167" />
 
     <!-- Mobile and PWA optimization -->
-    <meta name="theme-color" content="#0d1117" />
+    <meta name="theme-color" content="#0c0e0d" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Jon Ramos" />
@@ -135,6 +135,7 @@ const {
       href={`${Astro.url.origin}/en`}
     />
 
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
@@ -367,27 +368,127 @@ const {
 </html>
 
 <style is:global>
+  /* ============================================================
+     REPL Editorial — Jon Ramos Design System tokens.
+     INK (warm near-black) is the signature default ground; PAPER
+     (warm parchment) flips in under [data-theme='light']. The legacy
+     --color-* variables are kept and remapped onto the new semantic
+     tokens so every component inherits the new palette unchanged.
+     ============================================================ */
   :root {
-    --color-bg: #fafbfc;
-    --color-bg-elevated: #ffffff;
-    --color-bg-surface: #f3f4f6;
-    --color-text: #1f2328;
-    --color-text-muted: #57606a;
-    --color-text-subtle: #8b949e;
-    /* Accent Colors */
-    --color-primary: #1a7f37;
-    --color-primary-muted: rgba(26, 127, 55, 0.1);
-    --color-secondary: #0969da;
-    --color-accent: #cf222e;
-    --color-featured: #8250df;
+    /* ---------- Raw scales (theme-agnostic) ---------- */
+    --ink-950: #0c0e0d;
+    --ink-900: #121615;
+    --ink-850: #181d1b;
+    --ink-800: #1f2622;
+    --ink-700: #2a332e;
+    --ink-600: #3a453e;
+    --ink-500: #586259;
+    --ink-400: #7a857c;
 
-    /* Borders and surfaces */
-    --color-border: rgba(31, 35, 40, 0.1);
-    --color-border-emphasis: rgba(31, 35, 40, 0.2);
-    --color-card-bg: rgba(255, 255, 255, 0.9);
-    --color-bg-alpha: rgba(250, 251, 252, 0.95);
+    --paper-50: #faf8f1;
+    --paper-100: #f4f1e7;
+    --paper-200: #ece8da;
+    --paper-300: #ddd8c6;
+    --paper-400: #c4bda7;
 
-    /* Typography */
+    --jade-300: #6fe9b6;
+    --jade-400: #4fdca0;
+    --jade-500: #1fb47e;
+    --jade-600: #0e7a57;
+    --jade-700: #0a5d43;
+    --jade-900: #06301f;
+
+    --brass-300: #ecc985;
+    --brass-400: #e0b25e;
+    --brass-500: #c4922f;
+    --brass-600: #9a6b14;
+    --brass-700: #6f4c0e;
+
+    --clay-400: #f08562;
+    --clay-500: #d65b39;
+    --clay-600: #b8472b;
+
+    /* ---------- Semantic aliases — DEFAULT = INK (dark) ---------- */
+    --surface-base: var(--ink-950);
+    --surface-raised: var(--ink-900);
+    --surface-sunken: #090b0a;
+    --surface-overlay: var(--ink-850);
+    --surface-inset: var(--ink-850);
+
+    --hairline: rgba(233, 239, 234, 0.09);
+    --hairline-strong: rgba(233, 239, 234, 0.16);
+    --hairline-jade: rgba(79, 220, 160, 0.28);
+
+    --text-strong: #f1f5ef;
+    --text: #e2e8e1;
+    --text-muted: #9faea4;
+    --text-subtle: #6a766e;
+    --text-faint: #4b554e;
+
+    --accent: var(--jade-400);
+    --accent-hover: var(--jade-300);
+    --accent-press: var(--jade-500);
+    --accent-soft: rgba(79, 220, 160, 0.13);
+    --accent-line: rgba(79, 220, 160, 0.32);
+    --on-accent: #06140d;
+
+    --brass: var(--brass-400);
+    --brass-soft: rgba(224, 178, 94, 0.13);
+    --brass-line: rgba(224, 178, 94, 0.34);
+
+    --clay: var(--clay-400);
+    --clay-soft: rgba(240, 133, 98, 0.13);
+
+    --focus-ring: var(--jade-400);
+    --selection-bg: rgba(79, 220, 160, 0.26);
+
+    color-scheme: dark;
+
+    /* ---------- Type scale & weights ---------- */
+    --text-2xs: 0.6875rem;
+    --text-xs: 0.75rem;
+    --text-sm: 0.8125rem;
+    --text-base: 1rem;
+    --text-md: 1.125rem;
+    --text-lg: 1.375rem;
+    --text-xl: 1.75rem;
+    --text-2xl: 2.25rem;
+    --tracking-tight: -0.02em;
+    --tracking-wide: 0.04em;
+    --tracking-wider: 0.14em;
+    --leading-tight: 1.12;
+    --leading-snug: 1.32;
+    --leading-relaxed: 1.75;
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    /* ---------- Spacing, radii, elevation ---------- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 2.5rem;
+    --space-8: 3rem;
+    --space-9: 4rem;
+    --radius-xs: 3px;
+    --radius-sm: 5px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 18px;
+    --radius-pill: 999px;
+    --measure: 68ch;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
+    --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
+    --glow-jade:
+      0 0 0 1px var(--accent-line), 0 12px 36px -16px rgba(31, 180, 126, 0.45);
+
+    /* ---------- Typography families ---------- */
     --font-mono:
       'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular,
       'SF Mono', Menlo, Consolas, monospace;
@@ -395,33 +496,78 @@ const {
       'Crimson Pro Variable', 'Crimson Pro Fallback', Georgia,
       'Times New Roman', serif;
 
-    /* Layout */
-    --max-width: 1200px;
+    /* ---------- Layout ---------- */
+    --max-width: 1180px;
     --nav-height: 72px;
 
-    /* Animation */
+    /* ---------- Motion ---------- */
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-fast: 140ms;
+    --dur-base: 240ms;
+    --dur-slow: 480ms;
+
+    /* ---------- Legacy --color-* aliases mapped to DS tokens ---------- */
+    --color-bg: var(--surface-base);
+    --color-bg-elevated: var(--surface-raised);
+    --color-bg-surface: var(--surface-overlay);
+    --color-text: var(--text-strong);
+    --color-text-muted: var(--text-muted);
+    --color-text-subtle: var(--text-subtle);
+    --color-primary: var(--accent);
+    --color-primary-muted: var(--accent-soft);
+    --color-secondary: var(--brass);
+    --color-accent: var(--clay);
+    --color-featured: var(--brass);
+    --color-border: var(--hairline);
+    --color-border-emphasis: var(--hairline-strong);
+    --color-card-bg: var(--surface-raised);
+    --color-bg-alpha: rgba(12, 14, 13, 0.72);
   }
 
-  [data-theme='dark'] {
-    --color-bg: #0d1117;
-    --color-bg-elevated: #161b22;
-    --color-bg-surface: #21262d;
-    --color-text: #e6edf3;
-    --color-text-muted: #aeb4bc;
-    --color-text-subtle: #6e7681;
+  /* ---------- PAPER (light) theme ---------- */
+  [data-theme='light'] {
+    --surface-base: var(--paper-100);
+    --surface-raised: var(--paper-50);
+    --surface-sunken: var(--paper-200);
+    --surface-overlay: #ffffff;
+    --surface-inset: var(--paper-200);
 
-    --color-primary: #7ee787;
-    --color-primary-muted: rgba(126, 231, 135, 0.15);
-    --color-secondary: #58a6ff;
-    --color-accent: #f78166;
-    --color-featured: #d2a8ff;
+    --hairline: rgba(24, 28, 25, 0.1);
+    --hairline-strong: rgba(24, 28, 25, 0.2);
+    --hairline-jade: rgba(14, 122, 87, 0.3);
 
-    --color-border: rgba(240, 246, 252, 0.1);
-    --color-border-emphasis: rgba(240, 246, 252, 0.2);
-    --color-card-bg: rgba(22, 27, 34, 0.8);
-    --color-bg-alpha: rgba(13, 17, 23, 0.95);
+    --text-strong: #131715;
+    --text: #232a25;
+    --text-muted: #555e57;
+    --text-subtle: #8b938c;
+    --text-faint: #a7ada3;
+
+    --accent: var(--jade-600);
+    --accent-hover: var(--jade-700);
+    --accent-press: var(--jade-700);
+    --accent-soft: rgba(14, 122, 87, 0.1);
+    --accent-line: rgba(14, 122, 87, 0.26);
+    --on-accent: #f7faf4;
+
+    --brass: var(--brass-600);
+    --brass-soft: rgba(154, 107, 20, 0.1);
+    --brass-line: rgba(154, 107, 20, 0.3);
+
+    --clay: var(--clay-600);
+    --clay-soft: rgba(184, 71, 43, 0.1);
+
+    --focus-ring: var(--jade-600);
+    --selection-bg: rgba(14, 122, 87, 0.18);
+
+    --shadow-sm: 0 1px 2px rgba(40, 38, 28, 0.08);
+    --shadow-md: 0 10px 30px -16px rgba(40, 38, 28, 0.22);
+    --shadow-lg: 0 28px 64px -28px rgba(40, 38, 28, 0.26);
+
+    color-scheme: light;
+
+    --color-bg-alpha: rgba(244, 241, 231, 0.78);
   }
 
   * {
@@ -445,60 +591,41 @@ const {
     position: relative;
   }
 
-  /* Subtle grid background for terminal feel */
+  /* Signature ground: a sheet of engineering paper — a fine
+     hairline grid faded out with a radial mask from the top. */
   .background-grid {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     z-index: -2;
-    background-image:
-      linear-gradient(rgba(126, 231, 135, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(126, 231, 135, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
     pointer-events: none;
+    background-image:
+      linear-gradient(var(--hairline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 100% 80% at 50% 0%,
+      #000 30%,
+      transparent 78%
+    );
+    mask-image: radial-gradient(
+      ellipse 100% 80% at 50% 0%,
+      #000 30%,
+      transparent 78%
+    );
+    opacity: 0.6;
   }
 
-  /* Noise texture overlay */
+  /* Barely-there diagonal jade hatch wash. */
   .background-texture {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     z-index: -1;
-    opacity: 0.4;
     pointer-events: none;
-  }
-
-  .background-texture {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 2px,
-        rgba(26, 127, 55, 0.015) 2px,
-        rgba(26, 127, 55, 0.015) 3px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 2px,
-        rgba(26, 127, 55, 0.015) 2px,
-        rgba(26, 127, 55, 0.015) 3px
-      );
-    opacity: 1;
-  }
-
-  [data-theme='light'] .background-grid {
-    background-image:
-      linear-gradient(rgba(26, 127, 55, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(26, 127, 55, 0.04) 1px, transparent 1px);
-  }
-
-  [data-theme='light'] .background-texture {
-    opacity: 0.15;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent 0 6px,
+      rgba(31, 180, 126, 0.018) 6px 7px
+    );
   }
 
   a {
@@ -506,6 +633,7 @@ const {
     text-decoration: none;
   }
 
+  /* Headings carry the HUMAN voice — editorial serif. */
   h1,
   h2,
   h3,
@@ -513,17 +641,20 @@ const {
   h5,
   h6 {
     margin: 0;
-    font-family: var(--font-mono);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    font-family: var(--font-serif);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--text-strong);
+    text-wrap: balance;
   }
 
   p {
     color: var(--color-text-muted);
-    line-height: 1.7;
+    line-height: var(--leading-relaxed);
     margin-top: 0;
     font-family: var(--font-serif);
+    text-wrap: pretty;
   }
 
   code,
@@ -538,20 +669,63 @@ const {
     padding: 0 2rem;
   }
 
+  /* Section titles: serif human voice with a mono // comment lead. */
   .section-title {
-    font-size: 2rem;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
     margin-bottom: 3rem;
-    color: var(--color-text);
+    color: var(--text-strong);
     position: relative;
     display: inline-flex;
-    align-items: center;
-    gap: 1rem;
+    align-items: baseline;
+    gap: 0.5rem;
   }
 
   .section-title::before {
     content: '//';
-    color: var(--color-primary);
-    font-weight: 400;
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    color: var(--accent);
+    font-weight: var(--weight-regular);
+  }
+
+  /* ---------- REPL / terminal helper classes ---------- */
+
+  /* Mono eyebrow — the machine voice label, led by a ;; comment. */
+  .ds-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+
+  .ds-eyebrow::before {
+    content: ';;';
+    color: var(--accent);
+    letter-spacing: -0.1em;
+  }
+
+  /* Numeric index — 01 / 02 — for lists & nav. */
+  .ds-index {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Hairline editorial divider. */
+  .ds-rule {
+    height: 1px;
+    background: var(--hairline);
+    border: 0;
+    margin: var(--space-6) 0;
   }
 
   /* Skip link for accessibility */
@@ -659,8 +833,7 @@ const {
 
   /* Selection */
   ::selection {
-    background: var(--color-primary);
-    color: var(--color-bg);
+    background: var(--selection-bg);
   }
 
   /* Custom scrollbar */
