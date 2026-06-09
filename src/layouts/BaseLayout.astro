@@ -560,21 +560,25 @@ const {
     --text-strong: #0e1626;
     --text: #1f2c44;
     --text-muted: #525d85;
-    --text-subtle: #6e7aa6;
-    --text-faint: #94bcce;
+    /* subtle darkened from the raw scale so small mono labels (eyebrows,
+       indices, tech tags) clear WCAG AA contrast on the sky ground */
+    --text-subtle: #586480;
+    --text-faint: #7e8aa6;
 
-    --accent: var(--teal-600);
-    --accent-hover: var(--teal-700);
-    --accent-press: var(--teal-700);
+    /* accent uses teal-700 in light so accent-coloured text and badges
+       (status pills, // leads) stay >= 4.5:1 on tinted backgrounds */
+    --accent: var(--teal-700);
+    --accent-hover: var(--teal-800);
+    --accent-press: var(--teal-800);
     --accent-soft: rgba(38, 120, 121, 0.1);
     --accent-line: rgba(38, 120, 121, 0.28);
     --on-accent: #f1f8fb;
 
-    --shell: var(--shell-600);
-    --shell-soft: rgba(179, 77, 108, 0.1);
-    --shell-line: rgba(179, 77, 108, 0.3);
+    --shell: var(--shell-700);
+    --shell-soft: rgba(130, 56, 80, 0.1);
+    --shell-line: rgba(130, 56, 80, 0.3);
 
-    --haze: var(--haze-600);
+    --haze: var(--haze-700);
     --haze-soft: rgba(110, 122, 166, 0.1);
     --haze-line: rgba(110, 122, 166, 0.32);
 
