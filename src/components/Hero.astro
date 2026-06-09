@@ -108,6 +108,10 @@ const t = useTranslations(lang);
 <style>
   .hero {
     min-height: 100vh;
+    /* svh = small viewport height: stays fixed when the mobile address
+       bar collapses, so the vertically-centred content doesn't re-centre
+       and shift (CLS). */
+    min-height: 100svh;
     display: flex;
     align-items: center;
     padding-top: calc(var(--nav-height) + 2rem);
@@ -385,7 +389,9 @@ const t = useTranslations(lang);
 
     .profile-image {
       max-width: 100%;
-      height: 100%;
+      /* keep aspect-ratio reserving the height so the image (which sits
+         above the text on mobile) can't push the content down on load */
+      height: auto;
     }
   }
 

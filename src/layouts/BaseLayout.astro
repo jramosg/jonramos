@@ -608,12 +608,16 @@ const {
     scroll-behavior: smooth;
     font-size: 18px;
     line-height: 1.6;
+    /* Reserve the scrollbar gutter so a scrollbar appearing after load
+       doesn't narrow the viewport and reflow the centred hero (CLS). */
+    scrollbar-gutter: stable;
   }
 
   body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    min-height: 100svh;
     overflow-x: hidden;
     position: relative;
   }
