@@ -532,7 +532,9 @@ const langPath = Astro.url.pathname
     --text: #dde7ee;
     --text-muted: #a3b0c4;
     --text-subtle: #7384a0;
-    --text-faint: #4e5c78;
+    /* faint must still clear WCAG AA (4.5:1) on the ink ground — it is
+       used for real text (geo line, image label, durations) */
+    --text-faint: #6d7ea3;
 
     --accent: var(--teal-400);
     --accent-hover: var(--teal-300);
@@ -658,7 +660,7 @@ const langPath = Astro.url.pathname
     /* subtle darkened from the raw scale so small mono labels (eyebrows,
        indices, tech tags) clear WCAG AA contrast on the sky ground */
     --text-subtle: #586480;
-    --text-faint: #7e8aa6;
+    --text-faint: #5d6a87;
 
     /* accent uses teal-700 in light so accent-coloured text and badges
        (status pills, // leads) stay >= 4.5:1 on tinted backgrounds */
