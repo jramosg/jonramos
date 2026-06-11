@@ -1,5 +1,13 @@
 type Theme = string | null;
 
+function isAbortedViewTransitionError(error: unknown) {
+  return (
+    error instanceof DOMException &&
+    error.name === 'InvalidStateError' &&
+    error.message.includes('Transition was aborted')
+  );
+}
+
 export function getStoredTheme() {
   const localStorageTheme = localStorage.getItem('theme');
   // INK (dark) is the signature default ground for the design system.
@@ -28,9 +36,27 @@ export function setTheme(
     }
   };
 
-  if (!document.startViewTransition || options.transition === false) {
+  if (
+    !document.startViewTransition ||
+    options.transition === false ||
+    document.visibilityState !== 'visible'
+  ) {
     applyTheme();
   } else {
-    document.startViewTransition(applyTheme);
+    try {
+      const transition = document.startViewTransition(applyTheme);
+
+      transition.ready.catch((error: unknown) => {
+        if (!isAbortedViewTransitionError(error)) {
+          throw error;
+        }
+      });
+    } catch (error) {
+      if (isAbortedViewTransitionError(error)) {
+        applyTheme();
+      } else {
+        throw error;
+      }
+    }
   }
 }
