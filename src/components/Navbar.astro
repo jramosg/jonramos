@@ -66,13 +66,12 @@ const onCurrentPage = (link: (typeof links)[number]) =>
         </a>
 
         <div class="nav-center">
-          <ul class="nav-links" role="menubar">
+          <ul class="nav-links">
             {
               links.map((link, i) => (
-                <li role="none">
+                <li>
                   <a
                     href={link.href}
-                    role="menuitem"
                     data-section={link.spy ? link.id : undefined}
                     class={onCurrentPage(link) ? 'is-active' : undefined}
                     aria-current={onCurrentPage(link) ? 'page' : undefined}
@@ -115,17 +114,15 @@ const onCurrentPage = (link: (typeof links)[number]) =>
       aria-label="Mobile navigation"
       aria-hidden="true"
     >
-      <nav class="drawer-nav" role="menu">
+      <nav class="drawer-nav" aria-label="Mobile navigation links">
         {
           links.map((link, index) => (
             <a
               href={link.href}
               tabindex="-1"
-              aria-hidden="true"
               data-section={link.spy ? link.id : undefined}
               class={`drawer-link${onCurrentPage(link) ? ' is-active' : ''}`}
               aria-current={onCurrentPage(link) ? 'page' : undefined}
-              role="menuitem"
               style={`animation-delay: ${index * 0.05}s`}
             >
               <span class="drawer-link-index">0{index + 1}</span>
@@ -135,6 +132,8 @@ const onCurrentPage = (link: (typeof links)[number]) =>
         }
       </nav>
     </aside>
+
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
   </header>
 </>
 
@@ -152,19 +151,21 @@ const onCurrentPage = (link: (typeof links)[number]) =>
         drawer?.classList.remove('open');
         overlay?.classList.remove('open');
         menuBtn?.classList.remove('open');
+        menuBtn?.setAttribute('aria-expanded', 'false');
+        drawer?.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         drawerLinks.forEach((link) => {
           link.setAttribute('tabindex', '-1');
-          link.setAttribute('aria-hidden', 'true');
         });
       } else {
         drawer?.classList.add('open');
         overlay?.classList.add('open');
         menuBtn?.classList.add('open');
+        menuBtn?.setAttribute('aria-expanded', 'true');
+        drawer?.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         drawerLinks.forEach((link) => {
           link.setAttribute('tabindex', '0');
-          link.setAttribute('aria-hidden', 'false');
         });
       }
     }
@@ -179,6 +180,13 @@ const onCurrentPage = (link: (typeof links)[number]) =>
 
     drawerLinks.forEach((link) => {
       link.addEventListener('click', toggleDrawer);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer?.classList.contains('open')) {
+        toggleDrawer();
+        menuBtn?.focus();
+      }
     });
 
     // Scroll-spy: flag the nav link whose section is currently in view.
@@ -228,6 +236,26 @@ const onCurrentPage = (link: (typeof links)[number]) =>
       window.addEventListener('resize', onScroll, { passive: true });
       updateActive();
     }
+
+    // Scroll progress: a teal hairline along the bottom of the header.
+    const progress = document.getElementById('scrollProgress');
+    if (progress) {
+      let progressTicking = false;
+      const updateProgress = () => {
+        progressTicking = false;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+        progress.style.transform = `scaleX(${ratio.toFixed(4)})`;
+      };
+      const onProgressScroll = () => {
+        if (progressTicking) return;
+        progressTicking = true;
+        requestAnimationFrame(updateProgress);
+      };
+      window.addEventListener('scroll', onProgressScroll, { passive: true });
+      window.addEventListener('resize', onProgressScroll, { passive: true });
+      updateProgress();
+    }
   });
 </script>
 
@@ -243,6 +271,18 @@ const onCurrentPage = (link: (typeof links)[number]) =>
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
+  }
+
+  .scroll-progress {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--haze));
+    transform: scaleX(0);
+    transform-origin: left;
+    pointer-events: none;
   }
 
   .container {

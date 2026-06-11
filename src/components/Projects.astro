@@ -12,6 +12,7 @@ const projects = [
     href: 'https://www.naiha.io/',
     tags: ['Clojure', 'ClojureScript', 'Datomic'],
     type: 'WebApplication',
+    featured: true,
   },
   {
     title: 'Laguntza Fisioterapia',
@@ -76,13 +77,16 @@ const projects = [
   itemtype="https://schema.org/ItemList"
 >
   <div class="container">
-    <header class="section-header">
-      <h2 id="projects-title" class="section-title" itemprop="name">
-        {t('projects.title')}
-      </h2>
-      <p class="section-subtitle">
-        A selection of projects I've built and contributed to
+    <header class="section-head" data-reveal>
+      <p class="kicker">
+        <span class="no">02</span> · {t('projects.title')}
       </p>
+      <div class="heading-row">
+        <h2 id="projects-title" class="heading" itemprop="name">
+          {t('projects.title')}
+        </h2>
+      </div>
+      <p class="sub">{t('projects.subtitle')}</p>
       <meta itemprop="numberOfItems" content={String(projects.length)} />
       <meta itemprop="itemListOrder" content="ItemListUnordered" />
     </header>
@@ -93,10 +97,16 @@ const projects = [
           <div
             role="listitem"
             itemprop="itemListElement"
-            style={`animation-delay: ${index * 0.05}s`}
+            class:list={['cell', { featured: project.featured }]}
+            data-reveal
+            style={`--reveal-delay: ${Math.min(index, 5) * 70}ms`}
           >
             <meta itemprop="position" content={String(index + 1)} />
-            <ProjectCard {...project} />
+            <ProjectCard
+              {...project}
+              index={String(index + 1).padStart(2, '0')}
+              featuredLabel={t('projects.featured')}
+            />
           </div>
         ))
       }
@@ -106,37 +116,7 @@ const projects = [
 
 <style>
   .section {
-    padding: 6rem 0;
-  }
-
-  .section-header {
-    margin-bottom: 3rem;
-  }
-
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-tight);
-    color: var(--text-strong);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-  }
-
-  .section-title::before {
-    content: '//';
-    font-family: var(--font-mono);
-    font-size: 0.7em;
-    color: var(--accent);
-    font-weight: var(--weight-regular);
-  }
-
-  .section-subtitle {
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    margin: 0;
+    padding: 7rem 0;
   }
 
   .grid {
@@ -145,28 +125,18 @@ const projects = [
     gap: 1.25rem;
   }
 
-  .grid > div {
-    animation: fadeInUp 0.4s var(--ease-out-expo) backwards;
+  .cell {
+    display: flex;
+    min-width: 0;
   }
 
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .cell.featured {
+    grid-column: 1 / -1;
   }
 
   @media (max-width: 768px) {
     .section {
-      padding: 4rem 0;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
+      padding: 4.5rem 0;
     }
   }
 </style>

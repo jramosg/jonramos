@@ -18,14 +18,39 @@ const t = useTranslations(lang);
   <div class="container">
     <div class="hero-layout">
       <article class="content">
-        <div class="terminal-line">
-          <span class="prompt">$</span>
-          <span class="command">whoami</span>
+        <!-- Live REPL — the machine voice introduces the human. -->
+        <div class="repl">
+          <p class="repl-line" aria-hidden="true">
+            <span class="repl-prompt">user=&gt;</span>
+            <span class="repl-expr">(def jon (software-engineer))</span>
+          </p>
+          <p class="repl-line repl-result" aria-hidden="true">#'user/jon</p>
+          <p class="repl-line repl-comment" aria-hidden="true">
+            <span class="repl-semis">;;</span>
+            Clojure · ClojureScript · Datomic
+          </p>
+          <div class="repl-history" id="repl-history" aria-live="polite"></div>
+          <p class="repl-line repl-input-line">
+            <span class="repl-prompt" aria-hidden="true">user=&gt;</span>
+            <input
+              id="repl-input"
+              class="repl-input"
+              type="text"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="send"
+              maxlength="140"
+              placeholder="(help)"
+              aria-label="Interactive Clojure REPL. Type (help) and press Enter."
+            />
+          </p>
         </div>
 
         <h1 id="hero-title" class="name" itemprop="name">
           <span class="first">Jon</span>
-          <span class="last">Ramos</span>
+          <em class="last">Ramos</em>
           {lang === 'eu' && <span class="suffix">naiz</span>}
         </h1>
 
@@ -62,26 +87,28 @@ const t = useTranslations(lang);
         </span>
 
         <nav class="actions" aria-label="Primary actions">
-          <a
-            href={getNavigationUrl(lang, '#projects')}
-            class="btn btn-primary"
-            role="button"
-          >
-            <span class="btn-icon">&gt;</span>
+          <a href={getNavigationUrl(lang, '#projects')} class="btn btn-primary">
+            <span class="btn-icon" aria-hidden="true">&gt;</span>
             {t('hero.viewWork')}
+            <span class="btn-arrow" aria-hidden="true">→</span>
           </a>
           <a
             href={getNavigationUrl(lang, '#contact')}
             class="btn btn-secondary"
-            role="button"
           >
             {t('hero.contactMe')}
           </a>
         </nav>
+
+        <p class="geo" aria-hidden="true">
+          <span class="geo-mark">⌖</span>
+          43.25°N&thinsp;·&thinsp;2.00°W — Urnieta, Euskal Herria
+        </p>
       </article>
 
       <figure class="image-container">
         <div class="image-frame">
+          <div class="frame-offset" aria-hidden="true"></div>
           <div class="frame-corner tl"></div>
           <div class="frame-corner tr"></div>
           <div class="frame-corner bl"></div>
@@ -91,19 +118,402 @@ const t = useTranslations(lang);
             alt="Jon Ramos - Software Engineer and Full Stack Developer from Urnieta, Basque Country specializing in Clojure and modern web technologies"
             width={400}
             height={533}
+            densities={[1, 2]}
             class="profile-image"
             loading="eager"
             fetchpriority="high"
             itemprop="image"
           />
         </div>
-        <div class="image-label">
-          <span class="label-prefix">//</span> jon_ramos.jpeg
-        </div>
+        <figcaption class="image-label">
+          <span class="label-prefix">;;</span> jon_ramos.webp
+          <span class="label-dim">· 3024×4032</span>
+        </figcaption>
       </figure>
     </div>
   </div>
+
+  <a
+    href={getNavigationUrl(lang, '#experience')}
+    class="scroll-cue"
+    aria-label="Scroll to experience section"
+  >
+    <span class="scroll-word">scroll</span>
+    <span class="scroll-track" aria-hidden="true"></span>
+  </a>
 </section>
+
+<script>
+  import { setTheme } from './theme-switcher/theme';
+
+  /* ------------------------------------------------------------------ */
+  /* A tiny Clojure: enough of a reader + evaluator that the hero REPL   */
+  /* is real. (def jon (software-engineer)) genuinely evaluates.         */
+  /* ------------------------------------------------------------------ */
+
+  class Kw {
+    name: string;
+    constructor(name: string) {
+      this.name = name;
+    }
+  }
+
+  class Sym {
+    name: string;
+    constructor(name: string) {
+      this.name = name;
+    }
+  }
+
+  class Vec {
+    items: Value[];
+    constructor(items: Value[]) {
+      this.items = items;
+    }
+  }
+
+  /* printed verbatim — for record-style literals and help text */
+  class Raw {
+    s: string;
+    constructor(s: string) {
+      this.s = s;
+    }
+  }
+
+  type Value =
+    | number
+    | string
+    | boolean
+    | null
+    | Kw
+    | Sym
+    | Vec
+    | Raw
+    | Value[]
+    | ((...args: Value[]) => Value);
+
+  function tokenize(src: string): string[] {
+    const tokens: string[] = [];
+    let i = 0;
+    while (i < src.length) {
+      const c = src[i];
+      if (/[\s,]/.test(c)) {
+        i++;
+      } else if ("()[]'".includes(c)) {
+        tokens.push(c);
+        i++;
+      } else if (c === '"') {
+        let j = i + 1;
+        while (j < src.length && src[j] !== '"') {
+          j += src[j] === '\\' ? 2 : 1;
+        }
+        if (j >= src.length) throw new Error('EOF while reading string');
+        tokens.push(src.slice(i, j + 1));
+        i = j + 1;
+      } else if (c === ';') {
+        break;
+      } else {
+        let j = i;
+        while (j < src.length && !/[\s,()[\]"';]/.test(src[j])) j++;
+        tokens.push(src.slice(i, j));
+        i = j;
+      }
+    }
+    return tokens;
+  }
+
+  function readForm(tokens: string[]): Value {
+    const tok = tokens.shift();
+    if (tok === undefined) throw new Error('EOF while reading');
+    if (tok === "'") return [new Sym('quote'), readForm(tokens)];
+    if (tok === '(' || tok === '[') {
+      const close = tok === '(' ? ')' : ']';
+      const items: Value[] = [];
+      while (tokens[0] !== close) {
+        if (tokens.length === 0) throw new Error('EOF while reading');
+        items.push(readForm(tokens));
+      }
+      tokens.shift();
+      return tok === '(' ? items : new Vec(items);
+    }
+    if (tok === ')' || tok === ']') {
+      throw new Error(`Unmatched delimiter: ${tok}`);
+    }
+    if (tok.startsWith('"')) return JSON.parse(tok);
+    if (tok === 'nil') return null;
+    if (tok === 'true') return true;
+    if (tok === 'false') return false;
+    if (/^[+-]?(\d+\.?\d*|\.\d+)$/.test(tok)) return Number(tok);
+    if (tok.startsWith(':')) return new Kw(tok.slice(1));
+    return new Sym(tok);
+  }
+
+  function pr(v: Value): string {
+    if (v === null) return 'nil';
+    if (typeof v === 'string') return JSON.stringify(v);
+    if (typeof v === 'function') return '#function[user/fn]';
+    if (v instanceof Kw) return ':' + v.name;
+    if (v instanceof Sym) return v.name;
+    if (v instanceof Raw) return v.s;
+    if (v instanceof Vec) return '[' + v.items.map(pr).join(' ') + ']';
+    if (Array.isArray(v)) return '(' + v.map(pr).join(' ') + ')';
+    return String(v);
+  }
+
+  function asNum(v: Value): number {
+    if (typeof v !== 'number') {
+      throw new Error(`${pr(v)} cannot be cast to java.lang.Number`);
+    }
+    return v;
+  }
+
+  function seqOf(v: Value): Value[] {
+    if (v instanceof Vec) return v.items;
+    if (Array.isArray(v)) return v;
+    if (typeof v === 'string') return v.split('');
+    throw new Error(`Don't know how to create ISeq from: ${pr(v)}`);
+  }
+
+  function scrollTo(id: string): Value {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    return new Kw(id);
+  }
+
+  function applyTheme(name: string): Value {
+    setTheme(name);
+    const dark = name === 'dark';
+    for (const id of [
+      'theme-toggle-checkbox',
+      'theme-toggle-mobile-checkbox',
+    ]) {
+      const cb = document.getElementById(id) as HTMLInputElement | null;
+      if (cb) cb.checked = dark;
+    }
+    return new Kw(name);
+  }
+
+  const person = new Raw(
+    '#user.SoftwareEngineer{:name "Jon Ramos", :since 2016, ' +
+      ':stack [Clojure ClojureScript Datomic], :base "Urnieta"}',
+  );
+
+  const HELP = new Raw(
+    [
+      ';; this REPL is real — try:',
+      ';;   (skills)          what I work with',
+      ';;   (experience)      jump to experience',
+      ';;   (projects)        jump to projects',
+      ';;   (contact)         get in touch',
+      ';;   (theme :light)    flip the lights',
+      ';;   (* 6 7)           or just compute',
+    ].join('\n'),
+  );
+
+  const env: Record<string, Value> = {
+    jon: person,
+    'software-engineer': () => person,
+    help: () => HELP,
+    skills: () =>
+      new Vec(
+        [
+          'clojure',
+          'clojurescript',
+          'datomic',
+          're-frame',
+          'react',
+          'astro',
+          'typescript',
+          'postgresql',
+        ].map((s) => new Kw(s)),
+      ),
+    experience: () => scrollTo('experience'),
+    projects: () => scrollTo('projects'),
+    contact: () => scrollTo('contact'),
+    theme: (t?: Value) => {
+      if (t === undefined) {
+        return new Kw(
+          document.documentElement.getAttribute('data-theme') ?? 'dark',
+        );
+      }
+      if (t instanceof Kw && (t.name === 'light' || t.name === 'dark')) {
+        return applyTheme(t.name);
+      }
+      throw new Error('theme expects :light or :dark');
+    },
+    '+': (...xs) => xs.reduce<number>((a, b) => a + asNum(b), 0),
+    '*': (...xs) => xs.reduce<number>((a, b) => a * asNum(b), 1),
+    '-': (...xs) =>
+      xs.length === 1
+        ? -asNum(xs[0])
+        : xs.slice(1).reduce<number>((a, b) => a - asNum(b), asNum(xs[0])),
+    '/': (...xs) =>
+      xs.slice(1).reduce<number>((a, b) => {
+        if (asNum(b) === 0) throw new Error('Divide by zero');
+        return a / asNum(b);
+      }, asNum(xs[0])),
+    mod: (a, b) => asNum(a) % asNum(b),
+    inc: (x) => asNum(x) + 1,
+    dec: (x) => asNum(x) - 1,
+    max: (...xs) => Math.max(...xs.map(asNum)),
+    min: (...xs) => Math.min(...xs.map(asNum)),
+    '=': (a, b) => pr(a) === pr(b),
+    '<': (a, b) => asNum(a) < asNum(b),
+    '>': (a, b) => asNum(a) > asNum(b),
+    '<=': (a, b) => asNum(a) <= asNum(b),
+    '>=': (a, b) => asNum(a) >= asNum(b),
+    not: (x) => x === false || x === null,
+    str: (...xs) =>
+      xs
+        .map((x) => (typeof x === 'string' ? x : x === null ? '' : pr(x)))
+        .join(''),
+    count: (x) => seqOf(x).length,
+    first: (x) => seqOf(x)[0] ?? null,
+    last: (x) => seqOf(x)[seqOf(x).length - 1] ?? null,
+    rest: (x) => seqOf(x).slice(1),
+    reverse: (x) => seqOf(x).slice().reverse(),
+    nth: (x, n) => {
+      const s = seqOf(x);
+      const i = asNum(n);
+      if (i < 0 || i >= s.length) throw new Error('Index out of bounds');
+      return s[i];
+    },
+    range: (n?: Value) => {
+      const len = Math.min(n === undefined ? 0 : asNum(n), 100);
+      return Array.from({ length: len }, (_, i) => i);
+    },
+    'rand-int': (n) => Math.floor(Math.random() * asNum(n)),
+    'rand-nth': (x) => {
+      const s = seqOf(x);
+      return s[Math.floor(Math.random() * s.length)];
+    },
+  };
+
+  function evalForm(form: Value): Value {
+    if (form instanceof Sym) {
+      if (form.name in env) return env[form.name];
+      throw new Error(`Unable to resolve symbol: ${form.name} in this context`);
+    }
+    if (form instanceof Vec) return new Vec(form.items.map(evalForm));
+    if (!Array.isArray(form)) return form;
+    if (form.length === 0) return [];
+
+    const [head, ...args] = form;
+    if (head instanceof Sym) {
+      if (head.name === 'quote') return args[0] ?? null;
+      if (head.name === 'def') {
+        const [name, expr] = args;
+        if (!(name instanceof Sym)) {
+          throw new Error('First argument to def must be a Symbol');
+        }
+        env[name.name] = expr === undefined ? null : evalForm(expr);
+        return new Raw(`#'user/${name.name}`);
+      }
+      if (head.name === 'if') {
+        const test = evalForm(args[0]);
+        const branch = test === false || test === null ? args[2] : args[1];
+        return branch === undefined ? null : evalForm(branch);
+      }
+      if (head.name === 'do') {
+        return args.reduce<Value>((_, f) => evalForm(f), null);
+      }
+    }
+
+    const fn = evalForm(head);
+    if (typeof fn !== 'function') {
+      throw new Error(`${pr(fn)} cannot be cast to clojure.lang.IFn`);
+    }
+    return fn(...args.map(evalForm));
+  }
+
+  /* ------------------------------- UI ------------------------------- */
+
+  const repl = document.querySelector<HTMLElement>('.repl');
+  const history = document.getElementById('repl-history');
+  const input = document.getElementById(
+    'repl-input',
+  ) as HTMLInputElement | null;
+
+  if (repl && history && input) {
+    const MAX_LINES = 14;
+
+    const addLine = (cls: string, text: string, prompt = false) => {
+      const p = document.createElement('p');
+      p.className = `repl-line ${cls}`;
+      if (prompt) {
+        const span = document.createElement('span');
+        span.className = 'repl-prompt';
+        span.textContent = 'user=>';
+        p.append(span, document.createTextNode(' ' + text));
+      } else {
+        p.textContent = text;
+      }
+      history.append(p);
+      while (history.children.length > MAX_LINES) {
+        history.firstElementChild?.remove();
+      }
+    };
+
+    const past: string[] = [];
+    let cursor = 0;
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const src = input.value.trim();
+        if (!src) return;
+        addLine('repl-echo', src, true);
+        try {
+          const tokens = tokenize(src);
+          if (tokens.length === 0) throw new Error('EOF while reading');
+          let result: Value = null;
+          while (tokens.length > 0) result = evalForm(readForm(tokens));
+          let out = pr(result);
+          if (out.length > 280) out = out.slice(0, 280) + '…';
+          addLine('repl-out', out);
+        } catch (err) {
+          addLine(
+            'repl-err',
+            `Execution error: ${err instanceof Error ? err.message : err}`,
+          );
+        }
+        past.push(src);
+        cursor = past.length;
+        input.value = '';
+      } else if (e.key === 'ArrowUp' && past.length > 0) {
+        e.preventDefault();
+        cursor = Math.max(0, cursor - 1);
+        input.value = past[cursor];
+      } else if (e.key === 'ArrowDown' && past.length > 0) {
+        e.preventDefault();
+        cursor = Math.min(past.length, cursor + 1);
+        input.value = cursor === past.length ? '' : past[cursor];
+      }
+    });
+
+    repl.addEventListener('click', () => {
+      if (window.getSelection()?.toString() === '') {
+        input.focus({ preventScroll: true });
+      }
+    });
+  }
+
+  /* Magnetic buttons — pointer-following nudge, desktop pointers only. */
+  if (
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    document.querySelectorAll<HTMLElement>('.hero .btn').forEach((btn) => {
+      btn.addEventListener('pointermove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width - 0.5) * 8;
+        const y = ((e.clientY - r.top) / r.height - 0.5) * 6;
+        btn.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+      });
+      btn.addEventListener('pointerleave', () => {
+        btn.style.translate = '';
+      });
+    });
+  }
+</script>
 
 <style>
   .hero {
@@ -115,14 +525,14 @@ const t = useTranslations(lang);
     display: flex;
     align-items: center;
     padding-top: calc(var(--nav-height) + 2rem);
-    padding-bottom: 4rem;
+    padding-bottom: 5rem;
     position: relative;
     overflow: hidden;
   }
 
   .hero-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
     gap: 4rem;
   }
@@ -132,99 +542,258 @@ const t = useTranslations(lang);
     flex-direction: column;
   }
 
-  .terminal-line {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  /* ---------- Entrance choreography (CSS-only, load-time) ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .repl,
+    .name,
+    .title,
+    .description,
+    .actions,
+    .geo {
+      animation: rise 0.9s var(--ease-out-quint) backwards;
+    }
+
+    .name {
+      animation-delay: 0.08s;
+    }
+    .title {
+      animation-delay: 0.16s;
+    }
+    .description {
+      animation-delay: 0.24s;
+    }
+    .actions {
+      animation-delay: 0.32s;
+    }
+    .geo {
+      animation-delay: 0.4s;
+    }
+
+    .image-container {
+      animation: rise 1s var(--ease-out-quint) 0.2s backwards;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+  }
+
+  /* ---------- The REPL ---------- */
+  .repl {
     font-family: var(--font-mono);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-text-muted);
-    background: var(--color-bg-surface);
-    border: 1px solid var(--color-border);
-    padding: 0.75rem 1rem;
-    border-radius: 4px;
-    width: fit-content;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    /* fixed lines — height is reserved, nothing below shifts while
+       the expression types itself out. */
   }
 
-  .prompt {
-    color: var(--color-primary);
+  /* ---------- Interactive REPL (progressive enhancement) ---------- */
+  /* The input line only exists with JS; html.has-js is set pre-paint,
+     so there is no visible layout shift either way. */
+  .repl-input-line {
+    display: none;
   }
 
-  .command {
-    color: var(--color-text);
-    position: relative;
+  :global(html.has-js) .repl-input-line {
+    display: flex;
+    align-items: baseline;
   }
 
-  .command::after {
-    content: '_';
-    animation: blink 1s step-end infinite;
-    color: var(--color-primary);
+  .repl-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: inherit;
+    line-height: inherit;
+    color: var(--text);
+    caret-color: var(--accent);
   }
 
-  @keyframes blink {
+  .repl-input::placeholder {
+    color: var(--text-faint);
+  }
+
+  .repl-history {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .repl-history :global(.repl-echo) {
+    color: var(--text-muted);
+  }
+
+  .repl-history :global(.repl-echo .repl-prompt) {
+    color: var(--text-subtle);
+    margin-right: 0.6ch;
+  }
+
+  .repl-history :global(.repl-out) {
+    color: var(--accent);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .repl-history :global(.repl-err) {
+    color: var(--shell);
+    overflow-wrap: anywhere;
+  }
+
+  .repl-line {
+    margin: 0;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    line-height: inherit;
+    min-height: 1.7em;
+  }
+
+  .repl-prompt {
+    color: var(--text-subtle);
+    margin-right: 0.6ch;
+  }
+
+  .repl-expr {
+    display: inline-block;
+    vertical-align: bottom;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 29ch; /* exact length of the expression */
+    color: var(--text);
+    border-right: 2px solid var(--accent);
+  }
+
+  /* Clojure-ish syntax tinting via plain CSS on the one expression we
+     control: keyword + name picked out with gradient text. */
+  .repl-result {
+    color: var(--accent);
+  }
+
+  .repl-comment {
+    color: var(--text-subtle);
+    display: flex;
+    align-items: center;
+    gap: 0.6ch;
+  }
+
+  .repl-semis {
+    color: var(--accent);
+    letter-spacing: -0.1em;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .repl-expr {
+      animation:
+        typing 1.6s steps(29) 0.5s backwards,
+        caret-blink 1.1s step-end 2.3s infinite;
+    }
+
+    .repl-result {
+      animation: repl-fade 0.4s var(--ease-out-expo) 2.2s backwards;
+    }
+
+    .repl-comment {
+      animation: repl-fade 0.4s var(--ease-out-expo) 2.5s backwards;
+    }
+
+    .repl-input-line {
+      animation: repl-fade 0.4s var(--ease-out-expo) 2.8s backwards;
+    }
+  }
+
+  @keyframes typing {
+    from {
+      max-width: 0;
+    }
+  }
+
+  @keyframes caret-blink {
     0%,
     100% {
-      opacity: 1;
+      border-right-color: var(--accent);
     }
     50% {
-      opacity: 0;
+      border-right-color: transparent;
     }
   }
 
+  @keyframes repl-fade {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  /* ---------- The name ---------- */
   .name {
-    font-size: clamp(3rem, 8vw, 5rem);
-    line-height: 1;
-    margin-bottom: 1.5rem;
+    font-size: var(--text-display);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.75rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    align-items: baseline;
+    column-gap: 0.22em;
   }
 
   .first {
-    color: var(--color-text);
+    color: var(--text-strong);
+    font-weight: var(--weight-medium);
   }
 
   .last {
-    color: var(--color-primary);
+    font-style: italic;
+    font-weight: var(--weight-semibold);
+    background: linear-gradient(105deg, var(--accent) 20%, var(--haze) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* breathing room so the italic overhang isn't clipped */
+    padding-right: 0.08em;
   }
 
   .suffix {
-    font-size: 1.5rem;
-    color: var(--color-text-muted);
-    align-self: flex-end;
-    margin-bottom: 0.5rem;
-    font-weight: 400;
+    font-size: 0.3em;
+    color: var(--text-muted);
+    font-weight: var(--weight-regular);
+    font-style: italic;
   }
 
   .title {
     font-family: var(--font-serif);
-    font-size: 1.5rem;
-    color: var(--color-text-muted);
-    margin-bottom: 2rem;
-    font-weight: 400;
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-weight: var(--weight-regular);
     font-style: italic;
     max-width: 500px;
   }
 
   .description {
-    font-size: 1.125rem;
-    max-width: 520px;
-    margin-bottom: 3rem;
-    color: var(--color-text-muted);
+    font-size: var(--text-md);
+    max-width: 54ch;
+    margin-bottom: 2.5rem;
+    color: var(--text-muted);
   }
 
   .highlight {
-    color: var(--color-secondary);
-    border-bottom: 1px solid transparent;
-    transition: all 0.2s var(--ease-out-expo);
+    color: var(--haze);
+    border-bottom: 1px solid var(--haze-line);
+    transition: all var(--dur-base) var(--ease-out-expo);
   }
 
   .highlight:hover {
-    border-bottom-color: var(--color-secondary);
+    color: var(--text-strong);
+    border-bottom-color: var(--haze);
   }
 
+  /* ---------- Actions ---------- */
   .actions {
     display: flex;
     gap: 1rem;
@@ -239,12 +808,25 @@ const t = useTranslations(lang);
     font-family: var(--font-mono);
     font-size: 0.9rem;
     font-weight: 500;
-    border-radius: 4px;
-    transition: all 0.2s var(--ease-out-expo);
+    border-radius: var(--radius-sm);
+    transition: all var(--dur-base) var(--ease-out-expo);
   }
 
   .btn-icon {
     color: var(--color-primary);
+  }
+
+  .btn-arrow {
+    display: inline-block;
+    margin-left: 0.1rem;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all var(--dur-base) var(--ease-out-expo);
+  }
+
+  .btn-primary:hover .btn-arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .btn-primary {
@@ -272,10 +854,24 @@ const t = useTranslations(lang);
 
   .btn-secondary:hover {
     color: var(--color-text);
-    border-color: var(--color-border-emphasis);
+    border-color: var(--hairline-teal);
+    background: var(--accent-soft);
   }
 
-  /* Image Styles */
+  .geo {
+    margin: 2.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-faint);
+  }
+
+  .geo-mark {
+    color: var(--shell);
+    margin-right: 0.5ch;
+  }
+
+  /* ---------- Portrait ---------- */
   .image-container {
     display: flex;
     flex-direction: column;
@@ -288,12 +884,29 @@ const t = useTranslations(lang);
     padding: 1rem;
   }
 
+  /* Offset echo frame — a second hairline rectangle pushed off-axis. */
+  .frame-offset {
+    position: absolute;
+    inset: 1rem;
+    transform: translate(16px, 16px);
+    border: 1px solid var(--hairline-teal);
+    border-radius: 2px;
+    pointer-events: none;
+    transition: transform var(--dur-slow) var(--ease-out-expo);
+  }
+
+  .image-frame:hover .frame-offset {
+    transform: translate(10px, 10px);
+  }
+
   .frame-corner {
     position: absolute;
     width: 24px;
     height: 24px;
     border-color: var(--color-primary);
     border-style: solid;
+    z-index: 1;
+    transition: all var(--dur-slow) var(--ease-out-expo);
   }
 
   .tl {
@@ -320,16 +933,26 @@ const t = useTranslations(lang);
     border-width: 0 2px 2px 0;
   }
 
+  .image-frame:hover .frame-corner {
+    width: 32px;
+    height: 32px;
+  }
+
   .profile-image {
     width: 100%;
     max-width: 400px;
-    aspect-ratio: 1600 / 2133;
+    aspect-ratio: 3024 / 4032;
     border-radius: 2px;
-    transition: transform 0.4s var(--ease-out-expo);
+    display: block;
+    filter: grayscale(0.25) contrast(1.02);
+    transition:
+      transform var(--dur-slow) var(--ease-out-expo),
+      filter var(--dur-slow) var(--ease-out-expo);
   }
 
-  .profile-image:hover {
-    transform: scale(1.02);
+  .image-frame:hover .profile-image {
+    transform: scale(1.015);
+    filter: grayscale(0) contrast(1);
   }
 
   .image-label {
@@ -340,6 +963,72 @@ const t = useTranslations(lang);
 
   .label-prefix {
     color: var(--color-primary);
+    letter-spacing: -0.1em;
+  }
+
+  .label-dim {
+    color: var(--text-faint);
+  }
+
+  /* ---------- Scroll cue ---------- */
+  .scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 1.75rem;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-faint);
+    transition: color var(--dur-base) var(--ease-out-expo);
+  }
+
+  .scroll-cue:hover {
+    color: var(--accent);
+  }
+
+  .scroll-word {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    /* visually centre the letter-spaced word */
+    margin-right: -0.3em;
+  }
+
+  .scroll-track {
+    width: 1px;
+    height: 44px;
+    background: var(--hairline-strong);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-track::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 14px;
+    background: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-track::after {
+      animation: scroll-drop 2.2s var(--ease-in-out) infinite;
+    }
+  }
+
+  @keyframes scroll-drop {
+    0% {
+      transform: translateY(-16px);
+    }
+    65%,
+    100% {
+      transform: translateY(46px);
+    }
   }
 
   .visually-hidden {
@@ -383,30 +1072,41 @@ const t = useTranslations(lang);
       justify-content: center;
     }
 
-    .terminal-line {
-      justify-content: center;
+    .repl {
+      text-align: left;
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .repl-comment {
+      justify-content: flex-start;
     }
 
     .profile-image {
-      max-width: 100%;
+      max-width: min(320px, 100%);
       /* keep aspect-ratio reserving the height so the image (which sits
          above the text on mobile) can't push the content down on load */
       height: auto;
     }
+
+    .scroll-cue {
+      display: none;
+    }
   }
 
   @media (max-width: 480px) {
-    .name {
-      font-size: 2.5rem;
-    }
-
-    .title {
-      font-size: 1.25rem;
+    .repl {
+      font-size: 0.72rem;
     }
 
     .btn {
       width: 100%;
       justify-content: center;
+    }
+
+    .frame-offset {
+      display: none;
     }
   }
 </style>

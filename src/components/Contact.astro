@@ -40,8 +40,13 @@ const links = [
   itemtype="https://schema.org/ContactPage"
 >
   <div class="container">
-    <header>
-      <h2 id="contact-title" class="section-title">{t('contact.title')}</h2>
+    <header class="section-head" data-reveal>
+      <p class="kicker">
+        <span class="no">04</span> · {t('contact.title')}
+      </p>
+      <div class="heading-row">
+        <h2 id="contact-title" class="heading">{t('contact.title')}</h2>
+      </div>
     </header>
 
     <div class="grid-layout">
@@ -49,6 +54,7 @@ const links = [
         class="contact-info"
         itemscope
         itemtype="https://schema.org/Person"
+        data-reveal
       >
         <meta itemprop="name" content="Jon Ramos" />
         <p class="text" itemprop="description">
@@ -97,14 +103,19 @@ const links = [
         />
       </address>
 
-      <div class="form-container">
+      <div class="form-container" data-reveal style="--reveal-delay: 90ms">
         <h3 class="form-title">{t('contact.form.title')}</h3>
         <p class="form-description">{t('contact.form.description')}</p>
         <ContactForm />
       </div>
     </div>
 
-    <div class="map-section" role="region" aria-label="Location map">
+    <div
+      class="map-section"
+      role="region"
+      aria-label="Location map"
+      data-reveal
+    >
       <LeafletMap />
     </div>
   </div>
@@ -141,11 +152,15 @@ const links = [
   }
 
   .text {
-    font-size: 1.5rem;
-    line-height: unset;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
     margin-bottom: 0.5rem;
-    color: var(--color-text);
-    font-weight: 600;
+    color: var(--text-strong);
+    font-weight: 500;
+    max-width: 22ch;
+    text-wrap: balance;
   }
 
   .links {

@@ -5,6 +5,7 @@ import LinkedinIcon from '@/assets/linkedin.svg';
 import MailIcon from '@/assets/mail.svg';
 import CoffeeIcon from '@/assets/coffee.svg';
 import { buymeacoffee, github, linkedin, mail } from '@/settings';
+import { getNavigationUrl } from '@/utils/navigation';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -45,8 +46,22 @@ const socials = [
   itemtype="https://schema.org/WPFooter"
 >
   <div class="container">
+    <div class="finale">
+      <p class="wordmark" aria-hidden="true">
+        Jon <em>Ramos</em>
+      </p>
+
+      <a href={getNavigationUrl(lang, '#home')} class="back-to-top">
+        <span class="top-arrow" aria-hidden="true">↑</span>
+        {t('footer.backToTop')}
+      </a>
+    </div>
+
     <div class="content">
       <div class="footer-left">
+        <p class="colophon" aria-hidden="true">
+          <span class="semis">;;</span> eof — Astro · Clojure-flavoured · Urnieta
+        </p>
         <p>
           <small
             >&copy; {currentYear}
@@ -57,8 +72,7 @@ const socials = [
         </p>
         <p class="tagline">
           <small
-            >Senior Software Engineer | Full Stack Developer | Available for
-            Hire</small
+            >Senior Software Engineer | Full Stack Developer</small
           >
         </p>
       </div>
@@ -85,9 +99,81 @@ const socials = [
 
 <style>
   .footer {
-    padding: 3rem 0;
+    padding: 4.5rem 0 3rem;
     border-top: 1px solid var(--color-border);
     background: var(--color-bg);
+    position: relative;
+  }
+
+  /* short teal segment over the top hairline, echoing the section entries */
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .finale {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-tight);
+    /* a touch over 1 so italic ascenders/descenders aren't clipped */
+    line-height: 1.15;
+    color: var(--text-strong);
+    margin: 0;
+    user-select: none;
+  }
+
+  .wordmark em {
+    font-style: italic;
+    background: linear-gradient(105deg, var(--accent) 20%, var(--haze) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* italic overhang would otherwise be clipped by background-clip: text */
+    display: inline-block;
+    padding-right: 0.12em;
+  }
+
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-text-muted);
+    padding: 0.5rem 0;
+    flex-shrink: 0;
+    transition: color var(--dur-base) var(--ease-out-expo);
+  }
+
+  .back-to-top:hover {
+    color: var(--accent);
+  }
+
+  .top-arrow {
+    transition: transform var(--dur-base) var(--ease-out-expo);
+  }
+
+  .back-to-top:hover .top-arrow {
+    transform: translateY(-3px);
   }
 
   .content {
@@ -100,6 +186,17 @@ const socials = [
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .colophon {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-subtle);
+    margin: 0 0 0.375rem;
+  }
+
+  .colophon .semis {
+    color: var(--accent);
   }
 
   .footer-left p {
@@ -146,6 +243,12 @@ const socials = [
   }
 
   @media (max-width: 600px) {
+    .finale {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
     .content {
       flex-direction: column;
       gap: 2rem;

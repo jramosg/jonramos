@@ -29,14 +29,24 @@ export const ui = {
       'I build websites and web applications focused on high performance, data-driven solutions, and design. Astro for static/SSR sites and Clojure/ClojureScript for complex web apps. Based in Urnieta, Basque Country (Euskal Herria). Currently developing at',
     'hero.viewWork': 'View Work',
     'hero.contactMe': 'Contact Me',
+    'hero.available': 'Open to new projects',
 
     'experience.title': 'Experience',
     'experience.present': 'Present',
     'experience.role': 'Software Engineer',
     'experience.ubikare_desc':
       'Developing Naiha, a healthcare platform built with Clojure, ClojureScript, and Datomic. Focusing on building robust, data-driven applications for the healthcare sector.',
+    'experience.highlight1':
+      'Building Naiha end to end — from the data model to the user interface.',
+    'experience.highlight2':
+      'Designing robust, data-driven systems for the healthcare sector.',
+    'experience.highlight3':
+      'Upstreaming fixes to the open source tools the team relies on.',
 
     'projects.title': 'Selected Projects',
+    'projects.subtitle':
+      "A selection of projects I've built and contributed to",
+    'projects.featured': 'Featured',
     'projects.naiha_desc':
       'A healthcare platform developed at Ubikare. Built with Clojure, ClojureScript, and Datomic for robust data management.',
     'projects.laguntza_desc':
@@ -64,8 +74,15 @@ export const ui = {
     'contact.form.title': 'Contact Me Directly',
     'contact.form.description':
       "Got a question or proposal? Fill out the form and I'll get back to you shortly.",
+    'contact.form.send': 'Send Message',
+    'contact.form.sending': 'Sending…',
+    'contact.form.success': 'Message sent successfully!',
+    'contact.form.error': 'Error sending message. Please try again.',
 
     'footer.rights': 'All rights reserved.',
+    'footer.backToTop': 'Back to top',
+    'contributions.home.subtitle':
+      'Building and improving developer tools through open source',
     'themeSwitcher.toggleTheme': 'Toggle theme',
     'email.membership.subject.membership': 'Membership Application',
     'email.membership.subject.federation': 'Federation Application',
@@ -123,14 +140,24 @@ export const ui = {
       'Desarrollo sitios web y aplicaciones web centradas en alto rendimiento, soluciones orientadas a datos y diseño. Astro para sitios estáticos/SSR y Clojure/ClojureScript para aplicaciones web complejas. Ubicado en Urnieta, País Vasco (Euskal Herria). Actualmente desarrollando en',
     'hero.viewWork': 'Ver Trabajos',
     'hero.contactMe': 'Contáctame',
+    'hero.available': 'Abierto a nuevos proyectos',
 
     'experience.title': 'Experiencia',
     'experience.present': 'Presente',
     'experience.role': 'Ingeniero de Software',
     'experience.ubikare_desc':
       'Desarrollando Naiha, una plataforma de salud construida con Clojure, ClojureScript y Datomic. Enfocado en crear aplicaciones robustas y orientadas a datos para el sector salud.',
+    'experience.highlight1':
+      'Construyendo Naiha de principio a fin: del modelo de datos a la interfaz.',
+    'experience.highlight2':
+      'Diseñando sistemas robustos y orientados a datos para el sector salud.',
+    'experience.highlight3':
+      'Aportando mejoras a las herramientas open source que usa el equipo.',
 
     'projects.title': 'Proyectos Seleccionados',
+    'projects.subtitle':
+      'Una selección de proyectos que he construido y en los que he contribuido',
+    'projects.featured': 'Destacado',
     'projects.naiha_desc':
       'Plataforma de salud desarrollada en Ubikare. Construida con Clojure, ClojureScript y Datomic para una gestión de datos robusta.',
     'projects.laguntza_desc':
@@ -158,8 +185,16 @@ export const ui = {
     'contact.form.title': 'Contáctame directamente',
     'contact.form.description':
       '¿Tienes una pregunta o propuesta? Completa el formulario y te responderé pronto.',
+    'contact.form.send': 'Enviar mensaje',
+    'contact.form.sending': 'Enviando…',
+    'contact.form.success': '¡Mensaje enviado correctamente!',
+    'contact.form.error':
+      'Error al enviar el mensaje. Por favor, inténtalo de nuevo.',
 
     'footer.rights': 'Todos los derechos reservados.',
+    'footer.backToTop': 'Volver arriba',
+    'contributions.home.subtitle':
+      'Construyendo y mejorando herramientas para desarrolladores a través del open source',
     'themeSwitcher.toggleTheme': 'Cambiar tema',
     'email.membership.subject.membership': 'Solicitud de Membresía',
     'email.membership.subject.federation': 'Solicitud de Federación',
@@ -219,14 +254,23 @@ export const ui = {
       'Webguneak eta web aplikazioak eraikitzen ditut. Errendimendu handiko, datuetan oinarritutako soluzioetan eta diseinuan zentratuta. Astro teknologia erabiliz webgune estatikoak/SSR eta Clojure/ClojureScript web aplikazio konplexuetarako. Urnietan, Euskal Herrian kokatua. Gaur egun garatzen',
     'hero.viewWork': 'Lanak Ikusi',
     'hero.contactMe': 'Kontaktatu',
+    'hero.available': 'Proiektu berrietarako prest',
 
     'experience.title': 'Esperientzia',
     'experience.present': 'Orain',
     'experience.role': 'Software Ingeniaria',
     'experience.ubikare_desc':
       'Naiha garatzen, Clojure, ClojureScript eta Datomic erabiliz soratutako osasun plataforma bat. Sektoreko datuetan oinarritutako aplikazioak garatzen ditugu.',
+    'experience.highlight1':
+      'Naiha hasieratik bukaerara eraikitzen: datu-eredutik interfazera.',
+    'experience.highlight2':
+      'Osasun sektorerako sistema sendoak eta datuetan oinarritutakoak diseinatzen.',
+    'experience.highlight3':
+      'Taldeak erabiltzen dituen kode irekiko tresnak hobetzen.',
 
     'projects.title': 'Nire proiektuak',
+    'projects.subtitle': 'Eraiki eta lagundu ditudan proiektuen aukeraketa bat',
+    'projects.featured': 'Nabarmendua',
     'projects.naiha_desc':
       'Ubikaren garatutako osasun plataforma. Clojure, ClojureScript eta Datomic erabiliz eraikia datuen kudeaketa sendorako.',
     'projects.laguntza_desc':
@@ -254,8 +298,15 @@ export const ui = {
     'contact.form.title': 'Kontaktatu zuzenean',
     'contact.form.description':
       'Galdera edo proposamenik? Bete formularioa eta laster erantzungo dizut.',
+    'contact.form.send': 'Bidali mezua',
+    'contact.form.sending': 'Bidaltzen…',
+    'contact.form.success': 'Mezua ondo bidali da!',
+    'contact.form.error': 'Errorea mezua bidaltzean. Saiatu berriro.',
 
     'footer.rights': 'Eskubide guztiak erreserbatuta.',
+    'footer.backToTop': 'Gora itzuli',
+    'contributions.home.subtitle':
+      'Garatzaileentzako tresnak eraikitzen eta hobetzen kode irekiaren bidez',
     'themeSwitcher.toggleTheme': 'Gaia aldatu',
     'email.membership.subject.membership': 'Bazkidetza Eskaera',
     'email.membership.subject.federation': 'Federazio Eskaera',
