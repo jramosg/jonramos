@@ -883,6 +883,11 @@ const t = useTranslations(lang);
   .image-frame {
     position: relative;
     padding: 1rem;
+    /* definite width (img 400px + padding): with the centred flex parent
+       the frame would otherwise shrink-wrap the image, whose width:100%
+       resolves circularly to 0 until the file loads — the box collapses
+       at first paint and re-expands, a ~0.26 CLS hit on mobile */
+    width: min(100%, 432px);
   }
 
   /* Offset echo frame — a second hairline rectangle pushed off-axis. */
@@ -941,7 +946,6 @@ const t = useTranslations(lang);
 
   .profile-image {
     width: 100%;
-    max-width: 400px;
     /* the height="533" attribute would otherwise pin the height while the
        grid column shrinks the width, distorting the photo */
     height: auto;
@@ -1087,11 +1091,11 @@ const t = useTranslations(lang);
       justify-content: flex-start;
     }
 
-    .profile-image {
-      max-width: min(320px, 100%);
-      /* keep aspect-ratio reserving the height so the image (which sits
-         above the text on mobile) can't push the content down on load */
-      height: auto;
+    /* cap the frame, not the img: the frame width is definite, so the
+       image box (width:100% + aspect-ratio) is fully computable before
+       the file loads and can't push the content below it */
+    .image-frame {
+      width: min(100%, 352px);
     }
 
     .scroll-cue {
