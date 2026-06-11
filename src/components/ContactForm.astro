@@ -5,7 +5,13 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<form class="contact-form" id="contact-form">
+<form
+  class="contact-form"
+  id="contact-form"
+  data-msg-sending={t('contact.form.sending')}
+  data-msg-success={t('contact.form.success')}
+  data-msg-error={t('contact.form.error')}
+>
   <input type="hidden" name="language" value={lang} />
   <div class="form-group">
     <label for="name" class="sr-only">{t('contact.form.name')}</label>
@@ -13,8 +19,9 @@ const t = useTranslations(lang);
       type="text"
       id="name"
       name="name"
-      placeholder="Name"
+      placeholder={t('contact.form.name')}
       required
+      autocomplete="name"
       class="form-input"
     />
   </div>
@@ -25,8 +32,9 @@ const t = useTranslations(lang);
       type="email"
       id="email"
       name="email"
-      placeholder="Email"
+      placeholder={t('contact.form.email')}
       required
+      autocomplete="email"
       class="form-input"
     />
   </div>
@@ -36,14 +44,14 @@ const t = useTranslations(lang);
     <textarea
       id="message"
       name="message"
-      placeholder="Message"
+      placeholder={t('contact.form.message')}
       rows="4"
       required
       class="form-input textarea"></textarea>
   </div>
 
   <button type="submit" class="submit-btn">
-    <span class="btn-text">Send Message</span>
+    <span class="btn-text">{t('contact.form.send')}</span>
     <div class="btn-icon">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +70,8 @@ const t = useTranslations(lang);
     </div>
   </button>
 
-  <div class="form-status" id="form-status"></div>
+  <div class="form-status" id="form-status" role="status" aria-live="polite">
+  </div>
 </form>
 
 <script>
@@ -76,9 +85,10 @@ const t = useTranslations(lang);
       e.preventDefault();
       const btn = form.querySelector('.submit-btn');
       const originalText = btn?.innerHTML;
+      const { msgSending, msgSuccess, msgError } = form.dataset;
 
       if (btn) {
-        btn.innerHTML = '<span class="loader"></span> Sending...';
+        btn.innerHTML = `<span class="loader"></span> ${msgSending}`;
         (btn as HTMLButtonElement).disabled = true;
       }
 
@@ -87,10 +97,10 @@ const t = useTranslations(lang);
 
       if (status) {
         if (error) {
-          status.textContent = 'Error sending message. Please try again.';
+          status.textContent = msgError ?? 'Error sending message.';
           status.className = 'form-status error show';
         } else {
-          status.textContent = 'Message sent successfully!';
+          status.textContent = msgSuccess ?? 'Message sent!';
           status.className = 'form-status success show';
           form.reset();
         }

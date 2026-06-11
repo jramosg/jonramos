@@ -130,6 +130,7 @@ const projectLogos: Record<string, any> = {
                   data-value="all"
                   role="option"
                   aria-selected="true"
+                  tabindex="0"
                 >
                   {t('contributions.filter.all')}
                 </div>
@@ -140,6 +141,7 @@ const projectLogos: Record<string, any> = {
                       data-value={p.name.toLowerCase()}
                       role="option"
                       aria-selected="false"
+                      tabindex="0"
                     >
                       {p.name}
                     </div>
@@ -638,6 +640,11 @@ const projectLogos: Record<string, any> = {
     color: var(--color-primary);
   }
 
+  .select-option:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+
   .select-option.selected {
     background: var(--color-primary);
     color: white;
@@ -1105,20 +1112,53 @@ const projectLogos: Record<string, any> = {
       selectTrigger?.setAttribute('aria-expanded', 'false');
     });
 
-    selectOptions?.forEach((option) => {
+    // Open with ArrowDown from the trigger, focusing the first option.
+    selectTrigger?.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        projectSelect?.classList.add('open');
+        selectTrigger.setAttribute('aria-expanded', 'true');
+        (selectOptions?.[0] as HTMLElement | undefined)?.focus();
+      }
+    });
+
+    selectOptions?.forEach((option, index) => {
       option.addEventListener('click', () => {
         const value = option.getAttribute('data-value') || 'all';
         currentProject = value;
 
         // Update UI
-        selectOptions.forEach((opt) => opt.classList.remove('selected'));
+        selectOptions.forEach((opt) => {
+          opt.classList.remove('selected');
+          opt.setAttribute('aria-selected', 'false');
+        });
         option.classList.add('selected');
+        option.setAttribute('aria-selected', 'true');
         if (selectedText) selectedText.textContent = option.textContent;
 
         projectSelect?.classList.remove('open');
         selectTrigger?.setAttribute('aria-expanded', 'false');
 
         updateFilters();
+      });
+
+      option.addEventListener('keydown', (e) => {
+        const ke = e as KeyboardEvent;
+        if (ke.key === 'Enter' || ke.key === ' ') {
+          ke.preventDefault();
+          (option as HTMLElement).click();
+          selectTrigger?.focus();
+        } else if (ke.key === 'ArrowDown') {
+          ke.preventDefault();
+          (selectOptions[index + 1] as HTMLElement | undefined)?.focus();
+        } else if (ke.key === 'ArrowUp') {
+          ke.preventDefault();
+          (selectOptions[index - 1] as HTMLElement | undefined)?.focus();
+        } else if (ke.key === 'Escape') {
+          projectSelect?.classList.remove('open');
+          selectTrigger?.setAttribute('aria-expanded', 'false');
+          selectTrigger?.focus();
+        }
       });
     });
 

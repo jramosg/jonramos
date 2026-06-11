@@ -35,13 +35,35 @@ const {
 </div>
 
 <script>
-  import L, { type LatLngTuple } from 'leaflet';
+  import type * as Leaflet from 'leaflet';
+  import type { LatLngTuple } from 'leaflet';
 
   class LeafletMap extends HTMLElement {
-    private map: L.Map | null = null;
-    private tileLayer: L.TileLayer | null = null;
+    private map: Leaflet.Map | null = null;
+    private tileLayer: Leaflet.TileLayer | null = null;
+    private L: typeof Leaflet | null = null;
 
     connectedCallback() {
+      // Leaflet is ~150 kB — defer fetching and initialising it until the
+      // map is about to scroll into view.
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((entry) => entry.isIntersecting)) {
+              io.disconnect();
+              this.init();
+            }
+          },
+          { rootMargin: '400px 0px' },
+        );
+        io.observe(this);
+      } else {
+        this.init();
+      }
+    }
+
+    async init() {
+      const L = (this.L = (await import('leaflet')).default);
       const { latitude, longitude, zoom, markerComponent } = this.dataset;
       const latlng: LatLngTuple = [Number(latitude), Number(longitude)];
 
@@ -104,7 +126,8 @@ const {
     }
 
     updateTiles() {
-      if (!this.map) return;
+      const L = this.L;
+      if (!this.map || !L) return;
 
       const isDark =
         document.documentElement.getAttribute('data-theme') === 'dark';

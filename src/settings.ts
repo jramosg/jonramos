@@ -4,8 +4,8 @@ export const linkedin = 'jon-ramos-8ba55a14a';
 export const buymeacoffee = 'jramosg';
 export const location = {
   city: 'Urnieta',
-  lat: 43.248,
-  lng: -1.994,
+  lat: 43.2480356,
+  lng: -2.0022654,
 };
 export const company = 'Jon Ramos';
 export const url = 'https://jonramos.dev';
