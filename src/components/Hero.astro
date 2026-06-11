@@ -942,6 +942,9 @@ const t = useTranslations(lang);
   .profile-image {
     width: 100%;
     max-width: 400px;
+    /* the height="533" attribute would otherwise pin the height while the
+       grid column shrinks the width, distorting the photo */
+    height: auto;
     aspect-ratio: 3024 / 4032;
     border-radius: 2px;
     display: block;
