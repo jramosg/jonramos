@@ -1,85 +1,72 @@
-# Astro Starter Kit: Basics
+# jonramos.dev
 
-```sh
-pnpm create astro@latest -- --template basics
+Personal site and portfolio of Jon Ramos, software engineer in Urnieta, Basque Country. Built with [Astro](https://astro.build) 5, server-rendered, in three languages. Live at [jonramos.dev](https://jonramos.dev).
+
+The hero contains a working Clojure REPL. Type `(help)` in it.
+
+## Stack
+
+- **Astro 5** with the Node adapter (SSR, standalone mode)
+- **TypeScript** everywhere; no client framework on the page
+- **Astro Actions + Resend** for the contact form, with React Email templates
+- **Leaflet** for the location map, fetched only when it scrolls near the viewport
+- **Self-hosted fonts**: Crimson Pro (serif) and JetBrains Mono, preloaded, with metric-matched local fallbacks
+- **Docker + GitHub Actions** for CI and deploys
+- **pino** for structured server logs
+
+## The REPL
+
+The terminal in the hero is not an animation. A small Clojure reader and evaluator (about 200 lines of TypeScript, no dependencies) parses what you type and evaluates it:
+
+```clojure
+user=> (def jon (software-engineer))
+#'user/jon
+user=> (skills)
+[:clojure :clojurescript :datomic :re-frame :react :astro :typescript :postgresql]
+user=> (theme :light)
+:light
+user=> (* 6 7)
+42
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+It supports `def`, `if`, `do`, `quote`, vectors, arithmetic, string and sequence functions, and a few site commands: `(projects)`, `(experience)` and `(contact)` scroll to their sections, `(theme :light)` flips the theme. Errors mimic real Clojure ("Unable to resolve symbol: foo in this context"). Arrow keys recall input history.
 
-## 🚀 Project Structure
+## i18n
 
-Inside of your Astro project, you'll see the following folders and files:
+English, Spanish and Basque, routed by path (`/en`, `/es`, `/eu`). The root URL resolves the language from the `Accept-Language` header and rewrites. Every page emits hreflang alternates for the same path in the other two languages, and the sitemap repeats them.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## Performance and accessibility
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+- Layout shift engineered out: the hero reserves height for the REPL lines, images declare `aspect-ratio`, fonts ship fallback metrics, `100svh` keeps mobile address-bar collapse from re-centering the hero
+- Leaflet (~150 kB) loads through a dynamic import behind an IntersectionObserver
+- Animations (typewriter, reveal-on-scroll, aurora) run in CSS, gate on `prefers-reduced-motion`, and degrade to visible content without JavaScript
+- WCAG AA contrast in both themes, keyboard-operable menus and filters, `aria-live` form status
+- JSON-LD structured data (Person, ProfilePage, WebSite, BreadcrumbList), per-page canonical and Open Graph tags
 
-## 🧞 Commands
+## Commands
 
-All commands are run from the root of the project, from a terminal:
+| Command        | Action                               |
+| :------------- | :----------------------------------- |
+| `pnpm install` | Install dependencies                 |
+| `pnpm dev`     | Dev server at `localhost:4321`       |
+| `pnpm build`   | Type-check (`astro check`) and build |
+| `pnpm preview` | Preview the production build         |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+Node 22+ (see `.nvmrc`).
 
-## 🐳 Docker
-
-To run the application using Docker:
-
-### Build the Docker image
+## Docker
 
 ```sh
 docker build -t jonramos:latest .
-```
-
-### Run with Docker Compose
-
-```sh
 docker compose up -d
 ```
 
-Check the container status:
+Logs land in `./logs` (override with `LOG_DIR`): `info.log`, `warn.log`, `error.log`. Stop with `docker compose down`.
 
-```sh
-docker compose ps
-```
+## OG image
 
-View Docker container logs:
+`public/og-image.jpg` is generated from an SVG that uses the site's design tokens and fonts. The renderer lives in `scripts/og/render.mjs` (resvg-js with the decompressed brand fonts).
 
-```sh
-docker compose logs -f
-```
+## Design system
 
-Application logs are written to `./logs` (or path specified in `LOG_DIR` env variable):
-- `logs/info.log` - Info level logs
-- `logs/warn.log` - Warning level logs
-- `logs/error.log` - Error level logs
-
-Stop the container:
-
-```sh
-docker compose down
-```
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Dark "ink" and light "sky" themes over a coastal palette: teal accent, periwinkle haze, shell pink. Crimson Pro carries the human voice (headings, prose), JetBrains Mono the machine voice (labels, code, the `;;` and `//` markers). The same tokens style the demos of [jon-nested-menu](https://github.com/jramosg/jon-nested-menu), a Reagent/MUI nested menu library published to Clojars and npm.
