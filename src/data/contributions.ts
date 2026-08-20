@@ -1515,6 +1515,58 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: 're-frame-query',
+    description:
+      'A declarative data-fetching and caching library for re-frame, inspired by TanStack Query and RTK Query',
+    repository: 'https://github.com/shipclojure/re-frame-query',
+    website: 'https://github.com/shipclojure/re-frame-query',
+    technology: ['Clojure', 'ClojureScript', 're-frame', 'Data Fetching'],
+    stats: {
+      category: 'Developer Tools',
+    },
+    contributions: [
+      {
+        title: 'Keep Cancelled Initial Queries Retryable',
+        description:
+          'Updated query cancellation to mark an in-flight initial request as stale, allowing a later `ensure-query` to retry it while safely dropping the cancelled response. Added regression coverage for retrying and stale-response protection.',
+        impact:
+          'Prevents a cancelled first request from leaving the cache permanently unusable and protects fresh data from late responses',
+        prLink: 'https://github.com/shipclojure/re-frame-query/pull/5',
+        date: '2026-08-20',
+        tags: ['bugfix', 'query-cancellation', 'cache-retry', 'testing'],
+        tier: 'featured',
+      },
+      {
+        title: 'Restore Never-Fetched Queries to Idle After Cancellation',
+        description:
+          'Added cancellation status handling so a query that never received a successful response returns to `:idle` instead of remaining stuck at `:loading`. Queries with a previous success or error retain their finished status.',
+        impact:
+          'Keeps query state accurate after cancellation and gives consumers a reliable status for retryable initial loads',
+        prLink: 'https://github.com/shipclojure/re-frame-query/pull/5',
+        date: '2026-08-20',
+        tags: ['bugfix', 'query-cancellation', 'query-status', 'testing'],
+        tier: 'notable',
+      },
+      {
+        title: 'Add Request Attempt IDs and Query Cancellation',
+        description:
+          'Co-authored the request-attempt identity system that associates every query attempt with a `:request-id`, preventing older in-flight responses from overwriting newer data. Added `cancel-query` support using the same supersession mechanism, with request metadata and regression coverage for regular and infinite queries.',
+        impact:
+          'Protects cached data from stale response races and gives applications an explicit way to abandon in-flight queries safely',
+        prLink:
+          'https://github.com/shipclojure/re-frame-query/commit/34acd49ac176e065234e771a164419179f0d58de',
+        date: '2026-08-14',
+        tags: [
+          'new-feature',
+          'query-cancellation',
+          'request-identity',
+          'concurrency',
+        ],
+        tier: 'featured',
+      },
+    ],
+  },
+  {
     name: 'cljdoc-analyzer',
     description:
       'The analyzer behind cljdoc that reads a library namespaces and docstrings to build its documentation',
