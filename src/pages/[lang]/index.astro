@@ -4,6 +4,7 @@ export const prerender = false;
 import Layout from '@/layouts/Layout.astro';
 import Hero from '@/components/Hero.astro';
 import Experience from '@/components/Experience.astro';
+import Publications from '@/components/Publications.astro';
 import Projects from '@/components/Projects.astro';
 import Contact from '@/components/Contact.astro';
 import ContributionsHome from '@/components/ContributionsHome.astro';
@@ -24,6 +25,7 @@ if (lang !== resolvedLang) {
   <>
     <Hero />
     <Experience />
+    <Publications />
     <Projects />
     <ContributionsHome />
     <Contact />

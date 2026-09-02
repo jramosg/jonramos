@@ -43,6 +43,13 @@ export const ui = {
     'experience.highlight3':
       'Upstreaming fixes to the open source tools the team relies on.',
 
+    'publications.title': 'Research / Publications',
+    'publications.intro':
+      'Through my work at Ubikare, I contributed to the technology and data infrastructure supporting multicenter clinical research carried out by the COVID-19 Spanish ICU Network.',
+    'publications.association': 'COVID-19 Spanish ICU Network · Ubikare',
+    'publications.link': 'Open in PMC',
+    'publications.listLabel': 'Scientific publications',
+
     'projects.title': 'Selected Projects',
     'projects.subtitle':
       "A selection of projects I've built and contributed to",
@@ -153,6 +160,13 @@ export const ui = {
       'Diseñando sistemas robustos y orientados a datos para el sector salud.',
     'experience.highlight3':
       'Aportando mejoras a las herramientas open source que usa el equipo.',
+
+    'publications.title': 'Investigación / Publicaciones',
+    'publications.intro':
+      'A través de mi trabajo en Ubikare, contribuí a la tecnología y la infraestructura de datos que respaldaron la investigación clínica multicéntrica realizada por la Red de UCI Española para COVID-19.',
+    'publications.association': 'Red de UCI Española para COVID-19 · Ubikare',
+    'publications.link': 'Abrir en PMC',
+    'publications.listLabel': 'Publicaciones científicas',
 
     'projects.title': 'Proyectos Seleccionados',
     'projects.subtitle':
@@ -267,6 +281,13 @@ export const ui = {
       'Osasun sektorerako sistema sendoak eta datuetan oinarritutakoak diseinatzen.',
     'experience.highlight3':
       'Taldeak erabiltzen dituen kode irekiko tresnak hobetzen.',
+
+    'publications.title': 'Ikerketa / Argitalpenak',
+    'publications.intro':
+      'Ubikareko lanaren bidez, COVID-19aren Espainiako ZIU Sareak egindako zentro anitzeko ikerketa klinikoa babestu zuten teknologia- eta datu-azpiegituretan lagundu nuen.',
+    'publications.association': 'COVID-19aren Espainiako ZIU Sarea · Ubikare',
+    'publications.link': 'Ireki PMC-n',
+    'publications.listLabel': 'Argitalpen zientifikoak',
 
     'projects.title': 'Nire proiektuak',
     'projects.subtitle': 'Eraiki eta lagundu ditudan proiektuen aukeraketa bat',
