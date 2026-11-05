@@ -40,8 +40,6 @@ const {
 
   class LeafletMap extends HTMLElement {
     private map: Leaflet.Map | null = null;
-    private tileLayer: Leaflet.TileLayer | null = null;
-    private L: typeof Leaflet | null = null;
 
     connectedCallback() {
       // Leaflet is ~150 kB — defer fetching and initialising it until the
@@ -63,14 +61,14 @@ const {
     }
 
     async init() {
-      const L = (this.L = (await import('leaflet')).default);
-      const { latitude, longitude, zoom, markerComponent } = this.dataset;
+      const L = (await import('leaflet')).default;
+      const { latitude, longitude, zoom, tiles, markerComponent } =
+        this.dataset;
       const latlng: LatLngTuple = [Number(latitude), Number(longitude)];
 
       this.map = L.map(this, {
         scrollWheelZoom: false,
         dragging: !L.Browser.mobile,
-        attributionControl: false,
       }).setView(latlng, Number(zoom));
 
       // Enable interaction on click/tap
@@ -79,7 +77,13 @@ const {
         this.map?.dragging.enable();
       });
 
-      this.updateTiles();
+      // CARTO basemaps now require an API key, so default to keyless OSM
+      // tiles. Dark mode is a CSS filter on the tile pane (see styles).
+      L.tileLayer(tiles || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(this.map);
 
       // Custom marker icon
       const myIcon = L.divIcon({
@@ -113,40 +117,6 @@ const {
       if (markerComponent) {
         marker.bindPopup(markerComponent);
       }
-
-      // Observer for theme changes
-      const observer = new MutationObserver(() => {
-        this.updateTiles();
-      });
-
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme'],
-      });
-    }
-
-    updateTiles() {
-      const L = this.L;
-      if (!this.map || !L) return;
-
-      const isDark =
-        document.documentElement.getAttribute('data-theme') === 'dark';
-
-      // Remove existing layer
-      if (this.tileLayer) {
-        this.map.removeLayer(this.tileLayer);
-      }
-
-      const tileUrl = isDark
-        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-
-      this.tileLayer = L.tileLayer(tileUrl, {
-        maxZoom: 19,
-        subdomains: 'abcd',
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      }).addTo(this.map);
     }
   }
 
@@ -173,6 +143,21 @@ const {
     width: 100%;
     z-index: 1;
     min-height: 400px;
+  }
+
+  :global([data-theme='dark'] .leaflet-map .leaflet-tile-pane) {
+    filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9)
+      saturate(0.6);
+  }
+
+  :global(.leaflet-map .leaflet-control-attribution) {
+    background: color-mix(in srgb, var(--color-bg) 75%, transparent);
+    color: var(--color-text);
+    font-size: 10px;
+  }
+
+  :global(.leaflet-map .leaflet-control-attribution a) {
+    color: inherit;
   }
 
   :global(.custom-marker) {
