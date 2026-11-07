@@ -10,6 +10,7 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import cljKondoLogo from '@/assets/clj-kondo.png';
 import calvaLogo from '@/assets/calva.png';
 import logseqLogo from '@/assets/logseq.png';
+import kitLogo from '@/assets/kit.png';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -20,6 +21,7 @@ const projectLogos: Record<string, any> = {
   'clj-kondo': cljKondoLogo,
   Calva: calvaLogo,
   Logseq: logseqLogo,
+  Kit: kitLogo,
 };
 ---
 

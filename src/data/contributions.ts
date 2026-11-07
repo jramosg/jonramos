@@ -1430,12 +1430,57 @@ export const projects: Project[] = [
     description:
       'A lightweight, modular framework for building scalable Clojure web applications. Contributions span the main framework, the modules registry, and the documentation site.',
     repository: 'https://github.com/kit-clj/kit',
-    website: 'https://kit-clj.github.io',
+    website: 'https://kit-clj.github.io/',
+    logo: '/src/assets/kit.png',
     technology: ['Clojure', 'ClojureScript', 'Web Framework', 'Reagent'],
     stats: {
       category: 'Web Framework',
     },
     contributions: [
+      {
+        title: 'Static Resource Revalidation and Immutable Caching',
+        description:
+          'Added cache-control middleware to the application template: static responses with Last-Modified are revalidated with `no-cache`, while filenames containing a 32-character content hash receive a one-year immutable cache policy. Preserves explicit Cache-Control headers and includes regression tests for revalidation, immutable caching, and fingerprint detection.',
+        impact:
+          'Prevents browsers from serving stale static files after deployment while allowing fingerprinted assets to stay cached without repeated requests',
+        prLink: 'https://github.com/kit-clj/kit/pull/194',
+        date: '2026-11-06',
+        tags: ['bugfix', 'caching', 'middleware', 'static-assets', 'testing'],
+        tier: 'notable',
+      },
+      {
+        title: 'Content-Hashed ClojureScript Modules',
+        description:
+          'Enabled content-hashed module filenames for production ClojureScript builds and added an `app-script` Selmer tag that resolves the app bundle from the shadow-cljs build manifest. The generated namespace is loaded at startup, and development keeps the stable `/js/app.js` path.',
+        impact:
+          'Gives each production bundle a content-specific URL so deployments load the matching JavaScript and can use immutable asset caching',
+        prLink: 'https://github.com/kit-clj/modules/pull/48',
+        date: '2026-11-06',
+        tags: ['clojurescript', 'shadow-cljs', 'caching', 'selmer', 'modules'],
+        tier: 'notable',
+      },
+      {
+        title: 'Separate ClojureScript Development and Production Builds',
+        description:
+          'Split shadow-cljs configuration into development and production builds, directing watch output to `resources/public/js` and release output to `target/classes/cljsbuild/public/js`. Updated the release task to build `app-prod`, remove stale packaged JavaScript, and copy compiled assets into the public classpath directory. Changes span the modules registry (kit-clj/modules#46) and framework templates and generator fixtures (kit-clj/kit#178).',
+        impact:
+          'Keeps development artifacts out of version control and packages the production JavaScript in the application build',
+        prLink: 'https://github.com/kit-clj/modules/pull/46',
+        date: '2026-04-28',
+        tags: ['bugfix', 'clojurescript', 'shadow-cljs', 'build', 'modules'],
+        tier: 'notable',
+      },
+      {
+        title: 'Fix Ring Response Helper in Generated Handlers',
+        description:
+          'Replaced calls to the nonexistent `ring.util.http-response/content-type` with `ring.util.response/content-type` in the generated handler template for 404, 405, and 406 responses.',
+        impact:
+          'Fixes an unresolved response helper that prevented generated handlers from compiling',
+        prLink: 'https://github.com/kit-clj/kit/pull/179',
+        date: '2026-04-28',
+        tags: ['bugfix', 'ring', 'templates'],
+        tier: 'minor',
+      },
       {
         title: 'Reagent Module with React 19 Support',
         description:
