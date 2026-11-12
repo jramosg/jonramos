@@ -63,7 +63,7 @@ export const ui = {
     'projects.besaide_desc':
       'A multilingual (Basque/Spanish) website for Besaide Mendizale Elkartea. Built with Astro and Keystatic CMS, with i18n routing, accessibility-first components and zero-JS navigation.',
     'projects.colortools_desc':
-      'A Clojure(Script) library for color manipulation and conversion. Open source contribution.',
+      'A Clojure and ClojureScript color library: conversion, palettes, accessible themes and WCAG contrast, with an interactive demo.',
     'projects.jon_nested_menu_desc':
       'A nested MUI menu library for Reagent/ClojureScript and React: dropdowns, a right-click context menu, per-item icons, custom labels and keyboard navigation. Published to Clojars and npm.',
     'projects.norwegian_singles_desc':
@@ -184,7 +184,7 @@ export const ui = {
     'projects.besaide_desc':
       'Sitio web multilingüe (euskera/español) para Besaide Mendizale Elkartea. Construido con Astro y Keystatic CMS, con enrutado i18n, componentes accesibles y navegación sin JavaScript.',
     'projects.colortools_desc':
-      'Librería Clojure(Script) para manipulación y conversión de colores. Contribución de código abierto.',
+      'Librería de color para Clojure y ClojureScript: conversión, paletas, temas accesibles y contraste WCAG, con demo interactiva.',
     'projects.jon_nested_menu_desc':
       'Librería de menús MUI anidados para Reagent/ClojureScript y React: desplegables, menú contextual con clic derecho, iconos por elemento, etiquetas personalizadas y navegación por teclado. Publicada en Clojars y npm.',
     'projects.norwegian_singles_desc':
@@ -308,7 +308,7 @@ export const ui = {
     'projects.besaide_desc':
       'Besaide Mendizale Elkartearen webgune eleaniztuna (euskara/gaztelania). Astro eta Keystatic CMS-rekin eraikia, i18n bideratzearekin, irisgarritasunean oinarritutako osagaiekin eta JavaScript gabeko nabigazioarekin.',
     'projects.colortools_desc':
-      'Koloreen manipulazio eta bihurketarako Clojure(Script) liburutegia. Kode irekiko ekarpena.',
+      'Clojure eta ClojureScript-erako kolore liburutegia: bihurketa, paletak, gai irisgarriak eta WCAG kontrastea, demo interaktiboarekin.',
     'projects.jon_nested_menu_desc':
       'MUI menu habiaratuen liburutegia Reagent/ClojureScript eta React-erako: zabaltzeko menuak, eskuin-klik testuinguru-menua, elementu bakoitzeko ikonoak, etiketa pertsonalizatuak eta teklatu bidezko nabigazioa. Clojars eta npm-en argitaratua.',
     'projects.norwegian_singles_desc':
