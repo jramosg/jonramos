@@ -5,3 +5,5 @@ dist/
 pnpm-lock.yaml
 
 design-system/
+# vendored third-party bundle, served as-is
+public/vendor/

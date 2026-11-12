@@ -5,11 +5,13 @@ import LocalPage from '@/components/local/LocalPage.astro';
 import { getLangFromUrl } from '@/i18n/utils';
 import { localPath } from '@/data/localSlugs';
 
-// This slug is the 'en' one. Reached through another language prefix
-// (e.g. the language picker), send the visitor to that language's slug.
+// Each language has its own slug for this page. Reached through another
+// language prefix (e.g. /es/<this slug>), send the visitor to that
+// language's slug.
 const lang = getLangFromUrl(Astro.url);
-if (lang !== 'en') {
-  return Astro.redirect(localPath(lang), 301);
+const canonicalPath = localPath(lang);
+if (Astro.url.pathname.replace(/\/$/, '') !== canonicalPath) {
+  return Astro.redirect(canonicalPath, 301);
 }
 ---
 
