@@ -79,6 +79,13 @@ const t = useTranslations(lang);
 
   <div class="container">
     <div class="repl">
+      <!-- REPL site commands. Browsers skip this type; Scittle evaluates
+           it only after the visitor focuses the REPL (see repl/sci.ts). -->
+      <script
+        is:inline
+        type="application/x-scittle"
+        src="/repl/site.cljs"
+        data-repl-site></script>
       <p class="repl-hint">{t('hero.replHint')}</p>
       <p class="repl-line" aria-hidden="true">
         <span class="repl-prompt">user=&gt;</span>
@@ -439,7 +446,12 @@ const t = useTranslations(lang);
         scrollTo(id);
       },
       theme: (name?: string) => {
-        if (name) applyTheme(name);
+        // setTheme may apply inside a view transition, so the attribute
+        // can still hold the old theme right after the call.
+        if (name) {
+          applyTheme(name);
+          return name;
+        }
         return document.documentElement.getAttribute('data-theme') ?? 'light';
       },
     };

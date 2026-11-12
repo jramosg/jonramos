@@ -29,7 +29,7 @@ user=> (* 6 7)
 42
 ```
 
-Site commands are defined in the `user` namespace (`src/components/repl/sci.ts`): `(projects)`, `(experience)` and `(contact)` scroll to their sections, `(theme :light)` flips the theme and `(help)` lists them. `println` output is shown in the REPL. Arrow keys recall input history.
+Site commands are plain Clojure in `public/repl/site.cljs`, loaded through a `<script type="application/x-scittle">` tag that Scittle evaluates into the `user` namespace (the page side is `src/components/repl/sci.ts`): `(projects)`, `(experience)` and `(contact)` scroll to their sections, `(theme :light)` flips the theme and `(help)` lists them. `println` output is shown in the REPL. Arrow keys recall input history.
 
 Scittle is about 200 KB gzipped, so it is never part of the first load: Lighthouse doesn't type, and doesn't pay for it. Until it arrives, or if it can't load, a small built-in evaluator (`def`, `if`, arithmetic, sequences, the same site commands) answers instead. To upgrade Scittle, replace `public/vendor/scittle-<version>.js` and its license file, then update the path in `sci.ts`.
 

@@ -23,53 +23,23 @@ export type SciEval = (src: string) => SciResult;
 
 interface ScittleCore {
   eval_string: (src: string) => unknown;
+  eval_script_tags: (tags?: Element) => void;
 }
 
 declare global {
   interface Window {
     scittle?: { core: ScittleCore };
-    __jrSite?: SiteBridge;
+    __jrSite?: SiteBridge & { ready: () => void };
     __jrLast?: unknown;
   }
 }
 
-// Site commands, defined once in the user namespace. They reach the
-// page through window.__jrSite.
-const PRELUDE = `
-(defrecord SoftwareEngineer [name since stack base])
-
-(defn software-engineer []
-  (->SoftwareEngineer "Jon Ramos" 2016
-                      '[Clojure ClojureScript Datomic] "Urnieta"))
-
-(def jon (software-engineer))
-
-(defn skills []
-  [:clojure :clojurescript :datomic :re-frame :react :astro
-   :typescript :postgresql])
-
-(defn- go! [id]
-  (.scroll js/__jrSite (name id))
-  id)
-
-(defn experience [] (go! :experience))
-(defn projects [] (go! :projects))
-(defn contact [] (go! :contact))
-
-(defn theme
-  ([] (keyword (.theme js/__jrSite)))
-  ([t]
-   (when-not (#{:light :dark} t)
-     (throw (ex-info "theme expects :light or :dark" {:got t})))
-   (keyword (.theme js/__jrSite (name t)))))
-
-(defn help []
-  (println ";; This is real Clojure (SCI). Try:")
-  (println ";;   (skills)  (projects)  (contact)  (theme :dark)")
-  (println ";;   (map inc [1 2 3])")
-  (println ";;   (defn sq [x] (* x x)) (sq 12)")
-  (println ";;   (frequencies \\"txirimiri\\")"))
-`;
+// The site commands live in public/repl/site.cljs, referenced by a
+// <script type="application/x-scittle" data-repl-site> tag in the hero.
+// Browsers ignore that type, so the file is only fetched once Scittle
+// evaluates the tag. Its last form calls window.__jrSite.ready().
+const SITE_TAG = 'script[type="application/x-scittle"][data-repl-site]';
+const READY_TIMEOUT_MS = 8000;
 
 let loading: Promise<SciEval | null> | null = null;
 
@@ -94,24 +64,37 @@ function evaluate(core: ScittleCore, src: string): SciResult {
   }
 }
 
-/** Load Scittle once; resolves to null if it can't load (offline…). */
+/**
+ * Load Scittle once, then evaluate site.cljs. Resolves to null when
+ * either can't load (offline, blocked…), so the caller can fall back.
+ */
 export function loadSci(site: SiteBridge): Promise<SciEval | null> {
   loading ??= new Promise((resolve) => {
-    window.__jrSite = site;
+    const tag = document.querySelector(SITE_TAG);
+    if (!tag) return resolve(null);
+
+    // eval_script_tags fetches site.cljs asynchronously with no
+    // completion or error callback, so site.cljs signals ready itself
+    // and a timeout covers the case where it never does.
+    const timer = setTimeout(() => resolve(null), READY_TIMEOUT_MS);
+    const finish = (value: SciEval | null) => {
+      clearTimeout(timer);
+      resolve(value);
+    };
+
     const script = document.createElement('script');
     script.src = scittleUrl;
     script.async = true;
     script.onload = () => {
       const core = window.scittle?.core;
-      if (!core) return resolve(null);
-      try {
-        core.eval_string(PRELUDE);
-        resolve((src) => evaluate(core, src));
-      } catch {
-        resolve(null);
-      }
+      if (!core) return finish(null);
+      window.__jrSite = {
+        ...site,
+        ready: () => finish((src) => evaluate(core, src)),
+      };
+      core.eval_script_tags(tag);
     };
-    script.onerror = () => resolve(null);
+    script.onerror = () => finish(null);
     document.head.append(script);
   });
   return loading;
