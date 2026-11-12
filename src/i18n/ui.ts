@@ -57,7 +57,7 @@ export const ui = {
       "A selection of projects I've built and contributed to",
     'projects.featured': 'Featured',
     'projects.naiha_desc':
-      'A healthcare platform developed at Ubikare. Built with Clojure, ClojureScript, and Datomic for robust data management.',
+      "The healthcare platform I build at Ubikare: the application itself, in Clojure, ClojureScript and Datomic. naiha.io is the product's website, made by the company.",
     'projects.laguntza_desc':
       'Professional physiotherapy clinic website. Multilingual (Basque/Spanish) with interactive Leaflet maps, GSAP animations, and accessibility-first design.',
     'projects.besaide_desc':
@@ -178,7 +178,7 @@ export const ui = {
       'Una selección de proyectos que he construido y en los que he contribuido',
     'projects.featured': 'Destacado',
     'projects.naiha_desc':
-      'Plataforma de salud desarrollada en Ubikare. Construida con Clojure, ClojureScript y Datomic para una gestión de datos robusta.',
+      'La plataforma sanitaria que desarrollo en Ubikare: la aplicación en sí, con Clojure, ClojureScript y Datomic. naiha.io es la web del producto, hecha por la empresa.',
     'projects.laguntza_desc':
       'Sitio web profesional de clínica de fisioterapia. Multilingüe (euskera/español) con mapas interactivos Leaflet, animaciones GSAP y diseño accesible.',
     'projects.besaide_desc':
@@ -302,7 +302,7 @@ export const ui = {
     'projects.subtitle': 'Eraiki eta lagundu ditudan proiektuen aukeraketa bat',
     'projects.featured': 'Nabarmendua',
     'projects.naiha_desc':
-      'Ubikaren garatutako osasun plataforma. Clojure, ClojureScript eta Datomic erabiliz eraikia datuen kudeaketa sendorako.',
+      'Ubikaren garatzen dudan osasun plataforma: aplikazioa bera, Clojure, ClojureScript eta Datomic-ekin. naiha.io produktuaren webgunea da, enpresak egina.',
     'projects.laguntza_desc':
       'Fisioterapia klinika profesionalaren webgunea. Eleaniztuna (euskera/gaztelania) Leaflet mapa interaktiboekin, GSAP animazioekin eta irisgarritasun-lehentasunezko diseinuarekin.',
     'projects.besaide_desc':
