@@ -16,7 +16,7 @@ The hero contains a working Clojure REPL. Type `(help)` in it.
 
 ## The REPL
 
-The terminal in the hero is not an animation. A small Clojure reader and evaluator (about 200 lines of TypeScript, no dependencies) parses what you type and evaluates it:
+The terminal in the hero runs real Clojure. When you focus the input, the page loads [Scittle](https://babashka.org/scittle/) (SCI, the interpreter inside babashka) from `public/vendor/`, and everything you type is evaluated by it:
 
 ```clojure
 user=> (def jon (software-engineer))
@@ -29,7 +29,9 @@ user=> (* 6 7)
 42
 ```
 
-It supports `def`, `if`, `do`, `quote`, vectors, arithmetic, string and sequence functions, and a few site commands: `(projects)`, `(experience)` and `(contact)` scroll to their sections, `(theme :light)` flips the theme. Errors mimic real Clojure ("Unable to resolve symbol: foo in this context"). Arrow keys recall input history.
+Site commands are defined in the `user` namespace (`src/components/repl/sci.ts`): `(projects)`, `(experience)` and `(contact)` scroll to their sections, `(theme :light)` flips the theme and `(help)` lists them. `println` output is shown in the REPL. Arrow keys recall input history.
+
+Scittle is about 200 KB gzipped, so it is never part of the first load: Lighthouse doesn't type, and doesn't pay for it. Until it arrives, or if it can't load, a small built-in evaluator (`def`, `if`, arithmetic, sequences, the same site commands) answers instead. To upgrade Scittle, replace `public/vendor/scittle-<version>.js` and its license file, then update the path in `sci.ts`.
 
 ## i18n
 

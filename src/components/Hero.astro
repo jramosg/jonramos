@@ -108,6 +108,7 @@ const t = useTranslations(lang);
 
 <script>
   import { setTheme } from './theme-switcher/theme';
+  import { loadSci, type SciEval } from './repl/sci';
 
   /* ------------------------------------------------------------------ */
   /* A tiny Clojure: enough of a reader + evaluator that the hero REPL   */
@@ -416,31 +417,75 @@ const t = useTranslations(lang);
       }
     };
 
+    const clip = (s: string) => (s.length > 280 ? s.slice(0, 280) + '…' : s);
+    const fail = (err: unknown) =>
+      addLine(
+        'repl-err',
+        `Execution error: ${err instanceof Error ? err.message : err}`,
+      );
+
+    // The built-in mini evaluator: instant, and the fallback whenever
+    // SCI isn't available.
+    const evalMini = (src: string) => {
+      const tokens = tokenize(src);
+      if (tokens.length === 0) throw new Error('EOF while reading');
+      let result: Value = null;
+      while (tokens.length > 0) result = evalForm(readForm(tokens));
+      addLine('repl-out', clip(pr(result)));
+    };
+
+    const site = {
+      scroll: (id: string) => {
+        scrollTo(id);
+      },
+      theme: (name?: string) => {
+        if (name) applyTheme(name);
+        return document.documentElement.getAttribute('data-theme') ?? 'light';
+      },
+    };
+
+    // Start fetching SCI as soon as someone shows intent to type.
+    // loadSci loads once and caches its promise, so calling it again
+    // is free.
+    let sci: SciEval | null = null;
+    const warmUp = () => loadSci(site).then((ev) => (sci = ev));
+    input.addEventListener('focus', warmUp, { once: true });
+
     const past: string[] = [];
     let cursor = 0;
+    let busy = false;
 
-    input.addEventListener('keydown', (e) => {
+    input.addEventListener('keydown', async (e) => {
       if (e.key === 'Enter') {
         const src = input.value.trim();
-        if (!src) return;
+        if (!src || busy) return;
         addLine('repl-echo', src, true);
-        try {
-          const tokens = tokenize(src);
-          if (tokens.length === 0) throw new Error('EOF while reading');
-          let result: Value = null;
-          while (tokens.length > 0) result = evalForm(readForm(tokens));
-          let out = pr(result);
-          if (out.length > 280) out = out.slice(0, 280) + '…';
-          addLine('repl-out', out);
-        } catch (err) {
-          addLine(
-            'repl-err',
-            `Execution error: ${err instanceof Error ? err.message : err}`,
-          );
-        }
         past.push(src);
         cursor = past.length;
         input.value = '';
+
+        if (!sci) {
+          busy = true;
+          const slow = setTimeout(
+            () => addLine('repl-out', ';; loading Clojure…'),
+            250,
+          );
+          await warmUp();
+          clearTimeout(slow);
+          busy = false;
+        }
+
+        try {
+          if (sci) {
+            const { printed, value } = sci(src);
+            printed.forEach((line) => addLine('repl-out', clip(line)));
+            addLine('repl-out', clip(value));
+          } else {
+            evalMini(src);
+          }
+        } catch (err) {
+          fail(err);
+        }
       } else if (e.key === 'ArrowUp' && past.length > 0) {
         e.preventDefault();
         cursor = Math.max(0, cursor - 1);
