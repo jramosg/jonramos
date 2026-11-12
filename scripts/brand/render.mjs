@@ -204,4 +204,55 @@ for (const [lang, [lines, foot]] of Object.entries(local)) {
   );
 }
 
+/* ---------- demo cards (pages served from or linked to jonramos.dev) */
+
+const demoCard = (lines, foot, extra = '') =>
+  card(`
+  ${lines.map((l, i) => paint(l, 64, 190 + i * 160, 180)).join('\n  ')}
+  ${extra}
+  ${plain(foot, 72, 520, 32, C.sand)}
+  ${plain('Jon Ramos', 72, 580, 28, C.onWall, true)}
+  <text x="1128" y="580" text-anchor="end" font-family="Archivo Text Bold" font-size="28" fill="${C.onWallMuted}">jonramos.dev</text>`);
+
+writeFileSync(
+  join(pub, 'og', 'demo-nested-menu.jpg'),
+  await jpeg(
+    render(
+      demoCard(
+        ['Nested menus,', 'from data.'],
+        'reagent-mui-nested-menu for Reagent and React, on MUI',
+      ),
+      1200,
+    ),
+  ),
+);
+
+// a strip of real swatches: the colour-tools subject, not decoration
+const swatches = [
+  '#0f2c42',
+  '#163b57',
+  '#2f6690',
+  '#6fa3c8',
+  '#e9c46a',
+  '#f3f5f4',
+]
+  .map(
+    (hex, i) =>
+      `<rect x="${784 + i * 56}" y="96" width="48" height="196" fill="${hex}" stroke="#0b1721" stroke-opacity="0.25"/>`,
+  )
+  .join('');
+writeFileSync(
+  join(pub, 'og', 'demo-color-tools.jpg'),
+  await jpeg(
+    render(
+      demoCard(
+        ['color-tools'],
+        'Palettes, accessible themes and WCAG contrast for Clojure',
+        swatches,
+      ),
+      1200,
+    ),
+  ),
+);
+
 console.log('brand assets written to public/');
