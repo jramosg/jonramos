@@ -13,7 +13,12 @@ interface Props {
 }
 
 const { title, description, href, tags, demos } = Astro.props;
-const host = new URL(href).hostname.replace(/^www\./, '');
+// The visible address: just the host for sites, but owner/repo for
+// GitHub, where the bare host says nothing about the project.
+const url = new URL(href);
+const host = url.hostname.replace(/^www\./, '');
+const address =
+  host === 'github.com' ? `${host}${url.pathname.replace(/\/$/, '')}` : host;
 ---
 
 <article
@@ -30,7 +35,9 @@ const host = new URL(href).hostname.replace(/^www\./, '');
   <div class="detail">
     <p class="description" itemprop="description">{description}</p>
     <p class="meta">
-      <span class="host">{host}</span>
+      <a href={href} target="_blank" rel="noopener noreferrer" class="host u-link">
+        {address}
+      </a>
       <span class="tags" itemprop="keywords">{tags.join(', ')}</span>
     </p>
     {
@@ -99,7 +106,7 @@ const host = new URL(href).hostname.replace(/^www\./, '');
 
   .host {
     font-weight: 650;
-    color: var(--ink);
+    overflow-wrap: anywhere;
   }
 
   .demos {
