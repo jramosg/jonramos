@@ -45,6 +45,9 @@ const projectLogos: Record<string, any> = {
 <Layout
   title={t('contributions.page.title')}
   description={t('contributions.page.description')}
+  breadcrumb={[
+    { name: t('contributions.hero.title'), path: `/${lang}/contributions` },
+  ]}
 >
   <article
     class="contributions-page"

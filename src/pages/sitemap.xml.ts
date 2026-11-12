@@ -6,7 +6,6 @@ import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
   const site = context.site?.toString();
-  const currentDate = new Date().toISOString().split('T')[0];
 
   const urls: Array<{
     loc: string;
@@ -21,7 +20,6 @@ export async function GET(context: APIContext) {
     // Homepage
     urls.push({
       loc: `${site}${langCode}`,
-      lastmod: currentDate,
       changefreq: 'weekly',
       priority: 1.0,
       alternateRefs: Object.entries(languages)
@@ -40,7 +38,6 @@ export async function GET(context: APIContext) {
     // Contributions page for each language
     urls.push({
       loc: `${site}${langCode}/contributions`,
-      lastmod: currentDate,
       changefreq: 'monthly',
       priority: 0.8,
       alternateRefs: Object.entries(languages)
@@ -64,7 +61,6 @@ export async function GET(context: APIContext) {
   Object.entries(localSlugs).forEach(([l, slug]) => {
     urls.push({
       loc: `${site}${l}/${slug}`,
-      lastmod: currentDate,
       changefreq: 'monthly',
       priority: 0.9,
       alternateRefs: localAlternates,
@@ -74,20 +70,12 @@ export async function GET(context: APIContext) {
   // Demo pages (language-neutral)
   urls.push(
     {
-      loc: `${site}demos/jon-nested-menu`,
-      lastmod: currentDate,
-      changefreq: 'weekly',
-      priority: 0.7,
-    },
-    {
       loc: `${site}demos/jon-nested-menu/cljs/`,
-      lastmod: currentDate,
       changefreq: 'weekly',
       priority: 0.7,
     },
     {
       loc: `${site}demos/jon-nested-menu/react/`,
-      lastmod: currentDate,
       changefreq: 'weekly',
       priority: 0.7,
     },

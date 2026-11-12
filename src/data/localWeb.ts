@@ -81,7 +81,7 @@ export const localCopy: Record<Langs, LocalCopy> = {
   es: {
     metaTitle: 'Páginas web para negocios en Gipuzkoa | Jon Ramos, Urnieta',
     metaDescription:
-      'Diseño de páginas web para comercios, bares, clínicas y asociaciones de Donostia, Urnieta, Hernani, Andoain y toda Gipuzkoa. En euskera y castellano, rápidas y pensadas para salir en Google.',
+      'Páginas web para comercios, bares, clínicas y asociaciones de Donostia, Urnieta y toda Gipuzkoa. En euskera y castellano, rápidas y pensadas para Google.',
     h1: ['Páginas web', 'para negocios', 'de Gipuzkoa'],
     townsLead: 'Para tu negocio en',
     rotatingTowns: [
@@ -202,7 +202,7 @@ export const localCopy: Record<Langs, LocalCopy> = {
   eu: {
     metaTitle: 'Web orriak Gipuzkoako negozioentzat | Jon Ramos, Urnieta',
     metaDescription:
-      'Web orrien diseinua Donostia, Urnieta, Hernani, Andoain eta Gipuzkoa osoko denda, taberna, klinika eta elkarteentzat. Euskaraz eta gaztelaniaz, azkarrak eta Googlen agertzeko pentsatuak.',
+      'Web orriak Donostia, Urnieta eta Gipuzkoa osoko denda, taberna, klinika eta elkarteentzat. Euskaraz eta gaztelaniaz, azkarrak eta Googlerako pentsatuak.',
     h1: ['Web orriak', 'Gipuzkoako', 'negozioentzat'],
     townsLead: 'Zure negozioarentzat',
     rotatingTowns: [
@@ -323,7 +323,7 @@ export const localCopy: Record<Langs, LocalCopy> = {
   en: {
     metaTitle: 'Websites for local businesses in Gipuzkoa | Jon Ramos',
     metaDescription:
-      'Web design for shops, bars, clinics and associations in Donostia-San Sebastián, Urnieta, Hernani, Andoain and all of Gipuzkoa. In Basque and Spanish, fast, and built to be found on Google.',
+      'Websites for shops, bars, clinics and associations in Donostia, Urnieta and all of Gipuzkoa. In Basque and Spanish, fast, and built to be found on Google.',
     h1: ['Websites', 'for businesses', 'in Gipuzkoa'],
     townsLead: 'For your business in',
     rotatingTowns: [

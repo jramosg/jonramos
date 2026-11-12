@@ -1,19 +1,13 @@
 ---
+import type { ComponentProps } from 'astro/types';
 import Footer from '@/components/Footer.astro';
 import BaseLayout from './BaseLayout.astro';
 import Navbar from '@/components/Navbar.astro';
 
-interface Props {
-  title?: string;
-  description?: string;
-  ogImage?: string;
-  alternates?: Record<'en' | 'es' | 'eu', string>;
-}
-
-const { title, description, ogImage, alternates } = Astro.props;
+type Props = ComponentProps<typeof BaseLayout>;
 ---
 
-<BaseLayout {...{ title, description, ogImage, alternates }}>
+<BaseLayout {...Astro.props}>
   <slot name="head" slot="head" />
   <Navbar />
   <main id="main-content" tabindex="-1">

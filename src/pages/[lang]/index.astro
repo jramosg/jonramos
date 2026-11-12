@@ -10,7 +10,15 @@ import Contact from '@/components/Contact.astro';
 import ContributionsHome from '@/components/ContributionsHome.astro';
 import { resolveLanguage } from '@/utils/languageResolver';
 import { getLangFromUrl } from '@/i18n/utils';
+import { languages } from '@/i18n/ui';
 import { logger } from '@/logger';
+
+// Only real language prefixes are pages. Anything else (/foo,
+// /favicon.png typos, old URLs) must be a real 404, not the homepage
+// served with a 200.
+if (!(Astro.params.lang && Astro.params.lang in languages)) {
+  return Astro.rewrite('/404');
+}
 
 const lang = getLangFromUrl(Astro.url);
 const resolvedLang = resolveLanguage(Astro);

@@ -2,6 +2,7 @@
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { buymeacoffee, github, linkedin, mail } from '@/settings';
 import { getNavigationUrl } from '@/utils/navigation';
+import { localPath } from '@/data/localSlugs';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -34,6 +35,12 @@ const socials = [
 <footer class="footer" role="contentinfo">
   <div class="container">
     <p class="big" aria-hidden="true">Jon Ramos</p>
+    <nav class="site-links" aria-label={t('footer.siteLinks')}>
+      <a href={localPath(lang)}>{t('nav.local')}</a>
+      <a href={getNavigationUrl(lang, '#projects')}>{t('nav.projects')}</a>
+      <a href={`/${lang}/contributions`}>{t('nav.contributions')}</a>
+      <a href={getNavigationUrl(lang, '#contact')}>{t('nav.contact')}</a>
+    </nav>
     <div class="row">
       <p class="small">
         &copy; {currentYear} Jon Ramos. Urnieta, Gipuzkoa.
@@ -71,6 +78,30 @@ const socials = [
     line-height: 0.8;
     color: var(--on-wall);
     white-space: nowrap;
+  }
+
+  .site-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .site-links a {
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    font-weight: 800;
+    font-stretch: var(--cond);
+    color: var(--on-wall);
+  }
+
+  .site-links a:first-child {
+    color: var(--paint);
+  }
+
+  .site-links a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.15em;
   }
 
   .row {

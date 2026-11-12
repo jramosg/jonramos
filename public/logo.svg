@@ -1,39 +1,5 @@
-   <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14 6V20C14 23.3137 11.3137 26 8 26H7"
-              stroke="url(#logo-gradient)"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-            <path
-              d="M20 26V6H23C25.2091 6 27 7.79086 27 10C27 12.2091 25.2091 14 23 14H20"
-              stroke="url(#logo-gradient)"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-            <path
-              d="M20 14L26 26"
-              stroke="url(#logo-gradient)"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-            <defs>
-              <linearGradient
-                id="logo-gradient"
-                x1="8"
-                y1="6"
-                x2="27"
-                y2="26"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="#7c3aed"></stop>
-                <stop offset="1" stop-color="#db2777"></stop>
-              </linearGradient>
-            </defs>
-          </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#163b57"/>
+  <path transform="translate(10.97 45.00) scale(0.04373)" fill="#f3f5f4" d="M208 12Q149 12 103.0 -7.5Q57 -27 31.0 -71.5Q5 -116 5 -190V-242H182V-200Q182 -175 187.0 -160.0Q192 -145 211 -145Q231 -145 236.0 -160.0Q241 -175 241 -200V-688H424V-191Q424 -117 395.0 -72.0Q366 -27 317.0 -7.5Q268 12 208 12ZM493 0V-688H742Q819 -688 862.0 -660.0Q905 -632 922.5 -584.0Q940 -536 940 -477Q940 -423 929.0 -375.5Q918 -328 884 -293L960 0H771L724 -231H676V0ZM676 -376H718Q742 -376 749.5 -401.5Q757 -427 757 -459Q757 -481 753.5 -498.5Q750 -516 742.0 -527.0Q734 -538 718 -538H676Z"/>
+  <rect x="6.97" y="50.00" width="50.07" height="5.00" fill="#e9c46a"/>
+</svg>

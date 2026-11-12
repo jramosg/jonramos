@@ -18,7 +18,7 @@ const { lang } = Astro.props;
 const c = localCopy[lang];
 const images = { laguntza: laguntzaImg, besaide: besaideImg };
 const rotating = c.rotatingTowns;
-const origin = Astro.url.origin;
+const origin = (Astro.site ?? Astro.url).origin;
 const pageUrl = `${origin}${localPath(lang)}`;
 
 const serviceLd = {
@@ -28,7 +28,7 @@ const serviceLd = {
   name: `Jon Ramos, ${c.serviceName}`,
   description: c.serviceDescription,
   url: pageUrl,
-  image: `${origin}/og-image.jpg`,
+  image: `${origin}/og/local-${lang}.jpg`,
   email: mail,
   inLanguage: lang,
   address: {
@@ -66,6 +66,10 @@ const faqLd = {
   title={c.metaTitle}
   description={c.metaDescription}
   alternates={localAlternates}
+  xDefault="es"
+  ogImage={`/og/local-${lang}.jpg`}
+  ogImageAlt={c.h1.join(' ')}
+  breadcrumb={[{ name: c.serviceName, path: localPath(lang) }]}
 >
   <Fragment slot="head">
     <script
@@ -81,7 +85,7 @@ const faqLd = {
   </Fragment>
 
   <!-- 1. Hero: the bay-blue wall -->
-  <section class="hero" aria-labelledby="local-title">
+  <section class="hero on-wall" aria-labelledby="local-title">
     <div class="container hero-grid">
       <h1 id="local-title" class="h1">
         {c.h1.map((l) => <span>{l}</span>)}
@@ -405,22 +409,6 @@ const faqLd = {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-  }
-
-  .btn-on-wall {
-    color: var(--on-wall);
-    background: transparent;
-  }
-
-  .btn-on-wall:hover {
-    background: var(--on-wall);
-    color: var(--wall);
-  }
-
-  .hero .btn-paint:hover {
-    background: var(--on-wall);
-    border-color: var(--on-wall);
-    color: var(--wall);
   }
 
   .sand-line {

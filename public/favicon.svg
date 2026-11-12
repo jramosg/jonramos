@@ -1,6 +1,5 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jon Ramos">
-  <rect x="1" y="1" width="62" height="62" rx="15" fill="#0E1626"></rect>
-  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" stroke="#5CB6B8" stroke-opacity="0.30"></rect>
-  <text x="30" y="46" text-anchor="middle" font-family="'Crimson Pro Variable', 'Crimson Pro', 'Crimson Text', Georgia, 'Times New Roman', serif" font-weight="700" font-style="italic" font-size="40" letter-spacing="-2" fill="#f1f7fb">JR</text>
-  <rect x="50" y="40" width="4" height="8" rx="1" fill="#F4BDCE"></rect>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#163b57"/>
+  <path transform="translate(10.97 45.00) scale(0.04373)" fill="#f3f5f4" d="M208 12Q149 12 103.0 -7.5Q57 -27 31.0 -71.5Q5 -116 5 -190V-242H182V-200Q182 -175 187.0 -160.0Q192 -145 211 -145Q231 -145 236.0 -160.0Q241 -175 241 -200V-688H424V-191Q424 -117 395.0 -72.0Q366 -27 317.0 -7.5Q268 12 208 12ZM493 0V-688H742Q819 -688 862.0 -660.0Q905 -632 922.5 -584.0Q940 -536 940 -477Q940 -423 929.0 -375.5Q918 -328 884 -293L960 0H771L724 -231H676V0ZM676 -376H718Q742 -376 749.5 -401.5Q757 -427 757 -459Q757 -481 753.5 -498.5Q750 -516 742.0 -527.0Q734 -538 718 -538H676Z"/>
+  <rect x="6.97" y="50.00" width="50.07" height="5.00" fill="#e9c46a"/>
 </svg>

@@ -127,12 +127,10 @@ const {
   .map-container {
     height: 100%;
     width: 100%;
-    border-radius: 1.5rem;
+    border-radius: 0;
     overflow: hidden;
     position: relative;
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: none;
     border: 1px solid var(--color-border);
     background: var(--color-card-bg);
   }
@@ -169,8 +167,8 @@ const {
     background: var(--color-card-bg);
     color: var(--color-text);
     backdrop-filter: blur(8px);
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    box-shadow: none;
   }
 
   :global(.leaflet-popup-tip) {

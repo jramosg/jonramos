@@ -11,10 +11,6 @@ export const ui = {
     'meta.title': 'Jon Ramos — Software engineer and web developer in Gipuzkoa',
     'meta.description':
       'Software engineer in Urnieta, Gipuzkoa. Fast websites for local businesses around Donostia, and web applications in Clojure and ClojureScript.',
-    'meta.jobTitles':
-      'Senior Software Engineer, Full Stack Developer, Web Developer, Freelance Developer, Clojure Expert',
-    'meta.structuredDescription':
-      'Senior Software Engineer specializing in functional programming, web development and scalable web applications. Available for hire by top tech companies and freelance projects. Based in Urnieta, Basque Country.',
 
     'nav.home': 'Home',
     'nav.experience': 'Experience',
@@ -94,6 +90,7 @@ export const ui = {
 
     'footer.rights': 'All rights reserved.',
     'footer.backToTop': 'Back to top',
+    'footer.siteLinks': 'Site',
     'contributions.home.subtitle':
       'Building and improving developer tools through open source',
     'themeSwitcher.toggleTheme': 'Toggle theme',
@@ -104,7 +101,7 @@ export const ui = {
 
     'contributions.page.title': 'Open Source Contributions | Jon Ramos',
     'contributions.page.description':
-      'Comprehensive overview of my open source contributions to clj-kondo, cljfmt, Logseq and other projects. Specialized in Clojure tooling, static analysis, and developer experience improvements.',
+      'Merged pull requests to clj-kondo, Calva, Logseq, Kit and other Clojure tools: linters, editor support and developer experience fixes.',
     'contributions.hero.title': 'Open Source Contributions',
     'contributions.hero.subtitle':
       'Building better developer tools and experiences through meaningful contributions to open source projects',
@@ -135,10 +132,6 @@ export const ui = {
     'meta.title': 'Jon Ramos — Programador y desarrollador web en Gipuzkoa',
     'meta.description':
       'Programador en Urnieta (Gipuzkoa). Páginas web rápidas para negocios de Donostia y alrededores, y aplicaciones web en Clojure y ClojureScript.',
-    'meta.jobTitles':
-      'Ingeniero de Software Senior, Desarrollador Full Stack, Desarrollador Web, Desarrollador Freelance',
-    'meta.structuredDescription':
-      'Ingeniero de Software Senior especializado en programación funcional, desarrollo web y aplicaciones web escalables. Disponible para contratación por empresas tecnológicas y proyectos freelance en Urnieta, País Vasco.',
 
     'nav.home': 'Inicio',
     'nav.experience': 'Experiencia',
@@ -219,6 +212,7 @@ export const ui = {
 
     'footer.rights': 'Todos los derechos reservados.',
     'footer.backToTop': 'Volver arriba',
+    'footer.siteLinks': 'Secciones',
     'contributions.home.subtitle':
       'Construyendo y mejorando herramientas para desarrolladores a través del open source',
     'themeSwitcher.toggleTheme': 'Cambiar tema',
@@ -229,7 +223,7 @@ export const ui = {
 
     'contributions.page.title': 'Contribuciones Open Source | Jon Ramos',
     'contributions.page.description':
-      'Descripción completa de mis contribuciones open source a clj-kondo, cljfmt, Logseq y otros proyectos. Especializado en herramientas Clojure, análisis estático y mejoras de experiencia de desarrollador.',
+      'Pull requests aceptados en clj-kondo, Calva, Logseq, Kit y otras herramientas de Clojure: linters, soporte de editores y mejoras de experiencia.',
     'contributions.hero.title': 'Contribuciones Open Source',
     'contributions.hero.subtitle':
       'Construyendo mejores herramientas y experiencias para desarrolladores a través de contribuciones significativas a proyectos open source',
@@ -262,10 +256,6 @@ export const ui = {
     'meta.title': 'Jon Ramos — Programatzailea eta web garatzailea Gipuzkoan',
     'meta.description':
       'Programatzailea Urnietan (Gipuzkoa). Web orri azkarrak Donostia inguruko negozioentzat, eta web aplikazioak Clojure eta ClojureScript-en.',
-    'meta.jobTitles':
-      'Software Ingeniaria Senior, Full Stack Garatzailea, Web Garatzailea, Freelance Garatzailea',
-    'meta.structuredDescription':
-      'Software Ingeniaria Senior programazio funtzionalean, web garapenean eta web aplikazio eskalagarrietan espezializatua. Kontratatzeko eskuragarri enpresa teknologikoek eta freelance proiektuetarako Urnietan, Euskal Herrian.',
 
     'nav.home': 'Hasiera',
     'nav.experience': 'Esperientzia',
@@ -345,6 +335,7 @@ export const ui = {
 
     'footer.rights': 'Eskubide guztiak erreserbatuta.',
     'footer.backToTop': 'Gora itzuli',
+    'footer.siteLinks': 'Atalak',
     'contributions.home.subtitle':
       'Garatzaileentzako tresnak eraikitzen eta hobetzen kode irekiaren bidez',
     'themeSwitcher.toggleTheme': 'Gaia aldatu',
@@ -355,7 +346,7 @@ export const ui = {
 
     'contributions.page.title': 'Kode Irekiko Ekarpenak | Jon Ramos',
     'contributions.page.description':
-      'Nire kode irekiko ekarpenen ikuspegi osoa clj-kondo, cljfmt, Logseq eta beste proiektuetara. Clojure tresnak, analisi estatikoan eta garatzaileen esperientzian espezializatua.',
+      'clj-kondo, Calva, Logseq, Kit eta beste Clojure tresna batzuetan onartutako pull requestak: linterrak, editoreen euskarria eta hobekuntzak.',
     'contributions.hero.title': 'Kode Irekiko Ekarpenak',
     'contributions.hero.subtitle':
       'Garatzaile-tresna eta esperientzia hobeak eraikitzen kode irekiko proiektuetara ekapen esanguratsuak eginez',

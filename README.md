@@ -65,10 +65,16 @@ docker compose up -d
 
 Logs land in `./logs` (override with `LOG_DIR`): `info.log`, `warn.log`, `error.log`. Stop with `docker compose down`.
 
-## OG image
+## Brand images
 
-`public/og-image.jpg` is generated from an SVG that uses the site's design tokens and fonts. The renderer lives in `scripts/og/render.mjs` (resvg-js with the decompressed brand fonts).
+Favicons (`favicon.svg`, `favicon.ico`, `apple-touch-icon.png`), manifest icons and the Open Graph cards in `public/og/` (home and local-business page, one per language) are all generated:
+
+```sh
+node scripts/brand/render.mjs
+```
+
+It decompresses Archivo, makes static instances with fontTools (`python3` with `fontTools` required), converts "JR" to paths for the SVG icon, and renders with resvg-js. Re-run it after changing copy, colours or the photo.
 
 ## Design system
 
-Dark "ink" and light "sky" themes over a coastal palette: teal accent, periwinkle haze, shell pink. Crimson Pro carries the human voice (headings, prose), JetBrains Mono the machine voice (labels, code, the `;;` and `//` markers). The same tokens style the demos of [jon-nested-menu](https://github.com/jramosg/jon-nested-menu), a Reagent/MUI nested menu library published to Clojars and npm.
+Whitewash ground, deep Kontxa-bay blue (`#163b57`) for the big walls and a sand accent (`#e9c46a`) for the one line and button that matter. Archivo, a variable font, does all the talking: squeezed to 62% width for headlines, like the numerals painted on frontón walls, and normal width for reading. JetBrains Mono only appears in the REPL. Tokens live in `src/styles/global.css`.

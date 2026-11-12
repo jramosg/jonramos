@@ -1,16 +1,26 @@
 ---
 import { languages } from '@/i18n/ui';
 import { getLangFromUrl, getLangPath } from '@/i18n/utils';
+import { localAlternates, localSlugs } from '@/data/localSlugs';
 
 const lang = getLangFromUrl(Astro.url);
 const currentUrl = Astro.url;
+
+// Pages whose slug changes per language link straight to each version
+// instead of bouncing through a redirect.
+const slug = currentUrl.pathname.split('/')[2] ?? '';
+const onLocalPage = Object.values(localSlugs).includes(slug);
+const hrefFor = (code: string) =>
+  onLocalPage
+    ? localAlternates[code as keyof typeof localAlternates]
+    : getLangPath(currentUrl, code);
 ---
 
 <div class="language-picker">
   {
     Object.entries(languages).map(([langCode, label]) => (
       <a
-        href={getLangPath(currentUrl, langCode)}
+        href={hrefFor(langCode)}
         class={`lang-link ${lang === langCode ? 'active' : ''}`}
         hreflang={langCode}
         lang={langCode}

@@ -1,18 +1,33 @@
 ---
 import ThemeProvider from '@/components/theme-switcher/ThemeProvider.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
-import { github, linkedin } from '@/settings';
+import { github, linkedin, location, mail } from '@/settings';
 import jetbrainsLatin400 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2?url';
 import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2?url';
 import archivoLatinExt from '@fontsource-variable/archivo/files/archivo-latin-ext-standard-normal.woff2?url';
 import '@/styles/global.css';
 
+type Lang = 'en' | 'es' | 'eu';
+
+interface Crumb {
+  name: string;
+  path: string;
+}
+
 interface Props {
   title?: string;
   description?: string;
+  /** Path under public/, e.g. /og/local-es.jpg. Defaults to the
+   *  home card in the page's language. */
   ogImage?: string;
+  ogImageAlt?: string;
   /** Per-language paths when a page's slug differs by language. */
-  alternates?: Record<'en' | 'es' | 'eu', string>;
+  alternates?: Record<Lang, string>;
+  /** Language served to visitors whose language isn't offered. */
+  xDefault?: Lang;
+  /** Trail after the home crumb, for BreadcrumbList. */
+  breadcrumb?: Crumb[];
+  noindex?: boolean;
 }
 
 const lang = getLangFromUrl(Astro.url);
@@ -20,25 +35,136 @@ const t = useTranslations(lang);
 const {
   title = t('meta.title'),
   description = t('meta.description'),
-  ogImage = '/og-image.jpg',
+  ogImage = `/og/home-${lang}.jpg`,
+  ogImageAlt = `Jon Ramos. ${t('hero.title')}`,
   alternates,
+  xDefault = 'en',
+  breadcrumb = [],
+  noindex = false,
 } = Astro.props;
 
-// Language-relative path of the current page ('' for /en, '/contributions'
-// for /en/contributions) so hreflang alternates point at the same page in
-// each language rather than always at the homepage.
-const langPath = Astro.url.pathname
-  .replace(new RegExp(`^/${lang}`), '')
-  .replace(/\/$/, '');
-const altHref = (l: 'en' | 'es' | 'eu') =>
-  `${Astro.url.origin}${alternates?.[l] ?? `/${l}${langPath}`}`;
+// Absolute URLs always use the public origin (astro.config `site`), never
+// the host the request came in on, and drop query strings and trailing
+// slashes so every page has exactly one canonical address.
+const origin = (Astro.site ?? Astro.url).origin;
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonical = `${origin}${path}`;
+
+// Language-relative path ('' for /en, '/contributions' for
+// /en/contributions) so hreflang points at the same page per language.
+const langPath = path.replace(new RegExp(`^/${lang}`), '');
+const altHref = (l: Lang) =>
+  `${origin}${alternates?.[l] ?? `/${l}${langPath}`}`;
+const isHome = langPath === '';
+
+const ogLocales: Record<Lang, string> = {
+  en: 'en_GB',
+  es: 'es_ES',
+  eu: 'eu_ES',
+};
+const skipLabel: Record<Lang, string> = {
+  en: 'Skip to content',
+  es: 'Saltar al contenido',
+  eu: 'Edukira joan',
+};
+
+const person = {
+  '@type': 'Person',
+  '@id': `${origin}/#person`,
+  name: 'Jon Ramos',
+  givenName: 'Jon',
+  familyName: 'Ramos',
+  jobTitle: t('hero.title'),
+  description: t('meta.description'),
+  url: `${origin}/${lang}`,
+  image: `${origin}/og/home-${lang}.jpg`,
+  email: `mailto:${mail}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Urnieta',
+    postalCode: '20130',
+    addressRegion: 'Gipuzkoa',
+    addressCountry: 'ES',
+  },
+  homeLocation: {
+    '@type': 'Place',
+    name: 'Urnieta',
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: location.lat,
+      longitude: location.lng,
+    },
+  },
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Ubikare',
+    url: 'https://ubikare.io/',
+  },
+  sameAs: [
+    `https://github.com/${github}`,
+    `https://www.linkedin.com/in/${linkedin}`,
+  ],
+  knowsLanguage: ['eu', 'es', 'en'],
+  knowsAbout: [
+    'Web development',
+    'Web design',
+    'Clojure',
+    'ClojureScript',
+    'Datomic',
+    'TypeScript',
+    'Astro',
+    'React',
+    'Healthcare software',
+  ],
+};
+
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${origin}/#website`,
+  name: 'Jon Ramos',
+  url: `${origin}/`,
+  inLanguage: ['en', 'es', 'eu'],
+  publisher: { '@id': `${origin}/#person` },
+};
+
+const page = isHome
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      url: canonical,
+      inLanguage: lang,
+      mainEntity: person,
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { name: t('nav.home'), path: `/${lang}` },
+        ...breadcrumb,
+      ].map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: c.name,
+        item: `${origin}${c.path}`,
+      })),
+    };
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {
+      !noindex && (
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+      )
+    }
 
     <!-- Preload the one face that paints the hero -->
     <link
@@ -48,98 +174,55 @@ const altHref = (l: 'en' | 'es' | 'eu') =>
       type="font/woff2"
       crossorigin
     />
-    <meta name="description" content={description} />
 
-    <!-- Author and Copyright -->
-    <meta name="author" content="Jon Ramos" />
-    <meta name="copyright" content="Jon Ramos" />
-
-    <!-- Robots and Indexing -->
-    <meta
-      name="robots"
-      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-    />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="bingbot" content="index, follow" />
-
-    <!-- Geo-targeting for local SEO -->
-    <meta name="geo.region" content="ES-PV" />
-    <meta name="geo.placename" content="Urnieta, Gipuzkoa, Basque Country" />
-    <meta name="geo.position" content="43.2480356;-2.0022654" />
-    <meta name="ICBM" content="43.2480356, -2.0022654" />
-
-    <!-- Mobile and PWA optimization -->
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: dark)"
-      content="#0d1913"
-    />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: light)"
-      content="#eef1ec"
-    />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Jon Ramos" />
-
-    <link rel="sitemap" href="/sitemap.xml" />
-
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="profile" />
-    <meta property="og:site_name" content="Jon Ramos - Software Engineer" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={`${Astro.url.origin}${ogImage}`} />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="Jon Ramos - Software Engineer Portfolio"
-    />
-    <meta property="og:url" content={Astro.url} />
-    <meta
-      property="og:locale"
-      content={lang === 'eu' ? 'eu_ES' : lang === 'es' ? 'es_ES' : 'en_US'}
-    />
-    <meta property="og:locale:alternate" content="en_US" />
-    <meta property="og:locale:alternate" content="es_ES" />
-    <meta property="og:locale:alternate" content="eu_ES" />
-
-    <!-- Profile-specific OG tags -->
-    <meta property="profile:first_name" content="Jon" />
-    <meta property="profile:last_name" content="Ramos" />
-    <meta property="profile:username" content="jramosg" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@jramosg" />
-    <meta name="twitter:creator" content="@jramosg" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${Astro.url.origin}${ogImage}`} />
-    <meta
-      name="twitter:image:alt"
-      content="Jon Ramos - Software Engineer Portfolio"
-    />
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href={Astro.url.href} />
-
-    <!-- Hreflang for multilingual SEO -->
     <link rel="alternate" hreflang="en" href={altHref('en')} />
     <link rel="alternate" hreflang="es" href={altHref('es')} />
     <link rel="alternate" hreflang="eu" href={altHref('eu')} />
-    <link rel="alternate" hreflang="x-default" href={altHref('en')} />
+    <link rel="alternate" hreflang="x-default" href={altHref(xDefault)} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="generator" content={Astro.generator} />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#eff1ef"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0b1721"
+    />
+    <meta name="author" content="Jon Ramos" />
 
-    <title>{title}</title>
+    <meta property="og:type" content={isHome ? 'profile' : 'website'} />
+    <meta property="og:site_name" content="Jon Ramos" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${origin}${ogImage}`} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:locale" content={ogLocales[lang]} />
+    {
+      (Object.keys(ogLocales) as Lang[])
+        .filter((l) => l !== lang)
+        .map((l) => (
+          <meta property="og:locale:alternate" content={ogLocales[l]} />
+        ))
+    }
+    {
+      isHome && (
+        <>
+          <meta property="profile:first_name" content="Jon" />
+          <meta property="profile:last_name" content="Ramos" />
+        </>
+      )
+    }
+    <meta name="twitter:card" content="summary_large_image" />
 
     <script is:inline>
       // Set the theme before first paint so dark visitors never see a
@@ -158,169 +241,15 @@ const altHref = (l: 'en' | 'es' | 'eu') =>
       })();
     </script>
 
-    <!-- WebSite Schema for Google Sitelinks -->
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'Jon Ramos - Software Engineer Portfolio',
-        alternateName: ['Jon Ramos Portfolio', 'jonramos.dev'],
-        url: Astro.url.origin,
-        description: t('meta.description'),
-        inLanguage: [lang, 'en', 'es', 'eu'],
-        author: {
-          '@type': 'Person',
-          name: 'Jon Ramos',
-        },
-      })}
+      set:html={JSON.stringify(website)}
     />
-
-    <!-- ProfilePage Schema - signals expertise to Google -->
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'ProfilePage',
-        dateCreated: '2024-01-01T00:00:00Z',
-        dateModified: new Date().toISOString(),
-        mainEntity: {
-          '@type': 'Person',
-          '@id': `${Astro.url.origin}/#person`,
-          name: 'Jon Ramos',
-          givenName: 'Jon',
-          familyName: 'Ramos',
-          jobTitle: t('meta.jobTitles').split(', '),
-          description: t('meta.structuredDescription'),
-          url: Astro.url.origin,
-          image: `${Astro.url.origin}/og-image.jpg`,
-          email: 'jonurnieta@gmail.com',
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: 'Urnieta',
-            addressRegion: 'Gipuzkoa',
-            addressCountry: 'ES',
-          },
-          workLocation: {
-            '@type': 'Place',
-            name: 'Urnieta, Basque Country',
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: 'Urnieta',
-              addressRegion: 'Euskal Herria / Basque Country',
-              addressCountry: 'ES',
-            },
-            geo: {
-              '@type': 'GeoCoordinates',
-              latitude: 43.2480356,
-              longitude: -2.0022654,
-            },
-          },
-          sameAs: [
-            `https://github.com/${github}`,
-            `https://linkedin.com/in/${linkedin}`,
-          ],
-          knowsLanguage: [
-            { '@type': 'Language', name: 'Basque', alternateName: 'Euskara' },
-            { '@type': 'Language', name: 'Spanish', alternateName: 'Español' },
-            { '@type': 'Language', name: 'English' },
-          ],
-          knowsAbout: [
-            'Software Engineering',
-            'Full Stack Development',
-            'Web Development',
-            'Clojure',
-            'ClojureScript',
-            'JavaScript',
-            'TypeScript',
-            'React',
-            'Astro Framework',
-            'Datomic Database',
-            'Functional Programming',
-            'Healthcare Software',
-            'Open Source Development',
-          ],
-          hasOccupation: {
-            '@type': 'Occupation',
-            name: 'Software Engineer',
-            occupationLocation: {
-              '@type': 'Country',
-              name: 'Spain',
-            },
-            skills:
-              'Clojure, ClojureScript, JavaScript, TypeScript, React, Astro, Datomic, Full Stack Development, Web Applications, Healthcare Software',
-          },
-          worksFor: {
-            '@type': 'Organization',
-            name: 'Ubikare',
-            url: 'https://ubikare.io/',
-            description: 'Healthcare technology company',
-          },
-          alumniOf: {
-            '@type': 'EducationalOrganization',
-            name: 'Software Engineering Studies',
-          },
-          makesOffer: [
-            {
-              '@type': 'Offer',
-              itemOffered: {
-                '@type': 'Service',
-                name: 'Web Development Services',
-                description:
-                  'Custom web application development using modern technologies like Astro, React, and Clojure/ClojureScript',
-              },
-            },
-            {
-              '@type': 'Offer',
-              itemOffered: {
-                '@type': 'Service',
-                name: 'Full Stack Development',
-                description:
-                  'End-to-end software development from frontend to backend with focus on performance and data-driven solutions',
-              },
-            },
-            {
-              '@type': 'Offer',
-              itemOffered: {
-                '@type': 'Service',
-                name: 'Freelance Software Engineering',
-                description:
-                  'Professional freelance development services for businesses in Basque Country and internationally',
-              },
-            },
-          ],
-        },
-      })}
-    />
-
-    <!-- BreadcrumbList for better navigation in search results -->
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: `${Astro.url.origin}/${lang}`,
-          },
-          ...(langPath === '/contributions'
-            ? [
-                {
-                  '@type': 'ListItem',
-                  position: 2,
-                  name: t('contributions.hero.title'),
-                  item: `${Astro.url.origin}/${lang}/contributions`,
-                },
-              ]
-            : []),
-        ],
-      })}
+      set:html={JSON.stringify(page)}
     />
     <Fragment
       set:html={`<style>
@@ -359,7 +288,7 @@ const altHref = (l: 'en' | 'es' | 'eu') =>
     <slot name="head" />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">{skipLabel[lang]}</a>
     <slot />
   </body><ThemeProvider />
 </html>

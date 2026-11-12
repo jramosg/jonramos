@@ -1,0 +1,83 @@
+---
+export const prerender = false;
+
+import Layout from '@/layouts/Layout.astro';
+import { getLangFromUrl } from '@/i18n/utils';
+import { localPath } from '@/data/localSlugs';
+
+Astro.response.status = 404;
+
+const lang = getLangFromUrl(Astro.url);
+const copy = {
+  es: {
+    title: 'Página no encontrada',
+    body: 'Esta dirección no existe o ha cambiado. Puedes volver al inicio o ver cómo hago webs para negocios de Gipuzkoa.',
+    home: 'Ir al inicio',
+    local: 'Webs para negocios',
+  },
+  eu: {
+    title: 'Ez da orria aurkitu',
+    body: 'Helbide hau ez dago edo aldatu egin da. Hasierara itzul zaitezke edo Gipuzkoako negozioentzako webak ikusi.',
+    home: 'Hasierara joan',
+    local: 'Negozioentzako webak',
+  },
+  en: {
+    title: 'Page not found',
+    body: "This address doesn't exist or has moved. Go back to the start, or see how I build websites for businesses in Gipuzkoa.",
+    home: 'Go to the home page',
+    local: 'Business websites',
+  },
+}[lang];
+---
+
+<Layout title={`${copy.title} | Jon Ramos`} description={copy.body} noindex>
+  <section class="nf on-wall">
+    <div class="container">
+      <p class="code" aria-hidden="true">404</p>
+      <h1>{copy.title}</h1>
+      <p class="body">{copy.body}</p>
+      <div class="actions">
+        <a href={`/${lang}`} class="btn btn-paint">{copy.home}</a>
+        <a href={localPath(lang)} class="btn btn-on-wall">{copy.local}</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .nf {
+    background: var(--wall);
+    color: var(--on-wall);
+    padding: clamp(3rem, 8vw, 6rem) 0;
+    border-bottom: 10px solid var(--paint);
+  }
+
+  .code {
+    margin: 0;
+    font-size: clamp(8rem, 30vw, 20rem);
+    font-weight: 900;
+    font-stretch: var(--cond);
+    line-height: 0.8;
+    color: var(--on-wall);
+  }
+
+  h1 {
+    margin-top: 1.5rem;
+    font-size: var(--step-4);
+    color: var(--on-wall);
+  }
+
+  .body {
+    margin: 1.25rem 0 2rem;
+    max-width: 44ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--on-wall-muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

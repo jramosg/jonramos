@@ -338,6 +338,23 @@ img {
   color: var(--ground);
 }
 
+/* buttons sitting on a blue wall (add .on-wall to the section) */
+.btn-on-wall {
+  background: transparent;
+  color: var(--on-wall);
+}
+
+.btn-on-wall:hover {
+  background: var(--on-wall);
+  color: var(--wall);
+}
+
+.on-wall .btn-paint:hover {
+  background: var(--on-wall);
+  border-color: var(--on-wall);
+  color: var(--wall);
+}
+
 /* ---------- utilities */
 .visually-hidden,
 .sr-only {

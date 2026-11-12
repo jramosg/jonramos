@@ -25,4 +25,4 @@ pnpm-debug.log*
 
 logs/
 
-.vscode/
+.vscode/scripts/brand/.fonts/
