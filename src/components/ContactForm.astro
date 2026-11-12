@@ -14,12 +14,11 @@ const t = useTranslations(lang);
 >
   <input type="hidden" name="language" value={lang} />
   <div class="form-group">
-    <label for="name" class="sr-only">{t('contact.form.name')}</label>
+    <label for="name">{t('contact.form.name')}</label>
     <input
       type="text"
       id="name"
       name="name"
-      placeholder={t('contact.form.name')}
       required
       autocomplete="name"
       class="form-input"
@@ -27,12 +26,11 @@ const t = useTranslations(lang);
   </div>
 
   <div class="form-group">
-    <label for="email" class="sr-only">{t('contact.form.email')}</label>
+    <label for="email">{t('contact.form.email')}</label>
     <input
       type="email"
       id="email"
       name="email"
-      placeholder={t('contact.form.email')}
       required
       autocomplete="email"
       class="form-input"
@@ -40,34 +38,17 @@ const t = useTranslations(lang);
   </div>
 
   <div class="form-group">
-    <label for="message" class="sr-only">{t('contact.form.message')}</label>
+    <label for="message">{t('contact.form.message')}</label>
     <textarea
       id="message"
       name="message"
-      placeholder={t('contact.form.message')}
       rows="4"
       required
       class="form-input textarea"></textarea>
   </div>
 
-  <button type="submit" class="submit-btn">
+  <button type="submit" class="submit-btn btn btn-paint">
     <span class="btn-text">{t('contact.form.send')}</span>
-    <div class="btn-icon">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="w-6 h-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-        ></path>
-      </svg>
-    </div>
   </button>
 
   <div class="form-status" id="form-status" role="status" aria-live="polite">
@@ -120,154 +101,88 @@ const t = useTranslations(lang);
 
 <style>
   .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
+    display: grid;
+    gap: 1.25rem;
   }
 
   .form-group {
-    position: relative;
+    display: grid;
+    gap: 0.35rem;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+  label {
+    font-weight: 600;
+    color: var(--ink);
   }
 
   .form-input {
     width: 100%;
-    padding: 1rem 1.25rem;
-    background: var(--surface-overlay);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    color: var(--color-text);
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    transition: all 0.24s var(--ease-out-expo);
-    outline: none;
+    padding: 0.8rem 0.9rem;
+    font: inherit;
+    color: var(--ink);
+    background: var(--ground-raised);
+    border: 2px solid var(--rule-strong);
+    border-radius: 2px;
+    transition: border-color 160ms var(--ease);
   }
 
-  .form-input::placeholder {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    letter-spacing: var(--tracking-wide);
-    color: var(--color-text-subtle);
+  .form-input:hover {
+    border-color: var(--ink-subtle);
   }
 
   .form-input:focus {
-    border-color: var(--color-primary);
-    background: var(--surface-raised);
-    box-shadow: 0 0 0 3px var(--accent-soft);
+    outline: none;
+    border-color: var(--ink);
   }
 
   .textarea {
+    min-height: 9rem;
     resize: vertical;
-    min-height: 120px;
   }
 
   .submit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    background: var(--accent);
-    color: var(--on-accent);
-    border: 1px solid var(--accent);
-    border-radius: var(--radius-md);
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: var(--tracking-wide);
-    cursor: pointer;
-    transition: all 0.24s var(--ease-out-expo);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .submit-btn:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--glow-teal);
+    justify-self: start;
   }
 
   .submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .btn-icon svg {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-  }
-
-  .submit-btn:hover .btn-icon svg {
-    transform: translateX(4px) rotate(-10deg);
+    opacity: 0.6;
+    cursor: progress;
   }
 
   .form-status {
-    padding: 0 1rem;
-    margin-top: 0;
-    max-height: 0;
-    border-radius: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(10px);
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
+    display: none;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    border-left: 4px solid;
   }
 
   .form-status.show {
-    padding: 1rem;
-    margin-top: 1rem;
-    max-height: 200px;
-    opacity: 1;
-    transform: translateY(0);
+    display: block;
   }
 
   .form-status.success {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-    border-color: rgba(16, 185, 129, 0.2);
+    border-color: var(--link);
+    color: var(--ink);
+    background: var(--accent-soft);
   }
 
   .form-status.error {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-    border-color: rgba(239, 68, 68, 0.2);
+    border-color: #b42318;
+    color: var(--ink);
+    background: rgba(180, 35, 24, 0.08);
   }
 
-  /* Loader */
-  .loader {
-    width: 16px;
-    height: 16px;
+  :global(.loader) {
+    width: 1em;
+    height: 1em;
     border: 2px solid currentColor;
-    border-bottom-color: transparent;
+    border-right-color: transparent;
     border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
+    animation: spin 0.7s linear infinite;
   }
 
-  @keyframes rotation {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
+  @keyframes spin {
+    to {
       transform: rotate(360deg);
     }
   }

@@ -3,24 +3,17 @@ import LanguagePicker from './LanguagePicker.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import ThemeSwitcher from './theme-switcher/ThemeSwitcher.astro';
 import { getNavigationUrl } from '@/utils/navigation';
-import LogoMark from '@/assets/logo/mark-mono.svg';
+import { localPath } from '@/data/localSlugs';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// `id` ties each link to an in-page section so the scroll-spy can flag
-// the section in view. `spy: false` links are separate routes (e.g.
-// contributions) — they go active by matching the current path instead.
+// `spy` links point at sections of the home page and light up while
+// that section is in view; the others are routes matched by path.
 const links = [
   {
-    id: 'home',
-    name: t('nav.home'),
-    href: getNavigationUrl(lang, '#home'),
-    spy: true,
-  },
-  {
     id: 'experience',
-    name: t('nav.experience'),
+    name: t('nav.work'),
     href: getNavigationUrl(lang, '#experience'),
     spy: true,
   },
@@ -44,104 +37,88 @@ const links = [
   },
 ];
 
+const local = { name: t('nav.local'), href: localPath(lang) };
+
 const trim = (p: string) => p.replace(/\/+$/, '');
-const onCurrentPage = (link: (typeof links)[number]) =>
-  !link.spy && trim(Astro.url.pathname) === trim(link.href);
+const here = trim(Astro.url.pathname);
+const onPage = (href: string) => here === trim(href);
+const onHome = here === `/${lang}`;
 ---
 
-<>
-  <div class="drawer-overlay" id="drawerOverlay" aria-hidden="true"></div>
+<header class="header" role="banner">
+  <nav class="bar" aria-label="Main navigation">
+    <a href={`/${lang}`} class="wordmark" aria-label="Jon Ramos, home">
+      Jon Ramos
+    </a>
 
-  <header class="header" role="banner">
-    <div class="container">
-      <nav class="nav" aria-label="Main navigation">
-        <a
-          href={`/${lang}`}
-          class="logo"
-          aria-label="Jon Ramos - Home"
-          title="Go to homepage"
-        >
-          <LogoMark class="logo-mark" aria-hidden="true" />
-          <span class="visually-hidden">Jon Ramos - Software Engineer</span>
-        </a>
-
-        <div class="nav-center">
-          <ul class="nav-links">
-            {
-              links.map((link, i) => (
-                <li>
-                  <a
-                    href={link.href}
-                    data-section={link.spy ? link.id : undefined}
-                    class={onCurrentPage(link) ? 'is-active' : undefined}
-                    aria-current={onCurrentPage(link) ? 'page' : undefined}
-                  >
-                    <span class="link-index">0{i + 1}</span>
-                    {link.name}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-
-        <div class="nav-right">
-          <LanguagePicker />
-          <ThemeSwitcher />
-        </div>
-      </nav>
-
-      <div class="mobile-controls">
-        <LanguagePicker />
-        <ThemeSwitcher id="theme-toggle-mobile" />
-        <button
-          class="mobile-menu-btn"
-          aria-label="Open navigation menu"
-          aria-expanded="false"
-          aria-controls="drawer"
-          id="menuBtn"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </button>
-      </div>
-    </div>
-
-    <aside
-      class="drawer"
-      id="drawer"
-      aria-label="Mobile navigation"
-      aria-hidden="true"
-    >
-      <nav class="drawer-nav" aria-label="Mobile navigation links">
-        {
-          links.map((link, index) => (
+    <ul class="links">
+      {
+        links.map((link) => (
+          <li>
             <a
               href={link.href}
-              tabindex="-1"
-              data-section={link.spy ? link.id : undefined}
-              class={`drawer-link${onCurrentPage(link) ? ' is-active' : ''}`}
-              aria-current={onCurrentPage(link) ? 'page' : undefined}
-              style={`animation-delay: ${index * 0.05}s`}
+              data-section={link.spy && onHome ? link.id : undefined}
+              aria-current={!link.spy && onPage(link.href) ? 'page' : undefined}
             >
-              <span class="drawer-link-index">0{index + 1}</span>
               {link.name}
             </a>
-          ))
-        }
-      </nav>
-    </aside>
+          </li>
+        ))
+      }
+      <li>
+        <a
+          href={local.href}
+          class="local"
+          aria-current={onPage(local.href) ? 'page' : undefined}
+        >
+          {local.name}
+        </a>
+      </li>
+    </ul>
 
-    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-  </header>
-</>
+    <div class="tools">
+      <LanguagePicker />
+      <ThemeSwitcher />
+    </div>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      aria-expanded="false"
+      aria-controls="drawer"
+    >
+      <span class="menu-label">Menu</span>
+    </button>
+  </nav>
+
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <ul class="drawer-links">
+      <li>
+        <a href={local.href} class="drawer-link local" tabindex="-1">
+          {local.name}
+        </a>
+      </li>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} class="drawer-link" tabindex="-1">
+              {link.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="drawer-tools">
+      <LanguagePicker />
+      <ThemeSwitcher id="theme-toggle-mobile" />
+    </div>
+  </div>
+</header>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const menuBtn = document.getElementById('menuBtn');
     const drawer = document.getElementById('drawer');
-    const overlay = document.getElementById('drawerOverlay');
     const drawerLinks = document.querySelectorAll('.drawer-link');
 
     function toggleDrawer() {
@@ -149,7 +126,6 @@ const onCurrentPage = (link: (typeof links)[number]) =>
 
       if (isOpen) {
         drawer?.classList.remove('open');
-        overlay?.classList.remove('open');
         menuBtn?.classList.remove('open');
         menuBtn?.setAttribute('aria-expanded', 'false');
         drawer?.setAttribute('aria-hidden', 'true');
@@ -159,7 +135,6 @@ const onCurrentPage = (link: (typeof links)[number]) =>
         });
       } else {
         drawer?.classList.add('open');
-        overlay?.classList.add('open');
         menuBtn?.classList.add('open');
         menuBtn?.setAttribute('aria-expanded', 'true');
         drawer?.setAttribute('aria-hidden', 'false');
@@ -172,10 +147,6 @@ const onCurrentPage = (link: (typeof links)[number]) =>
 
     if (menuBtn) {
       menuBtn.addEventListener('click', toggleDrawer);
-    }
-
-    if (overlay) {
-      overlay.addEventListener('click', toggleDrawer);
     }
 
     drawerLinks.forEach((link) => {
@@ -209,7 +180,7 @@ const onCurrentPage = (link: (typeof links)[number]) =>
       const updateActive = () => {
         ticking = false;
         const line = window.scrollY + navHeight + 48;
-        let current = sections[0].id;
+        let current = '';
         for (const section of sections) {
           if (section.offsetTop <= line) current = section.id;
         }
@@ -236,296 +207,179 @@ const onCurrentPage = (link: (typeof links)[number]) =>
       window.addEventListener('resize', onScroll, { passive: true });
       updateActive();
     }
-
-    // Scroll progress: a teal hairline along the bottom of the header.
-    const progress = document.getElementById('scrollProgress');
-    if (progress) {
-      let progressTicking = false;
-      const updateProgress = () => {
-        progressTicking = false;
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-        progress.style.transform = `scaleX(${ratio.toFixed(4)})`;
-      };
-      const onProgressScroll = () => {
-        if (progressTicking) return;
-        progressTicking = true;
-        requestAnimationFrame(updateProgress);
-      };
-      window.addEventListener('scroll', onProgressScroll, { passive: true });
-      window.addEventListener('resize', onProgressScroll, { passive: true });
-      updateProgress();
-    }
   });
 </script>
 
 <style>
   .header {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--nav-height);
     z-index: 100;
-    background: var(--color-bg-alpha);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--color-border);
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
   }
 
-  .scroll-progress {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--haze));
-    transform: scaleX(0);
-    transform-origin: left;
-    pointer-events: none;
-  }
-
-  .container {
+  .bar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 100%;
+    gap: 2rem;
+    height: var(--nav-height);
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 var(--gutter);
   }
 
-  .nav {
+  .wordmark {
+    font-size: 1.5rem;
+    font-weight: 850;
+    font-stretch: var(--cond);
+    line-height: 1;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .links {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    transition: opacity 0.2s var(--ease-out-expo);
-    color: var(--text-strong);
-  }
-
-  .logo:hover {
-    opacity: 0.8;
-  }
-
-  .logo :global(.logo-mark) {
-    width: 64px;
-    height: 64px;
-    display: block;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 0.25rem;
-    list-style: none;
-    margin: 0;
+    gap: 1.6rem;
+    margin: 0 0 0 auto;
     padding: 0;
-    align-items: center;
+    list-style: none;
   }
 
-  .nav-links a {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
-    transition: all 0.2s var(--ease-out-expo);
-  }
-
-  .link-index {
-    color: var(--color-text-subtle);
-    font-size: 0.7rem;
-  }
-
-  .nav-links a:hover {
-    color: var(--color-text);
-    background: var(--color-primary-muted);
-  }
-
-  .nav-links a:hover .link-index {
-    color: var(--color-primary);
-  }
-
-  .nav-links a.is-active {
-    color: var(--accent);
-    background: var(--accent-soft);
-  }
-
-  .nav-links a.is-active .link-index {
-    color: var(--accent);
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .mobile-controls {
-    display: none;
-    align-items: center;
-    gap: 0.75rem;
-    z-index: 101;
-  }
-
-  .mobile-menu-btn {
-    display: flex;
-    background: none;
-    border: none;
-    cursor: pointer;
-    flex-direction: column;
-    gap: 5px;
-    padding: 0.5rem;
+  .links a {
     position: relative;
-    z-index: 101;
-  }
-
-  .mobile-menu-btn span {
     display: block;
-    width: 20px;
+    padding: 0.4rem 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    transition: color 160ms var(--ease);
+  }
+
+  .links a:hover,
+  .links a.is-active,
+  .links a[aria-current='page'] {
+    color: var(--ink);
+  }
+
+  .links a.is-active::after,
+  .links a[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
     height: 2px;
-    background-color: var(--color-text);
-    transition: all 0.3s var(--ease-out-expo);
-    transform-origin: center;
+    background: var(--ink);
   }
 
-  .mobile-menu-btn.open span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+  /* the one link for local businesses is painted, not underlined */
+  .links a.local {
+    padding: 0.45rem 0.85rem;
+    background: var(--paint);
+    color: var(--on-paint);
+    font-weight: 650;
+    border-radius: 2px;
   }
 
-  .mobile-menu-btn.open span:nth-child(2) {
-    opacity: 0;
+  .links a.local:hover {
+    background: var(--ink);
+    color: var(--ground);
   }
 
-  .mobile-menu-btn.open span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+  .links a.local::after {
+    display: none;
   }
 
-  /* Drawer Styles */
-  .drawer-overlay {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s var(--ease-out-expo);
-    z-index: 99;
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
-  .drawer-overlay.open {
-    opacity: 1;
-    visibility: visible;
+  .menu-btn {
+    display: none;
+    margin-left: auto;
+    padding: 0.5rem 0.9rem;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .menu-btn.open {
+    background: var(--ink);
+    color: var(--ground);
   }
 
   .drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(320px, 85vw);
-    height: 100vh;
-    background: var(--color-bg);
-    border-left: 1px solid var(--color-border);
-    transform: translateX(100%);
-    transition: transform 0.4s var(--ease-out-expo);
-    z-index: 100;
-    overflow-y: auto;
+    display: none;
   }
 
-  .drawer.open {
-    transform: translateX(0);
-  }
-
-  .drawer-nav {
-    display: flex;
-    flex-direction: column;
-    padding: calc(var(--nav-height) + 2rem) 1.5rem 2rem;
-    gap: 0.25rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .drawer-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    padding: 1rem;
-    border-radius: 4px;
-    transition: all 0.2s;
-    opacity: 0;
-    transform: translateX(20px);
-  }
-
-  .drawer-link-index {
-    color: var(--color-primary);
-    font-size: 0.8rem;
-  }
-
-  .drawer.open .drawer-link {
-    animation: slideIn 0.3s var(--ease-out-expo) forwards;
-  }
-
-  @keyframes slideIn {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  .drawer-link:hover {
-    background: var(--color-primary-muted);
-    color: var(--color-text);
-  }
-
-  .drawer-link.is-active {
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-
-  .drawer-link.is-active .drawer-link-index {
-    color: var(--accent);
-  }
-
-  @media (max-width: 970px) {
-    .nav-center {
+  @media (max-width: 960px) {
+    .links,
+    .tools {
       display: none;
     }
 
-    .nav-right {
-      display: none;
+    .menu-btn {
+      display: block;
     }
 
-    .mobile-controls {
+    .drawer {
+      display: block;
+      position: fixed;
+      inset: var(--nav-height) 0 0 0;
+      padding: 2rem var(--gutter);
+      background: var(--wall);
+      color: var(--on-wall);
+      transform: translateY(-110%);
+      visibility: hidden;
+      transition:
+        transform 380ms var(--ease),
+        visibility 0s 380ms;
+      overflow-y: auto;
+    }
+
+    .drawer.open {
+      transform: none;
+      visibility: visible;
+      transition: transform 380ms var(--ease);
+    }
+
+    .drawer-links {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .drawer-link {
+      display: block;
+      padding: 0.35rem 0;
+      font-size: clamp(2.6rem, 12vw, 4rem);
+      font-weight: 850;
+      font-stretch: var(--cond);
+      line-height: 1;
+      color: var(--on-wall);
+    }
+
+    .drawer-link.local {
+      color: var(--paint);
+    }
+
+    .drawer-tools {
       display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(242, 244, 239, 0.25);
+      --ink: var(--on-wall);
+      --ink-muted: var(--on-wall-muted);
     }
-  }
-
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>

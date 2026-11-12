@@ -1,0 +1,796 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '@/layouts/Layout.astro';
+import ContactForm from '@/components/ContactForm.astro';
+import { localCopy, towns } from '@/data/localWeb';
+import { localAlternates, localPath } from '@/data/localSlugs';
+import { location, mail } from '@/settings';
+import type { Langs } from '@/i18n/ui';
+import laguntzaImg from '@/assets/work/laguntza.jpg';
+import besaideImg from '@/assets/work/besaide.jpg';
+import jonImg from '@/assets/jonramos.webp';
+
+interface Props {
+  lang: Langs;
+}
+
+const { lang } = Astro.props;
+const c = localCopy[lang];
+const images = { laguntza: laguntzaImg, besaide: besaideImg };
+const rotating = c.rotatingTowns;
+const origin = Astro.url.origin;
+const pageUrl = `${origin}${localPath(lang)}`;
+
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${origin}/#web-design-gipuzkoa`,
+  name: `Jon Ramos, ${c.serviceName}`,
+  description: c.serviceDescription,
+  url: pageUrl,
+  image: `${origin}/og-image.jpg`,
+  email: mail,
+  inLanguage: lang,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Urnieta',
+    postalCode: '20130',
+    addressRegion: 'Gipuzkoa',
+    addressCountry: 'ES',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: location.lat,
+    longitude: location.lng,
+  },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Gipuzkoa' },
+    ...towns.map((name) => ({ '@type': 'City', name })),
+  ],
+  availableLanguage: ['eu', 'es', 'en'],
+  founder: { '@type': 'Person', '@id': `${origin}/#person`, name: 'Jon Ramos' },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.faq.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+---
+
+<Layout
+  title={c.metaTitle}
+  description={c.metaDescription}
+  alternates={localAlternates}
+>
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(serviceLd)}
+    />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(faqLd)}
+    />
+  </Fragment>
+
+  <!-- 1. Hero: the bay-blue wall -->
+  <section class="hero" aria-labelledby="local-title">
+    <div class="container hero-grid">
+      <h1 id="local-title" class="h1">
+        {c.h1.map((l) => <span>{l}</span>)}
+      </h1>
+
+      <p class="towns-line">
+        <span class="towns-lead">{c.townsLead}</span>
+        <span class="town-slot" aria-hidden="true">
+          <span class="town" data-town={JSON.stringify(rotating)}
+            >{rotating[0]}</span
+          >
+        </span>
+        <span class="visually-hidden">{towns.join(', ')}</span>
+      </p>
+
+      <div class="hero-foot">
+        <p class="lede">{c.lede}</p>
+        <div class="ctas">
+          <a href="#kontaktua" class="btn btn-paint">{c.ctaPrimary}</a>
+          <a href="#lanak" class="btn btn-on-wall">{c.ctaSecondary}</a>
+        </div>
+      </div>
+    </div>
+    <div class="sand-line" aria-hidden="true"></div>
+  </section>
+
+  <!-- 2. Speed: the one number that matters -->
+  <section class="speed container" aria-labelledby="speed-title">
+    <p class="hundred" aria-hidden="true">100</p>
+    <div>
+      <h2 id="speed-title" class="h2">{c.speedTitle}</h2>
+      <p class="speed-body">{c.speedBody}</p>
+    </div>
+  </section>
+
+  <!-- 3. The process, painted along the wall like frontón squares.
+       Scrolls sideways on wide screens (GSAP, loaded on approach);
+       a plain stack everywhere else. -->
+  <section class="wall" aria-labelledby="steps-title" data-wall>
+    <div class="wall-inner">
+      <h2 id="steps-title" class="h2 wall-title">{c.stepsTitle}</h2>
+      <ol class="track">
+        {
+          c.steps.map((step, i) => (
+            <li class="cuadro">
+              <span class="num" aria-hidden="true">
+                {i + 1}
+              </span>
+              <div class="cuadro-text">
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4. What's included -->
+  <section class="section container includes" aria-labelledby="inc-title">
+    <h2 id="inc-title" class="h2">{c.includesTitle}</h2>
+    <ul class="inc-list">
+      {c.includes.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <!-- 5. Real work -->
+  <section
+    id="lanak"
+    class="section container work"
+    aria-labelledby="work-title"
+  >
+    <h2 id="work-title" class="h2">{c.workTitle}</h2>
+    <ul class="work-list">
+      {
+        c.work.map((w) => (
+          <li class="work-item">
+            <a
+              href={w.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="shot"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <Image
+                src={images[w.image]}
+                alt=""
+                widths={[480, 760, 1100]}
+                sizes="(max-width: 860px) 100vw, 58vw"
+                loading="lazy"
+              />
+            </a>
+            <div class="work-text">
+              <h3>{w.name}</h3>
+              <p class="place">{w.place}</p>
+              <p>{w.body}</p>
+              <a
+                href={w.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="u-link"
+              >
+                {c.workVisit}
+              </a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- 6. Where -->
+  <section class="section towns" aria-labelledby="towns-title">
+    <div class="container towns-grid">
+      <div>
+        <h2 id="towns-title" class="h2">{c.townsTitle}</h2>
+        <p class="towns-body">{c.townsBody}</p>
+      </div>
+      <ul class="town-list">
+        {towns.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section class="section container faq" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="h2">{c.faqTitle}</h2>
+    <div class="faq-list">
+      {
+        c.faq.map(({ q, a }) => (
+          <details>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- 8. Contact -->
+  <section id="kontaktua" class="contact" aria-labelledby="lc-title">
+    <div class="container contact-grid">
+      <div>
+        <h2 id="lc-title" class="h2">{c.contactTitle}</h2>
+        <p class="contact-body">{c.contactBody}</p>
+        <p class="contact-mail">
+          {c.contactOr}{' '}
+          <a href={`mailto:${mail}`} class="u-link">{mail}</a>
+        </p>
+        <Image
+          src={jonImg}
+          alt="Jon Ramos"
+          width={160}
+          height={213}
+          class="contact-face"
+          loading="lazy"
+        />
+      </div>
+      <ContactForm />
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Town names rotate under the headline. */
+  const town = document.querySelector<HTMLElement>('[data-town]');
+  if (town && !reduce && town.dataset.town) {
+    const names: string[] = JSON.parse(town.dataset.town ?? '[]');
+    let i = 0;
+    setInterval(() => {
+      if (document.hidden) return;
+      i = (i + 1) % names.length;
+      town.classList.remove('in');
+      void town.offsetWidth;
+      town.textContent = names[i];
+      town.classList.add('in');
+    }, 1900);
+  }
+
+  /* Pin the process wall and walk sideways along it. GSAP is only
+     fetched when the wall is close, so it never costs the first load. */
+  const wall = document.querySelector<HTMLElement>('[data-wall]');
+  const wide = matchMedia('(min-width: 900px)').matches;
+  if (wall && wide && !reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      async (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+          import('gsap'),
+          import('gsap/ScrollTrigger'),
+        ]);
+        gsap.registerPlugin(ScrollTrigger);
+        const track = wall.querySelector<HTMLElement>('.track');
+        if (!track) return;
+        wall.classList.add('is-pinned');
+        const distance = () =>
+          Math.max(0, track.scrollWidth - wall.clientWidth);
+
+        const walk = gsap.to(track, {
+          x: () => -distance(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wall,
+            start: 'top top+=64',
+            end: () => `+=${distance()}`,
+            pin: true,
+            scrub: 0.5,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // numerals drift a little slower than the wall, like paint on
+        // a surface you walk past
+        track.querySelectorAll<HTMLElement>('.num').forEach((num) => {
+          gsap.fromTo(
+            num,
+            { xPercent: 12 },
+            {
+              xPercent: -6,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: num.parentElement,
+                containerAnimation: walk,
+                start: 'left right',
+                end: 'right left',
+                scrub: true,
+              },
+            },
+          );
+        });
+        ScrollTrigger.refresh();
+      },
+      { rootMargin: '800px 0px' },
+    );
+    io.observe(wall);
+  }
+</script>
+
+<style>
+  .h2 {
+    font-size: var(--step-4);
+    line-height: 0.92;
+  }
+
+  /* ---------- 1. hero ---------- */
+  .hero {
+    background: var(--wall);
+    color: var(--on-wall);
+  }
+
+  .hero-grid {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .h1 {
+    display: grid;
+    font-size: clamp(3.6rem, 12.5vw, 11rem);
+    font-weight: 900;
+    line-height: 0.84;
+    color: var(--on-wall);
+  }
+
+  .towns-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.35em;
+    margin: clamp(1.25rem, 3vw, 2rem) 0 0;
+    font-size: clamp(2rem, 5.5vw, 4.6rem);
+    font-weight: 800;
+    font-stretch: var(--cond);
+    line-height: 1;
+    color: var(--on-wall-muted);
+  }
+
+  .town-slot {
+    display: inline-block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    vertical-align: bottom;
+  }
+
+  .town {
+    display: inline-block;
+    color: var(--paint);
+  }
+
+  .town:global(.in) {
+    animation: town-in 520ms var(--ease) both;
+  }
+
+  @keyframes town-in {
+    from {
+      transform: translateY(100%);
+    }
+  }
+
+  .hero-foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) auto;
+    align-items: end;
+    gap: 1.5rem 3rem;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 46ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--on-wall-muted);
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn-on-wall {
+    color: var(--on-wall);
+    background: transparent;
+  }
+
+  .btn-on-wall:hover {
+    background: var(--on-wall);
+    color: var(--wall);
+  }
+
+  .hero .btn-paint:hover {
+    background: var(--on-wall);
+    border-color: var(--on-wall);
+    color: var(--wall);
+  }
+
+  .sand-line {
+    height: 10px;
+    background: var(--paint);
+  }
+
+  /* ---------- 2. speed ---------- */
+  .speed {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 5rem);
+    padding-top: clamp(4rem, 9vw, 7rem);
+    padding-bottom: clamp(4rem, 9vw, 7rem);
+  }
+
+  .hundred {
+    margin: 0;
+    font-size: clamp(8rem, 26vw, 22rem);
+    font-weight: 900;
+    font-stretch: var(--cond);
+    line-height: 0.78;
+    color: var(--wall);
+  }
+
+  :global([data-theme='dark']) .hundred {
+    color: var(--paint);
+  }
+
+  .speed-body {
+    margin: 1.25rem 0 0;
+    max-width: 48ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  /* ---------- 3. the wall ---------- */
+  .wall {
+    background: var(--wall);
+    color: var(--on-wall);
+    overflow: hidden;
+  }
+
+  .wall-inner {
+    padding: clamp(3rem, 7vw, 5rem) 0;
+  }
+
+  .wall-title {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+    padding: 0 var(--gutter);
+    color: var(--on-wall);
+  }
+
+  .track {
+    display: grid;
+    margin: 0;
+    padding: 0 var(--gutter);
+    list-style: none;
+    max-width: var(--max-width);
+    margin-inline: auto;
+  }
+
+  .cuadro {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-top: 4px solid var(--paint);
+  }
+
+  .num {
+    display: block;
+    font-size: 6rem;
+    font-weight: 900;
+    font-stretch: var(--cond);
+    line-height: 0.8;
+    color: var(--on-wall);
+  }
+
+  .cuadro-text h3 {
+    font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+    color: var(--on-wall);
+    margin-bottom: 0.6rem;
+  }
+
+  .cuadro-text p {
+    margin: 0;
+    max-width: 34ch;
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: var(--on-wall-muted);
+  }
+
+  /* wide screens: squares side by side along the wall */
+  @media (min-width: 900px) {
+    .wall-inner {
+      min-height: calc(100svh - var(--nav-height));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .track {
+      display: flex;
+      max-width: none;
+      margin: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .wall:global(.is-pinned) .track {
+      overflow: visible;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .cuadro {
+      flex: 0 0 auto;
+      width: clamp(26rem, 42vw, 38rem);
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 1.5rem;
+      padding: 0 clamp(2rem, 3.5vw, 3.5rem) 0 0;
+      margin-right: clamp(2rem, 3.5vw, 3.5rem);
+      border-top: 0;
+      border-right: 4px solid var(--paint);
+    }
+
+    .cuadro:last-child {
+      border-right: 0;
+      margin-right: var(--gutter);
+    }
+
+    .num {
+      font-size: clamp(14rem, 30vh, 22rem);
+      margin-left: -0.05em;
+    }
+  }
+
+  /* ---------- 4. includes ---------- */
+  .includes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 2rem clamp(2rem, 6vw, 6rem);
+  }
+
+  .inc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--ink);
+  }
+
+  .inc-list li {
+    position: relative;
+    padding: 0.9rem 0 0.9rem 2rem;
+    font-size: var(--step-1);
+    line-height: 1.35;
+    border-bottom: 1px solid var(--rule-strong);
+    color: var(--ink);
+  }
+
+  .inc-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.45rem;
+    width: 1rem;
+    height: 4px;
+    background: var(--line);
+  }
+
+  /* ---------- 5. work ---------- */
+  .work .h2 {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .work-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: clamp(3rem, 6vw, 5rem);
+  }
+
+  .work-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: 1.5rem clamp(1.5rem, 4vw, 3.5rem);
+    align-items: end;
+  }
+
+  .work-item:nth-child(even) .shot {
+    order: 2;
+  }
+
+  .shot {
+    display: block;
+    border: 2px solid var(--ink);
+    overflow: hidden;
+  }
+
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 600ms var(--ease);
+  }
+
+  .shot:hover img {
+    transform: scale(1.03);
+  }
+
+  .work-text h3 {
+    font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+  }
+
+  .place {
+    margin: 0.4rem 0 1rem;
+    font-weight: 700;
+    color: var(--ink-subtle);
+  }
+
+  /* ---------- 6. towns ---------- */
+  .towns {
+    background: var(--ground-sunken);
+  }
+
+  .towns-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 2rem clamp(2rem, 6vw, 6rem);
+  }
+
+  .towns-body {
+    margin-top: 1.25rem;
+    max-width: 36ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .town-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1em 0.45em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: clamp(1.9rem, 4vw, 3.2rem);
+    font-weight: 850;
+    font-stretch: var(--cond);
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .town-list li:not(:last-child)::after {
+    content: ',';
+    color: var(--ink-subtle);
+  }
+
+  /* ---------- 7. faq ---------- */
+  .faq {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 2rem clamp(2rem, 6vw, 6rem);
+  }
+
+  .faq-list {
+    border-top: 2px solid var(--ink);
+  }
+
+  details {
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  summary {
+    position: relative;
+    padding: 1.1rem 2.5rem 1.1rem 0;
+    font-size: var(--step-1);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before,
+  summary::after {
+    content: '';
+    position: absolute;
+    right: 0.3rem;
+    top: 50%;
+    width: 1.1rem;
+    height: 3px;
+    background: var(--ink);
+    transition: transform 240ms var(--ease);
+  }
+
+  summary::after {
+    transform: rotate(90deg);
+  }
+
+  details[open] summary::after {
+    transform: rotate(0deg);
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 2.5rem 1.4rem 0;
+    max-width: 60ch;
+    font-size: var(--step-0);
+    line-height: 1.6;
+  }
+
+  /* ---------- 8. contact ---------- */
+  .contact {
+    padding: clamp(4rem, 9vw, 7rem) 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 2.5rem clamp(2rem, 6vw, 6rem);
+  }
+
+  .contact-body {
+    margin-top: 1.25rem;
+    max-width: 40ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .contact-mail {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-face {
+    display: block;
+    width: 8rem;
+    height: auto;
+    margin-top: 2rem;
+    border: 2px solid var(--ink);
+  }
+
+  /* ---------- small screens ---------- */
+  @media (max-width: 860px) {
+    .hero-foot,
+    .speed,
+    .includes,
+    .work-item,
+    .towns-grid,
+    .faq,
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .work-item:nth-child(even) .shot {
+      order: 0;
+    }
+
+    .hundred {
+      font-size: clamp(7rem, 40vw, 12rem);
+    }
+  }
+</style>

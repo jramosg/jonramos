@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import { languages } from '@/i18n/ui';
+import { localSlugs } from '@/data/localSlugs';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
@@ -53,6 +54,20 @@ export async function GET(context: APIContext) {
             href: `${site}en/contributions`,
           },
         ]),
+    });
+  });
+
+  // Local-business landing: a different slug per language
+  const localAlternates = Object.entries(localSlugs)
+    .map(([l, slug]) => ({ hreflang: l, href: `${site}${l}/${slug}` }))
+    .concat([{ hreflang: 'x-default', href: `${site}es/${localSlugs.es}` }]);
+  Object.entries(localSlugs).forEach(([l, slug]) => {
+    urls.push({
+      loc: `${site}${l}/${slug}`,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.9,
+      alternateRefs: localAlternates,
     });
   });
 

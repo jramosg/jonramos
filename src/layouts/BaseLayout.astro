@@ -3,16 +3,16 @@ import ThemeProvider from '@/components/theme-switcher/ThemeProvider.astro';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 import { github, linkedin } from '@/settings';
 import jetbrainsLatin400 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2?url';
-import jetbrainsLatin600 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-600-normal.woff2?url';
-import crimsonProLatin from '@fontsource-variable/crimson-pro/files/crimson-pro-latin-wght-normal.woff2?url';
-import jetbrainsLatinExt400 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-ext-400-normal.woff2?url';
-import jetbrainsLatinExt600 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-ext-600-normal.woff2?url';
-import crimsonProLatinExt from '@fontsource-variable/crimson-pro/files/crimson-pro-latin-ext-wght-normal.woff2?url';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2?url';
+import archivoLatinExt from '@fontsource-variable/archivo/files/archivo-latin-ext-standard-normal.woff2?url';
+import '@/styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  /** Per-language paths when a page's slug differs by language. */
+  alternates?: Record<'en' | 'es' | 'eu', string>;
 }
 
 const lang = getLangFromUrl(Astro.url);
@@ -21,6 +21,7 @@ const {
   title = t('meta.title'),
   description = t('meta.description'),
   ogImage = '/og-image.jpg',
+  alternates,
 } = Astro.props;
 
 // Language-relative path of the current page ('' for /en, '/contributions'
@@ -29,6 +30,8 @@ const {
 const langPath = Astro.url.pathname
   .replace(new RegExp(`^/${lang}`), '')
   .replace(/\/$/, '');
+const altHref = (l: 'en' | 'es' | 'eu') =>
+  `${Astro.url.origin}${alternates?.[l] ?? `/${l}${langPath}`}`;
 ---
 
 <!doctype html>
@@ -37,33 +40,15 @@ const langPath = Astro.url.pathname
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Preload critical fonts to avoid layout shift -->
+    <!-- Preload the one face that paints the hero -->
     <link
       rel="preload"
-      href={jetbrainsLatin400}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href={jetbrainsLatin600}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href={crimsonProLatin}
+      href={archivoLatin}
       as="font"
       type="font/woff2"
       crossorigin
     />
     <meta name="description" content={description} />
-    <meta
-      name="keywords"
-      content="Software Engineer, Full Stack Developer, Web Developer, Desarrollador Web, Software Garatzailea, Web Garapena, Urnieta, Basque Country, Euskal Herria, País Vasco, Clojure, ClojureScript, JavaScript, TypeScript, Astro, React, Datomic, Freelance Developer, Hire Software Engineer, Web Application Development, Healthcare Software, Open Source Contributor"
-    />
 
     <!-- Author and Copyright -->
     <meta name="author" content="Jon Ramos" />
@@ -87,12 +72,12 @@ const langPath = Astro.url.pathname
     <meta
       name="theme-color"
       media="(prefers-color-scheme: dark)"
-      content="#0a1020"
+      content="#0d1913"
     />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"
-      content="#e8f2f7"
+      content="#eef1ec"
     />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -144,26 +129,10 @@ const langPath = Astro.url.pathname
     <link rel="canonical" href={Astro.url.href} />
 
     <!-- Hreflang for multilingual SEO -->
-    <link
-      rel="alternate"
-      hreflang="en"
-      href={`${Astro.url.origin}/en${langPath}`}
-    />
-    <link
-      rel="alternate"
-      hreflang="es"
-      href={`${Astro.url.origin}/es${langPath}`}
-    />
-    <link
-      rel="alternate"
-      hreflang="eu"
-      href={`${Astro.url.origin}/eu${langPath}`}
-    />
-    <link
-      rel="alternate"
-      hreflang="x-default"
-      href={`${Astro.url.origin}/en${langPath}`}
-    />
+    <link rel="alternate" hreflang="en" href={altHref('en')} />
+    <link rel="alternate" hreflang="es" href={altHref('es')} />
+    <link rel="alternate" hreflang="eu" href={altHref('eu')} />
+    <link rel="alternate" hreflang="x-default" href={altHref('en')} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -172,10 +141,21 @@ const langPath = Astro.url.pathname
 
     <title>{title}</title>
 
-    <!-- Flag JS availability before paint so reveal-on-scroll styles only
-         hide content when the IntersectionObserver will actually run. -->
     <script is:inline>
-      document.documentElement.classList.add('has-js');
+      // Set the theme before first paint so dark visitors never see a
+      // whitewash flash.
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('has-js');
+        try {
+          var t = localStorage.getItem('theme');
+          if (!t)
+            t = matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+          d.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
     </script>
 
     <!-- WebSite Schema for Google Sitelinks -->
@@ -345,828 +325,41 @@ const langPath = Astro.url.pathname
     <Fragment
       set:html={`<style>
       @font-face {
+        font-family: 'Archivo';
+        font-style: normal;
+        font-display: swap;
+        font-weight: 100 900;
+        font-stretch: 62% 125%;
+        src: url('${archivoLatin}') format('woff2-variations');
+        unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+      }
+      @font-face {
+        font-family: 'Archivo';
+        font-style: normal;
+        font-display: swap;
+        font-weight: 100 900;
+        font-stretch: 62% 125%;
+        src: url('${archivoLatinExt}') format('woff2-variations');
+        unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+      }
+      @font-face {
         font-family: 'JetBrains Mono';
         font-style: normal;
-        font-display: optional;
+        font-display: swap;
         font-weight: 400;
         src: url('${jetbrainsLatin400}') format('woff2');
-        unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
       }
       @font-face {
-        font-family: 'JetBrains Mono';
-        font-style: normal;
-        font-display: optional;
-        font-weight: 400;
-        src: url('${jetbrainsLatinExt400}') format('woff2');
-        unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-      }
-      @font-face {
-        font-family: 'JetBrains Mono';
-        font-style: normal;
-        font-display: optional;
-        font-weight: 600;
-        src: url('${jetbrainsLatin600}') format('woff2');
-        unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-      }
-      @font-face {
-        font-family: 'JetBrains Mono';
-        font-style: normal;
-        font-display: optional;
-        font-weight: 600;
-        src: url('${jetbrainsLatinExt600}') format('woff2');
-        unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-      }
-      @font-face {
-        font-family: 'Crimson Pro Variable';
-        font-style: normal;
-        font-display: optional;
-        font-weight: 200 900;
-        src: url('${crimsonProLatin}') format('woff2-variations');
-        unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-      }
-      @font-face {
-        font-family: 'Crimson Pro Variable';
-        font-style: normal;
-        font-display: optional;
-        font-weight: 200 900;
-        src: url('${crimsonProLatinExt}') format('woff2-variations');
-        unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-      }
-      @font-face {
-        font-family: 'Crimson Pro Fallback';
-        src: local('Georgia'), local('Times New Roman');
-        size-adjust: 97%;
-        ascent-override: 96%;
-        descent-override: 27%;
-        line-gap-override: 0%;
-      }
-      @font-face {
-        font-family: 'JetBrains Mono Fallback';
-        src: local('ui-monospace'), local('SFMono-Regular'), local('Menlo'), local('Consolas');
-        size-adjust: 101%;
-        ascent-override: 102%;
-        descent-override: 30%;
-        line-gap-override: 0%;
+        font-family: 'Archivo Fallback';
+        src: local('Arial'), local('Helvetica');
+        size-adjust: 102%;
       }
     </style>`}
     />
+    <slot name="head" />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div class="background-texture" aria-hidden="true"></div>
-    <div class="background-grid" aria-hidden="true"></div>
-    <div class="background-aurora" aria-hidden="true"></div>
-    <div class="background-grain" aria-hidden="true"></div>
     <slot />
   </body><ThemeProvider />
-
-  <script>
-    // Reveal-on-scroll: any [data-reveal] element fades/slides in once when
-    // it enters the viewport. Stagger via inline `--reveal-delay`.
-    const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
-    if (els.length > 0 && 'IntersectionObserver' in window) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-revealed');
-              io.unobserve(entry.target);
-            }
-          }
-        },
-        { threshold: 0.08, rootMargin: '0px 0px -48px 0px' },
-      );
-      els.forEach((el) => io.observe(el));
-    } else {
-      els.forEach((el) => el.classList.add('is-revealed'));
-    }
-
-    // Cursor spotlight: cards tagged [data-spotlight] get a teal glow that
-    // tracks the pointer. One delegated listener; desktop pointers only.
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      document.addEventListener(
-        'pointermove',
-        (e) => {
-          const target = e.target as Element | null;
-          const card = target?.closest?.('[data-spotlight]');
-          if (card instanceof HTMLElement) {
-            const r = card.getBoundingClientRect();
-            card.style.setProperty('--spot-x', `${e.clientX - r.left}px`);
-            card.style.setProperty('--spot-y', `${e.clientY - r.top}px`);
-          }
-        },
-        { passive: true },
-      );
-    }
-  </script>
 </html>
-
-<style is:global>
-  /* ============================================================
-     REPL Editorial — Jon Ramos Design System tokens.
-     INK (warm near-black) is the signature default ground; PAPER
-     (warm parchment) flips in under [data-theme='light']. The legacy
-     --color-* variables are kept and remapped onto the new semantic
-     tokens so every component inherits the new palette unchanged.
-     ============================================================ */
-  :root {
-    /* ---------- Raw scales (theme-agnostic) — coastal/spa ---------- */
-
-    /* Ink — deep navy near-blacks that harmonise with teal + haze */
-    --ink-950: #0a1020;
-    --ink-900: #0e1626;
-    --ink-850: #131c2e;
-    --ink-800: #182338;
-    --ink-700: #1f2c44;
-    --ink-600: #2c3a55;
-    --ink-500: #4a5878;
-    --ink-400: #6c7a9a;
-
-    /* Sky — pale-blue parchment, the light ground */
-    --sky-50: #f1f8fb;
-    --sky-100: #e8f2f7;
-    --sky-200: #d6e9f0;
-    --sky-300: #b9d6e2;
-    --sky-400: #94bcce;
-
-    /* Teal — the signature lagoon (built around #31999b) */
-    --teal-300: #8fd0d2;
-    --teal-400: #5cb6b8;
-    --teal-500: #31999b;
-    --teal-600: #267879;
-    --teal-700: #1c5c5d;
-    --teal-800: #133f40;
-    --teal-900: #082121;
-
-    /* Haze — periwinkle secondary accent (built around #8e98c2) */
-    --haze-300: #c4cae0;
-    --haze-400: #a9b1d1;
-    --haze-500: #8e98c2;
-    --haze-600: #6e7aa6;
-    --haze-700: #525d85;
-
-    /* Shell — soft pink highlight (built around #f4bdce) */
-    --shell-200: #fbdde6;
-    --shell-300: #f4bdce;
-    --shell-400: #ec96ae;
-    --shell-500: #d96e8c;
-    --shell-600: #b34d6c;
-    --shell-700: #823850;
-
-    --clay-400: #f08562;
-    --clay-500: #d65b39;
-    --clay-600: #b8472b;
-
-    /* ---------- Semantic aliases — DEFAULT = INK (dark navy) ---------- */
-    --surface-base: var(--ink-950);
-    --surface-raised: var(--ink-900);
-    --surface-sunken: #06091a;
-    --surface-overlay: var(--ink-850);
-    --surface-inset: var(--ink-850);
-
-    --hairline: rgba(214, 233, 240, 0.1);
-    --hairline-strong: rgba(214, 233, 240, 0.2);
-    --hairline-teal: rgba(92, 182, 184, 0.3);
-
-    --text-strong: #f1f7fb;
-    --text: #dde7ee;
-    --text-muted: #a3b0c4;
-    --text-subtle: #7384a0;
-    /* faint must still clear WCAG AA (4.5:1) on the ink ground — it is
-       used for real text (geo line, image label, durations) */
-    --text-faint: #6d7ea3;
-
-    --accent: var(--teal-400);
-    --accent-hover: var(--teal-300);
-    --accent-press: var(--teal-500);
-    --accent-soft: rgba(92, 182, 184, 0.13);
-    --accent-line: rgba(92, 182, 184, 0.32);
-    --on-accent: #06181a;
-
-    --shell: var(--shell-300);
-    --shell-soft: rgba(244, 189, 206, 0.1);
-    --shell-line: rgba(244, 189, 206, 0.3);
-
-    --haze: var(--haze-400);
-    --haze-soft: rgba(169, 177, 209, 0.12);
-    --haze-line: rgba(169, 177, 209, 0.32);
-
-    --clay: var(--clay-400);
-    --clay-soft: rgba(240, 133, 98, 0.13);
-
-    --focus-ring: var(--teal-400);
-    --selection-bg: rgba(92, 182, 184, 0.28);
-
-    color-scheme: dark;
-
-    /* ---------- Type scale & weights ---------- */
-    --text-2xs: 0.6875rem;
-    --text-xs: 0.75rem;
-    --text-sm: 0.8125rem;
-    --text-base: 1rem;
-    --text-md: 1.125rem;
-    --text-lg: 1.375rem;
-    --text-xl: 1.75rem;
-    --text-2xl: 2.25rem;
-    --text-3xl: clamp(2.25rem, 4.5vw, 3.25rem);
-    --text-display: clamp(3.25rem, 9.5vw, 6.75rem);
-    --tracking-tight: -0.02em;
-    --tracking-wide: 0.04em;
-    --tracking-wider: 0.14em;
-    --leading-tight: 1.12;
-    --leading-snug: 1.32;
-    --leading-relaxed: 1.75;
-    --weight-regular: 400;
-    --weight-medium: 500;
-    --weight-semibold: 600;
-    --weight-bold: 700;
-
-    /* ---------- Spacing, radii, elevation ---------- */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-5: 1.5rem;
-    --space-6: 2rem;
-    --space-7: 2.5rem;
-    --space-8: 3rem;
-    --space-9: 4rem;
-    --radius-xs: 3px;
-    --radius-sm: 5px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 18px;
-    --radius-pill: 999px;
-    --measure: 68ch;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
-    --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.55);
-    --shadow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
-    --glow-teal:
-      0 0 0 1px var(--accent-line), 0 12px 36px -16px rgba(49, 153, 155, 0.45);
-
-    /* ---------- Typography families ---------- */
-    --font-mono:
-      'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, SFMono-Regular,
-      'SF Mono', Menlo, Consolas, monospace;
-    --font-serif:
-      'Crimson Pro Variable', 'Crimson Pro Fallback', Georgia,
-      'Times New Roman', serif;
-
-    /* ---------- Layout ---------- */
-    --max-width: 1180px;
-    --nav-height: 72px;
-
-    /* ---------- Motion ---------- */
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-    --dur-fast: 140ms;
-    --dur-base: 240ms;
-    --dur-slow: 480ms;
-
-    /* ---------- Legacy --color-* aliases mapped to DS tokens ---------- */
-    --color-bg: var(--surface-base);
-    --color-bg-elevated: var(--surface-raised);
-    --color-bg-surface: var(--surface-overlay);
-    --color-text: var(--text-strong);
-    --color-text-muted: var(--text-muted);
-    --color-text-subtle: var(--text-subtle);
-    --color-primary: var(--accent);
-    --color-primary-muted: var(--accent-soft);
-    --color-secondary: var(--haze);
-    --color-accent: var(--clay);
-    --color-featured: var(--haze);
-    --color-border: var(--hairline);
-    --color-border-emphasis: var(--hairline-strong);
-    --color-card-bg: var(--surface-raised);
-    --color-bg-alpha: rgba(10, 16, 32, 0.72);
-  }
-
-  /* ---------- SKY (light) theme ---------- */
-  [data-theme='light'] {
-    --surface-base: var(--sky-100);
-    --surface-raised: var(--sky-50);
-    --surface-sunken: var(--sky-200);
-    --surface-overlay: #ffffff;
-    --surface-inset: var(--sky-200);
-
-    --hairline: rgba(14, 22, 38, 0.1);
-    --hairline-strong: rgba(14, 22, 38, 0.2);
-    --hairline-teal: rgba(38, 120, 121, 0.32);
-
-    --text-strong: #0e1626;
-    --text: #1f2c44;
-    --text-muted: #525d85;
-    /* subtle darkened from the raw scale so small mono labels (eyebrows,
-       indices, tech tags) clear WCAG AA contrast on the sky ground */
-    --text-subtle: #586480;
-    --text-faint: #5d6a87;
-
-    /* accent uses teal-700 in light so accent-coloured text and badges
-       (status pills, // leads) stay >= 4.5:1 on tinted backgrounds */
-    --accent: var(--teal-700);
-    --accent-hover: var(--teal-800);
-    --accent-press: var(--teal-800);
-    --accent-soft: rgba(38, 120, 121, 0.1);
-    --accent-line: rgba(38, 120, 121, 0.28);
-    --on-accent: #f1f8fb;
-
-    --shell: var(--shell-700);
-    --shell-soft: rgba(130, 56, 80, 0.1);
-    --shell-line: rgba(130, 56, 80, 0.3);
-
-    --haze: var(--haze-700);
-    --haze-soft: rgba(110, 122, 166, 0.1);
-    --haze-line: rgba(110, 122, 166, 0.32);
-
-    --clay: var(--clay-600);
-    --clay-soft: rgba(184, 71, 43, 0.1);
-
-    --focus-ring: var(--teal-600);
-    --selection-bg: rgba(38, 120, 121, 0.18);
-
-    --shadow-sm: 0 1px 2px rgba(14, 22, 38, 0.08);
-    --shadow-md: 0 10px 30px -16px rgba(14, 22, 38, 0.22);
-    --shadow-lg: 0 28px 64px -28px rgba(14, 22, 38, 0.26);
-
-    color-scheme: light;
-
-    --color-bg-alpha: rgba(232, 242, 247, 0.78);
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    font-family: var(--font-serif);
-    background: var(--color-bg);
-    color: var(--color-text);
-    scroll-behavior: smooth;
-    font-size: 18px;
-    line-height: 1.6;
-    /* Reserve the scrollbar gutter so a scrollbar appearing after load
-       doesn't narrow the viewport and reflow the centred hero (CLS). */
-    scrollbar-gutter: stable;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    min-height: 100svh;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  /* Anchor jumps and the scroll-spy land below the fixed nav. */
-  :where(section[id]) {
-    scroll-margin-top: var(--nav-height);
-  }
-
-  /* Signature ground: a sheet of engineering paper — a fine
-     hairline grid faded out with a radial mask from the top. */
-  .background-grid {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    pointer-events: none;
-    background-image:
-      linear-gradient(var(--hairline) 1px, transparent 1px),
-      linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
-    background-size: 64px 64px;
-    -webkit-mask-image: radial-gradient(
-      ellipse 100% 80% at 50% 0%,
-      #000 30%,
-      transparent 78%
-    );
-    mask-image: radial-gradient(
-      ellipse 100% 80% at 50% 0%,
-      #000 30%,
-      transparent 78%
-    );
-    opacity: 0.6;
-  }
-
-  /* Barely-there diagonal jade hatch wash. */
-  .background-texture {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: repeating-linear-gradient(
-      45deg,
-      transparent 0 6px,
-      rgba(49, 153, 155, 0.018) 6px 7px
-    );
-  }
-
-  /* Aurora — three slow-drifting pools of the brand hues. Gives the ink
-     ground depth without ever reading as "a gradient background". */
-  .background-aurora {
-    position: fixed;
-    inset: -20%;
-    z-index: -3;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        38% 30% at 18% 12%,
-        rgba(49, 153, 155, 0.13),
-        transparent 70%
-      ),
-      radial-gradient(
-        30% 26% at 85% 8%,
-        rgba(142, 152, 194, 0.1),
-        transparent 70%
-      ),
-      radial-gradient(
-        26% 22% at 75% 86%,
-        rgba(244, 189, 206, 0.05),
-        transparent 70%
-      );
-    filter: blur(40px);
-    animation: aurora-drift 26s var(--ease-in-out) infinite alternate;
-  }
-
-  [data-theme='light'] .background-aurora {
-    background:
-      radial-gradient(
-        38% 30% at 18% 12%,
-        rgba(49, 153, 155, 0.12),
-        transparent 70%
-      ),
-      radial-gradient(
-        30% 26% at 85% 8%,
-        rgba(142, 152, 194, 0.14),
-        transparent 70%
-      ),
-      radial-gradient(
-        26% 22% at 75% 86%,
-        rgba(244, 189, 206, 0.16),
-        transparent 70%
-      );
-  }
-
-  @keyframes aurora-drift {
-    from {
-      transform: translate3d(-2%, -1.5%, 0) scale(1);
-    }
-    to {
-      transform: translate3d(2%, 1.5%, 0) scale(1.06);
-    }
-  }
-
-  /* Film grain — breaks up the flat digital surfaces. */
-  .background-grain {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    pointer-events: none;
-    opacity: 0.05;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  [data-theme='light'] .background-grain {
-    opacity: 0.035;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  /* Headings carry the HUMAN voice — editorial serif. */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0;
-    font-family: var(--font-serif);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-tight);
-    line-height: var(--leading-tight);
-    color: var(--text-strong);
-    text-wrap: balance;
-  }
-
-  p {
-    color: var(--color-text-muted);
-    line-height: var(--leading-relaxed);
-    margin-top: 0;
-    font-family: var(--font-serif);
-    text-wrap: pretty;
-  }
-
-  code,
-  pre {
-    font-family: var(--font-mono);
-  }
-
-  /* Utility classes */
-  .container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  /* Section titles: serif human voice with a mono // comment lead. */
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-tight);
-    margin-bottom: 3rem;
-    color: var(--text-strong);
-    position: relative;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.5rem;
-  }
-
-  .section-title::before {
-    content: '//';
-    font-family: var(--font-mono);
-    font-size: 0.7em;
-    color: var(--accent);
-    font-weight: var(--weight-regular);
-  }
-
-  /* ---------- REPL / terminal helper classes ---------- */
-
-  /* Mono eyebrow — the machine voice label, led by a ;; comment. */
-  .ds-eyebrow {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    color: var(--text-subtle);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
-  }
-
-  .ds-eyebrow::before {
-    content: ';;';
-    color: var(--accent);
-    letter-spacing: -0.1em;
-  }
-
-  /* Numeric index — 01 / 02 — for lists & nav. */
-  .ds-index {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-faint);
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Hairline editorial divider. */
-  .ds-rule {
-    height: 1px;
-    background: var(--hairline);
-    border: 0;
-    margin: var(--space-6) 0;
-  }
-
-  /* ---------- Editorial section header ----------
-     ;; 01 · label            (machine voice, mono)
-     Big Serif Title ————————  (human voice + trailing hairline)
-     Optional subtitle.                                        */
-  .section-head {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 3.25rem;
-  }
-
-  .section-head .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    color: var(--text-subtle);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
-  }
-
-  .section-head .kicker::before {
-    content: ';;';
-    color: var(--accent);
-    letter-spacing: -0.1em;
-  }
-
-  .section-head .kicker .no {
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .section-head .heading-row {
-    display: flex;
-    align-items: center;
-    gap: 1.75rem;
-  }
-
-  .section-head .heading-row::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    min-width: 2rem;
-    background: linear-gradient(
-      90deg,
-      var(--hairline-strong),
-      var(--hairline) 60%,
-      transparent
-    );
-  }
-
-  .section-head .heading {
-    font-size: var(--text-3xl);
-    margin: 0;
-  }
-
-  .section-head .sub {
-    font-size: var(--text-md);
-    color: var(--text-muted);
-    max-width: 56ch;
-    margin: 0;
-  }
-
-  /* ---------- Reveal-on-scroll ---------- */
-  @media (prefers-reduced-motion: no-preference) {
-    html.has-js [data-reveal] {
-      opacity: 0;
-      transform: translateY(26px);
-      transition:
-        opacity 0.8s var(--ease-out-quint),
-        transform 0.8s var(--ease-out-quint);
-      transition-delay: var(--reveal-delay, 0ms);
-    }
-
-    html.has-js [data-reveal].is-revealed {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  /* ---------- Cursor spotlight on cards ---------- */
-  [data-spotlight] {
-    position: relative;
-  }
-
-  [data-spotlight]::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(
-      240px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-      var(--accent-soft),
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.35s var(--ease-out-expo);
-    pointer-events: none;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    [data-spotlight]:hover::after {
-      opacity: 1;
-    }
-  }
-
-  /* Skip link for accessibility */
-  .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--color-primary);
-    color: var(--color-bg);
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    z-index: 100;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-  }
-
-  .skip-link:focus {
-    top: 0;
-  }
-
-  /* Responsive typography */
-  @media (max-width: 768px) {
-    html {
-      font-size: 16px;
-    }
-
-    .container {
-      padding: 0 1.25rem;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .section-head {
-      margin-bottom: 2.25rem;
-    }
-  }
-
-  /* View transitions */
-  ::view-transition-group(root) {
-    animation-duration: 0.5s;
-    animation-timing-function: var(--ease-out-expo);
-  }
-
-  ::view-transition-new(root) {
-    animation-name: reveal-light;
-    animation-fill-mode: both;
-  }
-
-  ::view-transition-old(root),
-  .dark::view-transition-old(root) {
-    animation: none;
-    animation-fill-mode: both;
-    z-index: -1;
-  }
-
-  .dark::view-transition-new(root) {
-    animation-name: reveal-dark;
-    animation-fill-mode: both;
-  }
-
-  @keyframes reveal-dark {
-    from {
-      clip-path: polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%);
-    }
-    to {
-      clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
-    }
-  }
-
-  @keyframes reveal-light {
-    from {
-      clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
-    }
-    to {
-      clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
-    }
-  }
-
-  /* Reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      transition: none !important;
-      animation: none !important;
-    }
-  }
-
-  /* Focus styles */
-  button:focus-visible,
-  a:focus-visible,
-  input:focus-visible,
-  textarea:focus-visible,
-  select:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
-
-  button:focus:not(:focus-visible),
-  a:focus:not(:focus-visible),
-  input:focus:not(:focus-visible),
-  textarea:focus:not(:focus-visible),
-  select:focus:not(:focus-visible) {
-    outline: none;
-  }
-
-  /* Selection */
-  ::selection {
-    background: var(--selection-bg);
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: var(--color-bg);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-border-emphasis);
-    border-radius: 5px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-text-subtle);
-  }
-</style>

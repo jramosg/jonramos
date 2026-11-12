@@ -8,10 +8,9 @@ export const languages = {
 
 export const ui = {
   en: {
-    'meta.title':
-      'Jon Ramos | Senior Software Engineer & Full Stack Developer | Hire Expert Developer | Urnieta, Basque Country',
+    'meta.title': 'Jon Ramos — Software engineer and web developer in Gipuzkoa',
     'meta.description':
-      'Senior Software Engineer available for hire. Expert in Clojure, ClojureScript, TypeScript, React, and Astro. 8+ years building scalable web applications and healthcare software. Based in Basque Country, Spain. Open to remote work with companies like Google, Meta, Netflix, and startups worldwide. Freelance web development services available.',
+      'Software engineer in Urnieta, Gipuzkoa. Fast websites for local businesses around Donostia, and web applications in Clojure and ClojureScript.',
     'meta.jobTitles':
       'Senior Software Engineer, Full Stack Developer, Web Developer, Freelance Developer, Clojure Expert',
     'meta.structuredDescription':
@@ -24,9 +23,16 @@ export const ui = {
     'nav.contact': 'Contact',
 
     'hero.greeting': "Hello, I'm",
-    'hero.title': 'Software Engineer | Web Developer',
+    'hero.title': 'Software engineer in Urnieta, Gipuzkoa',
     'hero.description':
-      'I build websites and web applications focused on high performance, data-driven solutions, and design. Astro for static/SSR sites and Clojure/ClojureScript for complex web apps. Based in Urnieta, Basque Country (Euskal Herria). Currently developing at',
+      "I build fast websites for local businesses in Gipuzkoa and complex web applications in Clojure. Right now I'm building Naiha, a healthcare platform, at",
+    'hero.descAfter': '.',
+    'hero.doorLocal': 'I run a business and need a website',
+    'hero.doorTech': "I'm looking for a Clojure engineer",
+    'hero.replHint':
+      'This is a real Clojure REPL. Type (help) and press Enter.',
+    'nav.local': 'Business websites',
+    'nav.work': 'Software',
     'hero.viewWork': 'View Work',
     'hero.contactMe': 'Contact Me',
     'hero.available': 'Open to new projects',
@@ -43,10 +49,10 @@ export const ui = {
     'experience.highlight3':
       'Upstreaming fixes to the open source tools the team relies on.',
 
-    'publications.title': 'Research / Publications',
+    'publications.title': 'Research',
     'publications.intro':
       'Through my work at Ubikare, I contributed to the technology and data infrastructure supporting multicenter clinical research carried out by the COVID-19 Spanish ICU Network.',
-    'publications.association': 'COVID-19 Spanish ICU Network · Ubikare',
+    'publications.association': 'COVID-19 Spanish ICU Network, with Ubikare',
     'publications.link': 'Open in PMC',
     'publications.listLabel': 'Scientific publications',
 
@@ -69,7 +75,7 @@ export const ui = {
     'projects.newton_desc':
       'Educational deep-dive into polynomial interpolation — Newton, Lagrange, barycentric and cubic splines in Python, with an interactive Newton demo in JavaScript. Explores Chebyshev nodes, the Runge phenomenon and benchmarks.',
 
-    'contact.title': 'My Contact Details',
+    'contact.title': 'Get in touch',
     'contact.text':
       'Software developer based in Urnieta, Basque Country (Euskal Herria). Available for professional connections and technical discussions.',
     'contact.email': 'Email',
@@ -126,10 +132,9 @@ export const ui = {
     'contributions.card.showLess': 'Show less',
   },
   es: {
-    'meta.title':
-      'Jon Ramos | Ingeniero de Software Senior y Desarrollador Full Stack | Contratar Desarrollador | Urnieta, País Vasco',
+    'meta.title': 'Jon Ramos — Programador y desarrollador web en Gipuzkoa',
     'meta.description':
-      'Ingeniero de Software Senior disponible para contratación. Experto en Clojure, ClojureScript, TypeScript, React y Astro. Más de 8 años construyendo aplicaciones web escalables y software sanitario. Ubicado en País Vasco, España. Abierto a trabajo remoto con empresas como Google, Meta, Netflix y startups. Servicios de desarrollo web freelance disponibles.',
+      'Programador en Urnieta (Gipuzkoa). Páginas web rápidas para negocios de Donostia y alrededores, y aplicaciones web en Clojure y ClojureScript.',
     'meta.jobTitles':
       'Ingeniero de Software Senior, Desarrollador Full Stack, Desarrollador Web, Desarrollador Freelance',
     'meta.structuredDescription':
@@ -142,9 +147,16 @@ export const ui = {
     'nav.contact': 'Contacto',
 
     'hero.greeting': 'Hola, soy',
-    'hero.title': 'Ingeniero de Software | Desarrollador Web',
+    'hero.title': 'Programador en Urnieta, Gipuzkoa',
     'hero.description':
-      'Desarrollo sitios web y aplicaciones web centradas en alto rendimiento, soluciones orientadas a datos y diseño. Astro para sitios estáticos/SSR y Clojure/ClojureScript para aplicaciones web complejas. Ubicado en Urnieta, País Vasco (Euskal Herria). Actualmente desarrollando en',
+      'Hago páginas web rápidas para negocios de Gipuzkoa y aplicaciones web complejas en Clojure. Ahora mismo construyo Naiha, una plataforma sanitaria, en',
+    'hero.descAfter': '.',
+    'hero.doorLocal': 'Tengo un negocio y quiero una web',
+    'hero.doorTech': 'Busco a alguien que programe en Clojure',
+    'hero.replHint':
+      'Esto es un REPL de Clojure de verdad. Escribe (help) y pulsa Enter.',
+    'nav.local': 'Webs para negocios',
+    'nav.work': 'Software',
     'hero.viewWork': 'Ver Trabajos',
     'hero.contactMe': 'Contáctame',
     'hero.available': 'Abierto a nuevos proyectos',
@@ -161,10 +173,10 @@ export const ui = {
     'experience.highlight3':
       'Aportando mejoras a las herramientas open source que usa el equipo.',
 
-    'publications.title': 'Investigación / Publicaciones',
+    'publications.title': 'Investigación',
     'publications.intro':
       'A través de mi trabajo en Ubikare, contribuí a la tecnología y la infraestructura de datos que respaldaron la investigación clínica multicéntrica realizada por la Red de UCI Española para COVID-19.',
-    'publications.association': 'Red de UCI Española para COVID-19 · Ubikare',
+    'publications.association': 'Red española de UCI COVID-19, con Ubikare',
     'publications.link': 'Abrir en PMC',
     'publications.listLabel': 'Publicaciones científicas',
 
@@ -187,7 +199,7 @@ export const ui = {
     'projects.newton_desc':
       'Guía educativa sobre interpolación polinómica: Newton, Lagrange, baricéntrico y splines cúbicos en Python, con una demo interactiva de Newton en JavaScript. Explora los nodos de Chebyshev, el fenómeno de Runge y benchmarks.',
 
-    'contact.title': 'Mis datos de contacto',
+    'contact.title': 'Escríbeme',
     'contact.text':
       'Desarrollador de software en Urnieta, País Vasco (Euskal Herria). Disponible para conexiones profesionales y discusiones técnicas.',
     'contact.email': 'Correo',
@@ -247,10 +259,9 @@ export const ui = {
     'contributions.card.showLess': 'Ver menos',
   },
   eu: {
-    'meta.title':
-      'Jon Ramos | Software Ingeniaria Senior eta Full Stack Garatzailea | Kontratatu Garatzailea | Urnieta, Euskal Herria',
+    'meta.title': 'Jon Ramos — Programatzailea eta web garatzailea Gipuzkoan',
     'meta.description':
-      'Software Ingeniaria Senior kontratatzeko eskuragarri. Clojure, ClojureScript, TypeScript, React eta Astro-n aditua. 8 urte baino gehiago web aplikazio eskalagarriak eta osasun softwarea eraikitzen. Euskal Herrian kokatua. Urruneko lanerako irekia Google, Meta, Netflix eta startup-ekin. Freelance web garapen zerbitzuak eskuragarri.',
+      'Programatzailea Urnietan (Gipuzkoa). Web orri azkarrak Donostia inguruko negozioentzat, eta web aplikazioak Clojure eta ClojureScript-en.',
     'meta.jobTitles':
       'Software Ingeniaria Senior, Full Stack Garatzailea, Web Garatzailea, Freelance Garatzailea',
     'meta.structuredDescription':
@@ -263,9 +274,16 @@ export const ui = {
     'nav.contact': 'Kontaktua',
 
     'hero.greeting': 'Kaixo!',
-    'hero.title': 'Software Ingeniaria | Web Garatzailea',
+    'hero.title': 'Programatzailea Urnietan, Gipuzkoan',
     'hero.description':
-      'Webguneak eta web aplikazioak eraikitzen ditut. Errendimendu handiko, datuetan oinarritutako soluzioetan eta diseinuan zentratuta. Astro teknologia erabiliz webgune estatikoak/SSR eta Clojure/ClojureScript web aplikazio konplexuetarako. Urnietan, Euskal Herrian kokatua. Gaur egun garatzen',
+      'Web orri azkarrak egiten ditut Gipuzkoako negozioentzat, eta web aplikazio konplexuak Clojuren. Gaur egun Naiha eraikitzen ari naiz, osasun plataforma bat,',
+    'hero.descAfter': 'n.',
+    'hero.doorLocal': 'Negozio bat daukat eta web bat behar dut',
+    'hero.doorTech': 'Clojuren programatzen duen norbait bilatzen dut',
+    'hero.replHint':
+      'Benetako Clojure REPL bat da. Idatzi (help) eta sakatu Enter.',
+    'nav.local': 'Negozioentzako webak',
+    'nav.work': 'Softwarea',
     'hero.viewWork': 'Lanak Ikusi',
     'hero.contactMe': 'Kontaktatu',
     'hero.available': 'Proiektu berrietarako prest',
@@ -282,10 +300,11 @@ export const ui = {
     'experience.highlight3':
       'Taldeak erabiltzen dituen kode irekiko tresnak hobetzen.',
 
-    'publications.title': 'Ikerketa / Argitalpenak',
+    'publications.title': 'Ikerketa',
     'publications.intro':
       'Ubikareko lanaren bidez, COVID-19aren Espainiako ZIU Sareak egindako zentro anitzeko ikerketa klinikoa babestu zuten teknologia- eta datu-azpiegituretan lagundu nuen.',
-    'publications.association': 'COVID-19aren Espainiako ZIU Sarea · Ubikare',
+    'publications.association':
+      'COVID-19aren Espainiako ZIU Sarea, Ubikarerekin',
     'publications.link': 'Ireki PMC-n',
     'publications.listLabel': 'Argitalpen zientifikoak',
 

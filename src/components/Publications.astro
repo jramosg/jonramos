@@ -1,5 +1,4 @@
 ---
-import ExternalLinkIcon from '@/assets/icons/external-link.svg';
 import { getLangFromUrl, useTranslations } from '@/i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -45,15 +44,10 @@ const publications = [
   itemtype="https://schema.org/ItemList"
 >
   <div class="container">
-    <header class="section-head" data-reveal>
-      <p class="kicker">
-        <span class="no">02</span> · {t('publications.title')}
-      </p>
-      <div class="heading-row">
-        <h2 id="publications-title" class="heading" itemprop="name">
-          {t('publications.title')}
-        </h2>
-      </div>
+    <header class="section-head">
+      <h2 id="publications-title" class="heading" itemprop="name">
+        {t('publications.title')}
+      </h2>
       <p class="sub">{t('publications.intro')}</p>
       <meta itemprop="numberOfItems" content={String(publications.length)} />
       <meta itemprop="itemListOrder" content="ItemListUnordered" />
@@ -67,8 +61,6 @@ const publications = [
             itemprop="itemListElement"
             itemscope
             itemtype="https://schema.org/ListItem"
-            data-reveal
-            style={`--reveal-delay: ${index * 60}ms`}
           >
             <meta itemprop="position" content={String(index + 1)} />
             <article
@@ -104,24 +96,10 @@ const publications = [
                   >
                     <span itemprop="name">{publication.journal}</span>
                   </span>
-                  <span class="separator" aria-hidden="true">
-                    ·
-                  </span>
-                  <span>{t('publications.association')}</span>
+                  <span class="assoc">{t('publications.association')}</span>
                 </p>
                 <meta itemprop="contributor" content="Jon Ramos" />
               </div>
-
-              <a
-                class="publication-link"
-                href={publication.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${t('publications.link')}: ${publication.title}`}
-              >
-                <span>{t('publications.link')}</span>
-                <ExternalLinkIcon width={14} height={14} aria-hidden="true" />
-              </a>
             </article>
           </li>
         ))
@@ -131,170 +109,65 @@ const publications = [
 </section>
 
 <style>
-  .section {
-    padding: 5.5rem 0;
-  }
-
-  .section-head {
-    margin-bottom: 2.25rem;
-  }
-
-  .section-head .heading {
-    font-size: var(--text-2xl);
-  }
-
-  .section-head .sub {
-    max-width: 66ch;
-  }
-
   .publication-list {
-    list-style: none;
-    max-width: 980px;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--hairline-strong);
+    list-style: none;
+    border-top: 2px solid var(--ink);
   }
 
   .publication-item {
-    border-bottom: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--rule-strong);
   }
 
   .publication {
     display: grid;
-    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    grid-template-columns: 5rem 1fr;
     gap: 1.5rem;
-    align-items: start;
-    padding: 1.35rem 0.75rem;
-    margin: 0 -0.75rem;
-    border-radius: var(--radius-sm);
-    transition:
-      background-color var(--dur-base) var(--ease-out-expo),
-      border-color var(--dur-base) var(--ease-out-expo);
+    padding: 1.25rem 0;
   }
 
   .publication-year {
-    padding-top: 0.2rem;
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: var(--tracking-wide);
-    color: var(--accent);
-  }
-
-  .publication-body {
-    min-width: 0;
+    font-size: 1.6rem;
+    font-weight: 850;
+    font-stretch: var(--cond);
+    line-height: 1;
+    color: var(--ink-subtle);
   }
 
   .publication-title {
-    margin: 0 0 0.55rem;
-    font-size: var(--text-md);
-    font-weight: var(--weight-semibold);
-    line-height: var(--leading-snug);
-    text-wrap: balance;
+    font-size: var(--step-1);
+    font-weight: 600;
+    font-stretch: 100%;
+    line-height: 1.35;
+    margin-bottom: 0.4rem;
+    max-width: 62ch;
   }
 
-  .publication-title a {
-    color: var(--text-strong);
-    text-decoration: none;
-    transition: color var(--dur-fast) var(--ease-out-expo);
+  .publication-title a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
   }
 
   .publication-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.2rem 1rem;
     margin: 0;
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    line-height: 1.55;
-    color: var(--text-subtle);
+    font-size: var(--step--1);
+    color: var(--ink-subtle);
   }
 
-  .separator {
-    color: var(--hairline-strong);
+  .publication-meta [itemprop='name'] {
+    font-style: italic;
   }
 
-  .publication-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin-top: 0.15rem;
-    padding: 0.3rem 0;
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--text-subtle);
-    white-space: nowrap;
-    transition: color var(--dur-fast) var(--ease-out-expo);
-  }
-
-  .publication-link :global(svg) {
-    transition: transform var(--dur-base) var(--ease-out-expo);
-  }
-
-  .publication-title a:focus-visible,
-  .publication-link:focus-visible {
-    outline: 2px solid var(--focus-ring);
-    outline-offset: 3px;
-    border-radius: var(--radius-xs);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .publication:hover {
-      background: var(--accent-soft);
-    }
-
-    .publication:hover .publication-title a,
-    .publication-title a:hover,
-    .publication-link:hover {
-      color: var(--accent-hover);
-    }
-
-    .publication-link:hover :global(svg) {
-      transform: translate(2px, -2px);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .section {
-      padding: 4rem 0;
-    }
-
-    .publication {
-      grid-template-columns: 3.5rem minmax(0, 1fr);
-      gap: 0.75rem 1rem;
-      padding: 1.25rem 0.5rem;
-      margin: 0 -0.5rem;
-    }
-
-    .publication-link {
-      grid-column: 2;
-      justify-self: start;
-      margin-top: 0;
-    }
-  }
-
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .publication {
       grid-template-columns: 1fr;
-    }
-
-    .publication-year,
-    .publication-link {
-      grid-column: 1;
-    }
-
-    .publication-year {
-      padding-top: 0;
-    }
-
-    .separator {
-      display: none;
-    }
-
-    .publication-meta > span {
-      flex-basis: 100%;
+      gap: 0.25rem;
     }
   }
 </style>

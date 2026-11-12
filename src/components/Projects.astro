@@ -11,50 +11,42 @@ const projects = [
     description: t('projects.naiha_desc'),
     href: 'https://www.naiha.io/',
     tags: ['Clojure', 'ClojureScript', 'Datomic'],
-    type: 'WebApplication',
-    featured: true,
   },
   {
     title: 'Laguntza Fisioterapia',
     description: t('projects.laguntza_desc'),
     href: 'https://laguntzafisioterapia.com/',
     tags: ['Astro', 'GSAP', 'Typescript'],
-    type: 'WebSite',
   },
   {
     title: 'Norwegian Singles',
     description: t('projects.norwegian_singles_desc'),
     href: 'https://norwegian-singles.app',
     tags: ['Astro', 'React', 'Typescript'],
-    type: 'WebSite / WebApplication',
   },
   {
     title: 'Besaide Mendizale Elkartea',
     description: t('projects.besaide_desc'),
     href: 'https://besaide.eus',
     tags: ['Astro', 'Typescript', 'Keystatic'],
-    type: 'WebSite',
   },
   {
     title: 'Polynomial Interpolation',
     description: t('projects.newton_desc'),
     href: 'https://jonramos.dev/newton-lagrange-interpolation-python/',
     tags: ['Python', 'JavaScript', 'NumPy', 'SciPy'],
-    type: 'SoftwareSourceCode',
   },
   {
     title: 'color-tools',
     description: t('projects.colortools_desc'),
     href: 'https://github.com/jramosg/color-tools',
     tags: ['Clojure', 'Library', 'Open Source'],
-    type: 'SoftwareSourceCode',
   },
   {
     title: 'reagent-mui-nested-menu',
     description: t('projects.jon_nested_menu_desc'),
     href: 'https://github.com/jramosg/jon-nested-menu',
     tags: ['ClojureScript', 'React', 'MUI', 'Library'],
-    type: 'SoftwareSourceCode',
     demos: [
       {
         label: 'React',
@@ -77,66 +69,40 @@ const projects = [
   itemtype="https://schema.org/ItemList"
 >
   <div class="container">
-    <header class="section-head" data-reveal>
-      <p class="kicker">
-        <span class="no">03</span> · {t('projects.title')}
-      </p>
-      <div class="heading-row">
-        <h2 id="projects-title" class="heading" itemprop="name">
-          {t('projects.title')}
-        </h2>
-      </div>
+    <header class="section-head">
+      <h2 id="projects-title" class="heading" itemprop="name">
+        {t('projects.title')}
+      </h2>
       <p class="sub">{t('projects.subtitle')}</p>
       <meta itemprop="numberOfItems" content={String(projects.length)} />
-      <meta itemprop="itemListOrder" content="ItemListUnordered" />
     </header>
 
-    <div class="grid" role="list">
+    <ol class="list">
       {
         projects.map((project, index) => (
-          <div
-            role="listitem"
+          <li
             itemprop="itemListElement"
-            class:list={['cell', { featured: project.featured }]}
-            data-reveal
-            style={`--reveal-delay: ${Math.min(index, 5) * 70}ms`}
+            itemscope
+            itemtype="https://schema.org/ListItem"
           >
             <meta itemprop="position" content={String(index + 1)} />
-            <ProjectCard
-              {...project}
-              index={String(index + 1).padStart(2, '0')}
-              featuredLabel={t('projects.featured')}
-            />
-          </div>
+            <ProjectCard {...project} />
+          </li>
         ))
       }
-    </div>
+    </ol>
   </div>
 </section>
 
 <style>
-  .section {
-    padding: 7rem 0;
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--ink);
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .cell {
-    display: flex;
-    min-width: 0;
-  }
-
-  .cell.featured {
-    grid-column: 1 / -1;
-  }
-
-  @media (max-width: 768px) {
-    .section {
-      padding: 4.5rem 0;
-    }
+  .list > li {
+    border-bottom: 1px solid var(--rule-strong);
   }
 </style>

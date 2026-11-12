@@ -31,499 +31,168 @@ const projectLogos: Record<string, any> = {
   aria-labelledby="contributions-title"
 >
   <div class="container">
-    <header class="section-head" data-reveal>
-      <p class="kicker">
-        <span class="no">04</span> · {t('contributions.hero.title')}
-      </p>
-      <div class="heading-row">
-        <h2 id="contributions-title" class="heading">
-          {t('contributions.hero.title')}
-        </h2>
-      </div>
+    <header class="section-head">
+      <h2 id="contributions-title" class="heading">
+        {t('contributions.hero.title')}
+      </h2>
       <p class="sub">{t('contributions.home.subtitle')}</p>
     </header>
 
-    <div
-      class="stats-row"
-      role="list"
-      aria-label="Contribution statistics"
-      data-reveal
-    >
-      <div class="stat-item" role="listitem">
-        <span class="stat-value">{stats.totalContributions}</span>
-        <span class="stat-label">{t('contributions.stats.contributions')}</span>
-      </div>
-      <div class="stat-item" role="listitem">
-        <span class="stat-value">{stats.totalProjects}</span>
-        <span class="stat-label">{t('contributions.stats.projects')}</span>
-      </div>
-      <div class="stat-item featured-stat" role="listitem">
-        <span class="stat-value">{stats.featured}</span>
-        <span class="stat-label">{t('projects.featured')}</span>
-      </div>
+    <div class="tally" aria-label="Contribution statistics">
+      <p>
+        <strong>{stats.totalContributions}</strong>
+        {t('contributions.stats.contributions')}
+      </p>
+      <p>
+        <strong>{stats.totalProjects}</strong>
+        {t('contributions.stats.projects')}
+      </p>
     </div>
 
-    <div class="projects-grid" itemscope itemtype="https://schema.org/ItemList">
+    <ul class="projects" itemscope itemtype="https://schema.org/ItemList">
       <meta itemprop="name" content="Open Source Contributions" />
       {
         projects.map((project) => {
           const { featured, notable } = getContributionsByTier(
             project.contributions,
           );
-          // Show up to 2 featured contributions, or 1 notable if no featured
-          const previewContributions =
+          const preview =
             featured.length > 0 ? featured.slice(0, 3) : notable.slice(0, 3);
-          const remainingCount =
-            project.contributions.length - previewContributions.length;
-
           return (
-            <article class="project-card" data-reveal data-spotlight>
-              <div class="project-header">
-                <div class="project-name-wrapper">
-                  {projectLogos[project.name] && (
-                    <Image
-                      src={projectLogos[project.name]}
-                      alt={`${project.name} logo`}
-                      class="project-logo"
-                      loading="lazy"
-                    />
-                  )}
-                  <div>
-                    <h3 class="project-name">
-                      <span class="name-prefix">#</span>
-                      {project.name}
-                    </h3>
-                    <span class="project-tech">{project.technology[0]}</span>
-                  </div>
-                </div>
-                <div class="contribution-badges">
-                  <span class="contribution-count">
-                    {project.contributions.length}
-                  </span>
-                  {featured.length > 0 && (
-                    <span class="featured-badge">
-                      <span class="badge-icon">★</span>
-                      {featured.length}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <div class="contributions-preview">
-                {previewContributions.map((contribution) => (
-                  <a
-                    href={contribution.prLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class={`contribution-item ${contribution.tier === 'featured' ? 'is-featured' : ''}`}
-                  >
-                    {contribution.tier === 'featured' && (
-                      <span class="featured-indicator">★</span>
-                    )}
-                    <div class="contribution-content">
-                      <h4 class="contribution-title">{contribution.title}</h4>
-                      {contribution.impact && (
-                        <p class="contribution-impact">{contribution.impact}</p>
-                      )}
-                    </div>
-                    <span class="contribution-arrow">
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <line x1="7" y1="17" x2="17" y2="7" />
-                        <polyline points="7 7 17 7 17 17" />
-                      </svg>
-                    </span>
-                  </a>
-                ))}
-
-                {remainingCount > 0 && (
-                  <a href={`/${lang}/contributions`} class="more-link">
-                    <span>+{remainingCount} more contributions</span>
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </svg>
-                  </a>
+            <li class="project">
+              <div class="project-name">
+                {projectLogos[project.name] && (
+                  <Image
+                    src={projectLogos[project.name]}
+                    alt=""
+                    class="logo"
+                    width={40}
+                    height={40}
+                    loading="lazy"
+                  />
                 )}
+                <h3>{project.name}</h3>
+                <span class="count">{project.contributions.length}</span>
               </div>
-            </article>
+              <ul class="prs">
+                {preview.map((c) => (
+                  <li>
+                    <a
+                      href={c.prLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {c.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
           );
         })
       }
-    </div>
+    </ul>
 
-    <div class="see-more-container">
-      <a href={`/${lang}/contributions`} class="see-more-btn">
-        <span class="btn-text">{t('contributions.home.viewAll')}</span>
-        <span class="btn-icon">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </span>
-      </a>
-    </div>
+    <a href={`/${lang}/contributions`} class="btn btn-ghost all">
+      {t('contributions.home.viewAll')}
+    </a>
   </div>
 </section>
 
 <style>
-  .section {
-    padding: 7rem 0;
-  }
-
-  /* Stats: a full-width editorial strip between hairlines */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-bottom: 3rem;
-    padding: 1.75rem 0;
-    border-top: 1px solid var(--hairline);
-    border-bottom: 1px solid var(--hairline);
-  }
-
-  .stat-item {
+  .tally {
     display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-    position: relative;
-    padding-left: 1.5rem;
-  }
-
-  .stat-item:first-child {
-    padding-left: 0;
-  }
-
-  .stat-item + .stat-item {
-    border-left: 1px solid var(--hairline);
-  }
-
-  .stat-value {
-    font-family: var(--font-mono);
-    font-size: var(--text-3xl);
-    font-weight: 600;
-    line-height: 1;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .featured-stat .stat-value {
-    color: var(--color-featured);
-  }
-
-  .stat-label {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  /* Projects Grid */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
-    gap: 1.25rem;
+    gap: clamp(2rem, 6vw, 5rem);
     margin-bottom: 2.5rem;
   }
 
-  .project-card {
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.25s var(--ease-out-expo);
-    display: flex;
-    flex-direction: column;
+  .tally p {
+    display: grid;
+    margin: 0;
+    font-weight: 600;
+    color: var(--ink-muted);
   }
 
-  .project-card:hover {
-    border-color: var(--color-border-emphasis);
+  .tally strong {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 900;
+    font-stretch: var(--cond);
+    line-height: 0.9;
+    color: var(--ink);
   }
 
-  .project-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--color-border);
+  .projects {
+    margin: 0 0 2.5rem;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--ink);
   }
 
-  .project-name-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex: 1;
-  }
-
-  .project-logo {
-    height: 32px;
-    width: auto;
-    max-width: 80px;
-    object-fit: contain;
-    filter: grayscale(20%);
-    transition: filter 0.2s;
-  }
-
-  .project-card:hover .project-logo {
-    filter: grayscale(0%);
+  .project {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) 2fr;
+    gap: 1rem clamp(1.5rem, 4vw, 4rem);
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--rule-strong);
   }
 
   .project-name {
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-tight);
-    color: var(--text-strong);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    align-self: start;
+  }
+
+  .project-name h3 {
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  }
+
+  .logo {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+  }
+
+  .count {
+    margin-left: auto;
+    padding: 0.1rem 0.5rem;
+    font-weight: 700;
+    background: var(--ink);
+    color: var(--ground);
+    border-radius: 2px;
+  }
+
+  .prs {
     margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
+    padding: 0;
+    list-style: none;
   }
 
-  .name-prefix {
-    color: var(--color-primary);
+  .prs li + li {
+    border-top: 1px solid var(--rule);
   }
 
-  .project-tech {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-text-subtle);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+  .prs a {
+    display: block;
+    padding: 0.45rem 0;
+    color: var(--ink-muted);
   }
 
-  .contribution-badges {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  .prs a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
   }
 
-  .contribution-count {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    background: var(--color-bg-surface);
-    padding: 0.25rem 0.625rem;
-    border-radius: 4px;
-    border: 1px solid var(--color-border);
-  }
-
-  .featured-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-featured);
-    background: rgba(142, 152, 194, 0.1);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-  }
-
-  .badge-icon {
-    font-size: 0.65rem;
-  }
-
-  /* Contributions Preview */
-  .contributions-preview {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    flex: 1;
-  }
-
-  .contribution-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.875rem;
-    border-radius: 6px;
-    background: var(--color-bg-surface);
-    border: 1px solid transparent;
-    transition: all 0.2s;
-    text-decoration: none;
-  }
-
-  .contribution-item:hover {
-    border-color: var(--color-border);
-    background: var(--color-bg);
-  }
-
-  .contribution-item.is-featured {
-    border-left: 2px solid var(--color-featured);
-    background: rgba(142, 152, 194, 0.03);
-  }
-
-  .contribution-item.is-featured:hover {
-    border-color: var(--color-featured);
-    border-left: 2px solid var(--color-featured);
-  }
-
-  .featured-indicator {
-    color: var(--color-featured);
-    font-size: 0.7rem;
-    margin-top: 0.125rem;
-  }
-
-  .contribution-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .contribution-title {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin: 0 0 0.25rem 0;
-    line-height: 1.3;
-  }
-
-  .contribution-impact {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    margin: 0;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .contribution-arrow {
-    color: var(--color-text-subtle);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-
-  .contribution-item:hover .contribution-arrow {
-    opacity: 1;
-    transform: translateX(0);
-    color: var(--color-primary);
-  }
-
-  .more-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    padding: 0.5rem 0;
-    margin-top: auto;
-    transition: color 0.2s;
-  }
-
-  .more-link:hover {
-    color: var(--color-primary);
-  }
-
-  .more-link svg {
-    transition: transform 0.2s;
-  }
-
-  .more-link:hover svg {
-    transform: translateX(4px);
-  }
-
-  /* See More Button */
-  .see-more-container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .see-more-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text);
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: all 0.25s var(--ease-out-expo);
-  }
-
-  .see-more-btn:hover {
-    border-color: var(--color-primary);
-    transform: translateY(-2px);
-  }
-
-  .btn-icon {
-    color: var(--color-primary);
-    transition: transform 0.2s;
-  }
-
-  .see-more-btn:hover .btn-icon {
-    transform: translateX(4px);
-  }
-
-  @media (max-width: 768px) {
-    .section {
-      padding: 4.5rem 0;
-    }
-
-    .stats-row {
-      gap: 1rem;
-      padding: 1.25rem 0;
-    }
-
-    .stat-item {
-      padding-left: 1rem;
-    }
-
-    .stat-item:first-child {
-      padding-left: 0;
-    }
-
-    .stat-value {
-      font-size: var(--text-2xl);
-    }
-
-    .projects-grid {
+  @media (max-width: 760px) {
+    .project {
       grid-template-columns: 1fr;
     }
 
-    .project-card {
-      padding: 1.25rem;
-    }
-
-    .project-logo {
-      height: 28px;
-    }
-
-    .project-name {
-      font-size: 1rem;
+    .count {
+      margin-left: 0.25rem;
     }
   }
 </style>

@@ -7,14 +7,16 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  alternates?: Record<'en' | 'es' | 'eu', string>;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, alternates } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} ogImage={ogImage}>
+<BaseLayout {...{ title, description, ogImage, alternates }}>
+  <slot name="head" slot="head" />
   <Navbar />
-  <main id="main-content" role="main" tabindex="-1">
+  <main id="main-content" tabindex="-1">
     <slot />
   </main>
   <Footer />

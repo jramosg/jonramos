@@ -1,6 +1,4 @@
 ---
-import TechIcon from './TechIcon.astro';
-
 interface Demo {
   label: string;
   href: string;
@@ -12,312 +10,106 @@ interface Props {
   href: string;
   tags: string[];
   demos?: Demo[];
-  index?: string;
-  featured?: boolean;
-  featuredLabel?: string;
 }
 
-const {
-  title,
-  description,
-  href,
-  tags,
-  demos,
-  index,
-  featured,
-  featuredLabel,
-} = Astro.props;
+const { title, description, href, tags, demos } = Astro.props;
+const host = new URL(href).hostname.replace(/^www\./, '');
 ---
 
-<article class:list={['card', { featured }]} data-spotlight>
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    class="card-link"
-    aria-label={`View ${title} project (opens in new tab)`}
-  >
-    <div class="card-content">
-      <div class="card-header">
-        {index && <span class="project-index">{index}.</span>}
-        <h3 class="title" itemprop="name">{title}</h3>
-        {
-          featured && featuredLabel && (
-            <span class="featured-badge">{featuredLabel}</span>
-          )
-        }
-        <span class="arrow-icon">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
-          </svg>
-        </span>
-      </div>
-
-      <p class="description" itemprop="description">
-        {description}
-      </p>
-
-      <meta itemprop="url" content={href} />
-
-      <ul class="tags" aria-label="Technologies used" itemprop="keywords">
-        {
-          tags.map((tag) => (
-            <li class="tag">
-              <TechIcon tech={tag} />
-              <span class="tag-text">{tag}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </a>
-
-  {
-    demos && demos.length > 0 && (
-      <div class="card-demos">
-        <span class="demos-label">demos</span>
-        {demos.map((demo) => (
-          <a
-            class="demo-link"
-            href={demo.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${title} ${demo.label} demo (opens in new tab)`}
-          >
-            <span>{demo.label}</span>
-            <svg
-              width="11"
-              height="11"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </a>
-        ))}
-      </div>
-    )
-  }
+<article
+  class="row"
+  itemprop="item"
+  itemscope
+  itemtype="https://schema.org/CreativeWork"
+>
+  <h3 class="title" itemprop="name">
+    <a href={href} target="_blank" rel="noopener noreferrer" itemprop="url">
+      {title}
+    </a>
+  </h3>
+  <div class="detail">
+    <p class="description" itemprop="description">{description}</p>
+    <p class="meta">
+      <span class="host">{host}</span>
+      <span class="tags" itemprop="keywords">{tags.join(', ')}</span>
+    </p>
+    {
+      demos && demos.length > 0 && (
+        <p class="demos">
+          Demo:{' '}
+          {demos.map((demo, i) => (
+            <>
+              {i > 0 && ', '}
+              <a
+                href={demo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="u-link"
+              >
+                {demo.label}
+              </a>
+            </>
+          ))}
+        </p>
+      )
+    }
+  </div>
 </article>
 
 <style>
-  .card {
-    display: flex;
-    flex-direction: column;
+  .row {
     position: relative;
-    width: 100%;
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    overflow: hidden;
-    transition:
-      border-color 0.25s var(--ease-out-expo),
-      transform 0.25s var(--ease-out-expo),
-      box-shadow 0.25s var(--ease-out-expo);
-    height: 100%;
-  }
-
-  /* gradient hairline along the top edge, revealed on hover */
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--haze));
-    opacity: 0;
-    transition: opacity 0.25s var(--ease-out-expo);
-    pointer-events: none;
-  }
-
-  .card:hover {
-    border-color: var(--accent-line);
-    transform: translateY(-3px);
-    box-shadow: var(--glow-teal);
-  }
-
-  .card:hover::before {
-    opacity: 1;
-  }
-
-  .card-link {
-    display: block;
-    padding: 1.5rem;
-    flex: 1 1 auto;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .card.featured .card-link {
-    padding: 2rem;
-  }
-
-  .card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    height: 100%;
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-  }
-
-  .project-index {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 0.75rem clamp(1.5rem, 4vw, 4rem);
+    padding: clamp(1.25rem, 3vw, 2rem) 0;
   }
 
   .title {
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-tight);
-    margin: 0;
-    color: var(--text-strong);
-    flex: 1;
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
+    line-height: 0.95;
   }
 
-  .card.featured .title {
-    font-size: var(--text-xl);
+  .title a {
+    background-image: linear-gradient(var(--line), var(--line));
+    background-size: 0 4px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 260ms var(--ease);
   }
 
-  .featured-badge {
-    font-family: var(--font-mono);
-    font-size: var(--text-2xs);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);
-    color: var(--accent);
-    background: var(--accent-soft);
-    border: 1px solid var(--accent-line);
-    padding: 0.2rem 0.6rem;
-    border-radius: var(--radius-pill);
-    white-space: nowrap;
-  }
-
-  .arrow-icon {
-    color: var(--color-text-subtle);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: all 0.25s var(--ease-out-expo);
-  }
-
-  .card:hover .arrow-icon {
-    opacity: 1;
-    transform: translateX(0);
-    color: var(--color-primary);
+  .title a:hover,
+  .title a:focus-visible {
+    background-size: 100% 4px;
   }
 
   .description {
-    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    max-width: 60ch;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
     margin: 0;
-    color: var(--color-text-muted);
-    line-height: 1.6;
+    font-size: var(--step--1);
+    color: var(--ink-subtle);
   }
 
-  .card.featured .description {
-    font-size: var(--text-base);
-    max-width: 64ch;
+  .host {
+    font-weight: 650;
+    color: var(--ink);
   }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-    margin-top: auto;
-    padding-top: 0.75rem;
-    align-items: center;
-    list-style: none;
-    padding-left: 0;
-    border-top: 1px solid var(--color-border);
+  .demos {
+    margin: 0.5rem 0 0;
+    font-size: var(--step--1);
   }
 
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.25rem 0.5rem;
-    background: var(--color-bg-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    transition: all 0.2s;
-  }
-
-  .card:hover .tag {
-    border-color: var(--color-border-emphasis);
-  }
-
-  .tag-text {
-    line-height: 1;
-  }
-
-  /* demo links: sit below the main card link (no nested anchors) */
-  .card-demos {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0 1.5rem 1.25rem;
-  }
-
-  .demos-label {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-subtle);
-  }
-
-  .demo-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.28rem 0.55rem;
-    background: var(--color-bg-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    text-decoration: none;
-    transition: all 0.2s var(--ease-out-expo);
-  }
-
-  .demo-link:hover {
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-    background: var(--color-primary-muted);
-  }
-
-  .demo-link svg {
-    opacity: 0.7;
-  }
-
-  @media (max-width: 768px) {
-    .card.featured .card-link {
-      padding: 1.5rem;
+  @media (max-width: 760px) {
+    .row {
+      grid-template-columns: 1fr;
     }
   }
 </style>
