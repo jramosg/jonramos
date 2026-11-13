@@ -2,6 +2,7 @@ export const prerender = false;
 
 import { languages } from '@/i18n/ui';
 import { localSlugs } from '@/data/localSlugs';
+import { localUpdated } from '@/data/localWeb';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
@@ -61,6 +62,7 @@ export async function GET(context: APIContext) {
   Object.entries(localSlugs).forEach(([l, slug]) => {
     urls.push({
       loc: `${site}${l}/${slug}`,
+      lastmod: localUpdated,
       changefreq: 'monthly',
       priority: 0.9,
       alternateRefs: localAlternates,

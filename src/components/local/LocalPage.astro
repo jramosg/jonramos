@@ -4,7 +4,7 @@ import Layout from '@/layouts/Layout.astro';
 import ContactForm from '@/components/ContactForm.astro';
 import { localCopy, towns } from '@/data/localWeb';
 import { localAlternates, localPath } from '@/data/localSlugs';
-import { location, mail } from '@/settings';
+import { github, linkedin, location, mail } from '@/settings';
 import type { Langs } from '@/i18n/ui';
 import laguntzaImg from '@/assets/work/laguntza.jpg';
 import besaideImg from '@/assets/work/besaide.jpg';
@@ -20,6 +20,10 @@ const images = { laguntza: laguntzaImg, besaide: besaideImg };
 const rotating = c.rotatingTowns;
 const origin = (Astro.site ?? Astro.url).origin;
 const pageUrl = `${origin}${localPath(lang)}`;
+const words = (s: string) => s.trim().split(/\s+/).filter(Boolean);
+const proofs = c.work.filter((w) => w.perfect);
+const pageSpeed = (url: string) =>
+  `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(url)}`;
 
 const serviceLd = {
   '@context': 'https://schema.org',
@@ -48,6 +52,10 @@ const serviceLd = {
     ...towns.map((name) => ({ '@type': 'City', name })),
   ],
   availableLanguage: ['eu', 'es', 'en'],
+  sameAs: [
+    `https://github.com/${github}`,
+    `https://www.linkedin.com/in/${linkedin}`,
+  ],
   founder: { '@type': 'Person', '@id': `${origin}/#person`, name: 'Jon Ramos' },
 };
 
@@ -112,48 +120,33 @@ const faqLd = {
     <div class="sand-line" aria-hidden="true"></div>
   </section>
 
-  <!-- 2. Speed: the one number that matters -->
-  <section class="speed container" aria-labelledby="speed-title">
-    <p class="hundred" aria-hidden="true">100</p>
+  <!-- 2. Who: a few sentences that ink in as you scroll past, next
+       to the person saying them -->
+  <section class="about container">
     <div>
-      <h2 id="speed-title" class="h2">{c.speedTitle}</h2>
-      <p class="speed-body">{c.speedBody}</p>
-    </div>
-  </section>
-
-  <!-- 3. The process, painted along the wall like frontón squares.
-       Scrolls sideways on wide screens (GSAP, loaded on approach);
-       a plain stack everywhere else. -->
-  <section class="wall" aria-labelledby="steps-title" data-wall>
-    <div class="wall-inner">
-      <h2 id="steps-title" class="h2 wall-title">{c.stepsTitle}</h2>
-      <ol class="track">
+      <p class="statement" data-statement>
         {
-          c.steps.map((step, i) => (
-            <li class="cuadro">
-              <span class="num" aria-hidden="true">
-                {i + 1}
-              </span>
-              <div class="cuadro-text">
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </div>
-            </li>
+          words(c.about).map((w) => (
+            <>
+              <span class="w">{w}</span>{' '}
+            </>
           ))
         }
-      </ol>
+      </p>
+      <a href={`/${lang}`} class="u-link about-link">{c.aboutLink}</a>
     </div>
+    <figure class="portrait">
+      <Image
+        src={jonImg}
+        alt="Jon Ramos"
+        widths={[360, 540, 760]}
+        sizes="(max-width: 860px) 62vw, 22rem"
+        loading="lazy"
+      />
+    </figure>
   </section>
 
-  <!-- 4. What's included -->
-  <section class="section container includes" aria-labelledby="inc-title">
-    <h2 id="inc-title" class="h2">{c.includesTitle}</h2>
-    <ul class="inc-list">
-      {c.includes.map((item) => <li>{item}</li>)}
-    </ul>
-  </section>
-
-  <!-- 5. Real work -->
+  <!-- 3. Real work -->
   <section
     id="lanak"
     class="section container work"
@@ -174,7 +167,7 @@ const faqLd = {
             >
               <Image
                 src={images[w.image]}
-                alt=""
+                alt={`${w.name}, ${w.place}`}
                 widths={[480, 760, 1100]}
                 sizes="(max-width: 860px) 100vw, 58vw"
                 loading="lazy"
@@ -199,7 +192,103 @@ const faqLd = {
     </ul>
   </section>
 
-  <!-- 6. Where -->
+  <!-- 4. Speed: the one number that matters -->
+  <section class="speed container" aria-labelledby="speed-title">
+    <p class="hundred" aria-hidden="true">100</p>
+    <div>
+      <h2 id="speed-title" class="h2">{c.speedTitle}</h2>
+      <p class="speed-body">{c.speedBody}</p>
+      <p class="speed-proof">
+        {c.speedProof}{' '}
+        {
+          proofs.map((w, i) => (
+            <>
+              {i > 0 && ', '}
+              <a
+                href={pageSpeed(w.href)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="u-link"
+              >
+                {w.name}
+              </a>
+            </>
+          ))
+        }
+      </p>
+
+      <form
+        class="test"
+        data-test
+        data-loading={c.test.loading}
+        data-invalid={c.test.invalid}
+        data-busy={c.test.busy}
+        data-verdicts={JSON.stringify(c.test.verdicts)}
+        data-message={c.test.message}
+      >
+        <label for="test-url">{c.test.label}</label>
+        <div class="test-row">
+          <input
+            id="test-url"
+            type="text"
+            inputmode="url"
+            autocapitalize="off"
+            autocomplete="url"
+            spellcheck="false"
+            placeholder={c.test.placeholder}
+            required
+          />
+          <button type="submit" class="btn btn-paint">{c.test.button}</button>
+        </div>
+        <p class="test-status" role="status" aria-live="polite" data-status></p>
+      </form>
+    </div>
+
+    <div class="result" data-result hidden>
+      <p class="result-num" data-num>0</p>
+      <div>
+        <p class="result-label">
+          {c.test.resultLabel}: <span data-host></span>
+        </p>
+        <p class="result-verdict" data-verdict></p>
+        <a href="#kontaktua" class="btn btn-paint" data-cta>{c.test.cta}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. The process, painted along the wall like frontón squares.
+       Scrolls sideways on wide screens (GSAP, loaded on approach);
+       a plain stack everywhere else. -->
+  <section class="wall" aria-labelledby="steps-title" data-wall>
+    <div class="wall-inner">
+      <h2 id="steps-title" class="h2 wall-title">{c.stepsTitle}</h2>
+      <ol class="track">
+        {
+          c.steps.map((step, i) => (
+            <li class="cuadro">
+              <span class="num" aria-hidden="true">
+                {i + 1}
+              </span>
+              <div class="cuadro-text">
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 6. What's included -->
+  <section class="section container includes" aria-labelledby="inc-title">
+    <h2 id="inc-title" class="h2">{c.includesTitle}</h2>
+    <ul class="inc-list">
+      {c.includes.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <!-- 7. Where -->
   <section class="section towns" aria-labelledby="towns-title">
     <div class="container towns-grid">
       <div>
@@ -212,7 +301,7 @@ const faqLd = {
     </div>
   </section>
 
-  <!-- 7. FAQ -->
+  <!-- 8. FAQ -->
   <section class="section container faq" aria-labelledby="faq-title">
     <h2 id="faq-title" class="h2">{c.faqTitle}</h2>
     <div class="faq-list">
@@ -227,7 +316,7 @@ const faqLd = {
     </div>
   </section>
 
-  <!-- 8. Contact -->
+  <!-- 9. Contact -->
   <section id="kontaktua" class="contact" aria-labelledby="lc-title">
     <div class="container contact-grid">
       <div>
@@ -237,18 +326,24 @@ const faqLd = {
           {c.contactOr}{' '}
           <a href={`mailto:${mail}`} class="u-link">{mail}</a>
         </p>
-        <Image
-          src={jonImg}
-          alt="Jon Ramos"
-          width={160}
-          height={213}
-          class="contact-face"
-          loading="lazy"
-        />
       </div>
       <ContactForm />
     </div>
   </section>
+
+  <!-- The prompt that follows you down the page: one line about the
+       business, carried into the contact form. -->
+  <form class="dock" data-dock>
+    <label for="dock-input" class="visually-hidden">{c.barLabel}</label>
+    <input
+      id="dock-input"
+      type="text"
+      placeholder={c.barPlaceholder}
+      autocomplete="off"
+      enterkeyhint="go"
+    />
+    <button type="submit">{c.barButton}</button>
+  </form>
 </Layout>
 
 <script>
@@ -267,6 +362,145 @@ const faqLd = {
       town.textContent = names[i];
       town.classList.add('in');
     }, 1900);
+  }
+
+  /* The sentence inks in word by word with the scroll, and the prompt
+     bar docks once the hero is gone and leaves at the contact form. */
+  const statement = document.querySelector<HTMLElement>('[data-statement]');
+  const inkWords = statement
+    ? [...statement.querySelectorAll<HTMLElement>('.w')]
+    : [];
+  const dock = document.querySelector<HTMLFormElement>('[data-dock]');
+  const hero = document.querySelector<HTMLElement>('.hero');
+  const contact = document.getElementById('kontaktua');
+  const scoreBox = document.querySelector<HTMLElement>('[data-result]');
+  if (statement && !reduce) statement.classList.add('is-live');
+
+  let inked = -1;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const vh = innerHeight;
+    if (statement && !reduce) {
+      const r = statement.getBoundingClientRect();
+      const p = (vh * 0.85 - r.top) / (r.height + vh * 0.25);
+      const n = Math.round(Math.min(1, Math.max(0, p)) * inkWords.length);
+      if (n !== inked) {
+        inkWords.forEach((w, i) => w.classList.toggle('on', i < n));
+        inked = n;
+      }
+    }
+    if (dock && hero && contact) {
+      // the measured score has its own button; don't sit on top of it
+      const score = scoreBox?.hidden ? null : scoreBox?.getBoundingClientRect();
+      const onScore = !!score && score.top < vh && score.bottom > 0;
+      const show =
+        !onScore &&
+        hero.getBoundingClientRect().bottom < 0 &&
+        contact.getBoundingClientRect().top > vh * 0.75;
+      dock.classList.toggle('is-shown', show);
+      dock.inert = !show;
+    }
+  };
+  addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    },
+    { passive: true },
+  );
+  addEventListener('resize', update);
+  update();
+
+  /* Put a line at the top of the contact form's message, once. */
+  const carryToForm = (text: string | undefined) => {
+    const message = document.querySelector<HTMLTextAreaElement>('#message');
+    if (!text || !message || message.value.includes(text)) return;
+    message.value = message.value ? `${text}\n${message.value}` : text;
+  };
+
+  dock?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = dock.querySelector('input');
+    carryToForm(input?.value.trim());
+    if (input) input.value = '';
+    contact?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    document.getElementById('name')?.focus({ preventScroll: true });
+  });
+
+  /* Measure the visitor's current site and stand its score next to
+     the 100. The number is carried into the contact form. */
+  const test = document.querySelector<HTMLFormElement>('[data-test]');
+  const result = document.querySelector<HTMLElement>('[data-result]');
+  if (test && result) {
+    const field = test.querySelector<HTMLInputElement>('input')!;
+    const button = test.querySelector<HTMLButtonElement>('button')!;
+    const status = test.querySelector<HTMLElement>('[data-status]')!;
+    const num = result.querySelector<HTMLElement>('[data-num]')!;
+    const host = result.querySelector<HTMLElement>('[data-host]')!;
+    const verdict = result.querySelector<HTMLElement>('[data-verdict]')!;
+    const cta = result.querySelector<HTMLAnchorElement>('[data-cta]')!;
+    const verdicts: string[] = JSON.parse(test.dataset.verdicts ?? '[]');
+    let note = '';
+
+    const countTo = (target: number) => {
+      if (reduce) {
+        num.textContent = String(target);
+        return;
+      }
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / 900);
+        num.textContent = String(Math.round(target * (1 - (1 - t) ** 3)));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    test.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      button.disabled = true;
+      test.classList.add('is-busy');
+      status.textContent = test.dataset.loading ?? '';
+      try {
+        const res = await fetch('/api/speed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: field.value }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          status.textContent =
+            (data.error === 'invalid'
+              ? test.dataset.invalid
+              : test.dataset.busy) ?? '';
+          return;
+        }
+        status.textContent = '';
+        host.textContent = data.host;
+        verdict.textContent =
+          verdicts[data.score < 50 ? 0 : data.score < 90 ? 1 : 2] ?? '';
+        note = (test.dataset.message ?? '')
+          .replace('{url}', data.host)
+          .replace('{score}', String(data.score));
+        result.hidden = false;
+        countTo(data.score);
+        update();
+        result.scrollIntoView({
+          behavior: reduce ? 'auto' : 'smooth',
+          block: 'center',
+        });
+      } catch {
+        status.textContent = test.dataset.busy ?? '';
+      } finally {
+        button.disabled = false;
+        test.classList.remove('is-busy');
+      }
+    });
+
+    cta.addEventListener('click', () => carryToForm(note));
   }
 
   /* Pin the process wall and walk sideways along it. GSAP is only
@@ -335,6 +569,12 @@ const faqLd = {
     line-height: 0.92;
   }
 
+  /* this page stacks many short sections; the site-wide rhythm leaves
+     too much air between them */
+  .section {
+    padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  }
+
   /* ---------- 1. hero ---------- */
   .hero {
     background: var(--wall);
@@ -342,13 +582,15 @@ const faqLd = {
   }
 
   .hero-grid {
-    padding-top: clamp(2.5rem, 6vw, 5rem);
-    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    padding-top: clamp(2rem, 4vw, 3.5rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
   }
 
   .h1 {
     display: grid;
-    font-size: clamp(3.6rem, 12.5vw, 11rem);
+    /* capped by height too, so the lede and buttons stay on the
+       first screen of a laptop */
+    font-size: clamp(3.4rem, min(12.5vw, 16.5svh), 11rem);
     font-weight: 900;
     line-height: 0.84;
     color: var(--on-wall);
@@ -359,8 +601,8 @@ const faqLd = {
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0 0.35em;
-    margin: clamp(1.25rem, 3vw, 2rem) 0 0;
-    font-size: clamp(2rem, 5.5vw, 4.6rem);
+    margin: clamp(1rem, 2.5vw, 1.5rem) 0 0;
+    font-size: clamp(1.8rem, min(5.5vw, 7.5svh), 4.6rem);
     font-weight: 800;
     font-stretch: var(--cond);
     line-height: 1;
@@ -394,7 +636,7 @@ const faqLd = {
     grid-template-columns: minmax(0, 1.4fr) auto;
     align-items: end;
     gap: 1.5rem 3rem;
-    margin-top: clamp(2rem, 5vw, 3.5rem);
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
   }
 
   .lede {
@@ -416,7 +658,71 @@ const faqLd = {
     background: var(--paint);
   }
 
-  /* ---------- 2. speed ---------- */
+  /* ---------- 2. about ---------- */
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(15rem, 26vw, 22rem);
+    align-items: start;
+    gap: 2.5rem clamp(2rem, 5vw, 5rem);
+    padding-top: clamp(4rem, 9vw, 7rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .statement {
+    margin: 0;
+    max-width: 27ch;
+    font-size: clamp(2.1rem, 5.2vw, 4.6rem);
+    font-weight: 850;
+    font-stretch: var(--cond);
+    line-height: 0.98;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .statement.is-live .w {
+    opacity: 0.16;
+    transition: opacity 320ms var(--ease);
+  }
+
+  .statement.is-live .w.on {
+    opacity: 1;
+  }
+
+  .portrait {
+    isolation: isolate;
+    margin: 0 1rem 1rem 0;
+    /* stays beside the sentence while it inks in */
+    position: sticky;
+    top: calc(var(--nav-height) + 2rem);
+  }
+
+  /* a block of sand paint behind the photo, off by a brush width */
+  .portrait::before {
+    content: '';
+    position: absolute;
+    inset: 1rem -1rem -1rem 1rem;
+    z-index: -1;
+    background: var(--paint);
+  }
+
+  .portrait img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 0;
+    border: 3px solid var(--ink);
+  }
+
+  .about-link {
+    display: inline-block;
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: var(--step-1);
+    font-weight: 650;
+  }
+
+  /* ---------- 4. speed ---------- */
   .speed {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
@@ -446,7 +752,131 @@ const faqLd = {
     line-height: 1.5;
   }
 
-  /* ---------- 3. the wall ---------- */
+  .speed-proof {
+    margin: 1.25rem 0 0;
+    font-weight: 650;
+  }
+
+  .test {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--ink);
+    max-width: 34rem;
+  }
+
+  .test label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: var(--step-2);
+    font-weight: 850;
+    font-stretch: var(--cond);
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .test-row {
+    display: flex;
+    border: 3px solid var(--ink);
+    background: var(--ground-raised);
+  }
+
+  .test-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.8rem 1rem;
+    font: inherit;
+    font-size: var(--step-1);
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+  }
+
+  .test-row input:focus {
+    outline: none;
+  }
+
+  .test-row:focus-within {
+    border-color: var(--line);
+  }
+
+  .test-row .btn {
+    border: 0;
+    border-left: 3px solid var(--ink);
+    border-radius: 0;
+  }
+
+  .test-row .btn:disabled {
+    cursor: progress;
+  }
+
+  .test-status {
+    position: relative;
+    margin: 0.75rem 0 0;
+    min-height: 1.5em;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+
+  /* a sand line that keeps walking while Google measures */
+  .test.is-busy .test-status::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.6rem;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(var(--line), var(--line)) no-repeat 0 0 / 30%
+      100%;
+    animation: walk 1.4s var(--ease-in-out) infinite alternate;
+  }
+
+  @keyframes walk {
+    to {
+      background-position: 100% 0;
+    }
+  }
+
+  .result {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: center;
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: 2px solid var(--rule-strong);
+  }
+
+  .result[hidden] {
+    display: none;
+  }
+
+  .result-num {
+    margin: 0;
+    font-size: clamp(8rem, 26vw, 22rem);
+    font-weight: 900;
+    font-stretch: var(--cond);
+    font-variant-numeric: tabular-nums;
+    line-height: 0.78;
+    color: var(--ink-subtle);
+  }
+
+  .result-label {
+    margin: 0;
+    font-weight: 700;
+    color: var(--ink-subtle);
+    overflow-wrap: anywhere;
+  }
+
+  .result-verdict {
+    margin: 0.5rem 0 1.5rem;
+    max-width: 22ch;
+    font-size: var(--step-3);
+    font-weight: 850;
+    font-stretch: var(--cond);
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  /* ---------- 5. the wall ---------- */
   .wall {
     background: var(--wall);
     color: var(--on-wall);
@@ -753,17 +1183,82 @@ const faqLd = {
     overflow-wrap: anywhere;
   }
 
-  .contact-face {
-    display: block;
-    width: 8rem;
-    height: auto;
-    margin-top: 2rem;
-    border: 2px solid var(--ink);
+  /* ---------- the docked prompt ---------- */
+  .dock {
+    position: fixed;
+    left: 50%;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 90;
+    display: none;
+    width: min(38rem, calc(100% - 2 * var(--gutter)));
+    background: var(--ground-raised);
+    border: 3px solid var(--ink);
+    translate: -50% calc(100% + 2rem);
+    transition: translate 480ms var(--ease);
+  }
+
+  :global(.has-js) .dock {
+    display: flex;
+  }
+
+  .dock.is-shown {
+    translate: -50% 0;
+  }
+
+  .dock input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.95rem 1.1rem;
+    font: inherit;
+    font-size: var(--step-1);
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+  }
+
+  .dock input::placeholder {
+    color: var(--ink-subtle);
+  }
+
+  .dock input:focus {
+    outline: none;
+  }
+
+  .dock:focus-within {
+    border-color: var(--line);
+  }
+
+  .dock button {
+    padding: 0 1.4rem;
+    font: inherit;
+    font-size: var(--step-1);
+    font-weight: 850;
+    font-stretch: var(--cond);
+    color: var(--on-paint);
+    background: var(--paint);
+    border: 0;
+    border-left: 3px solid var(--ink);
+    cursor: pointer;
+    transition:
+      background 160ms var(--ease),
+      color 160ms var(--ease);
+  }
+
+  .dock button:hover {
+    background: var(--ink);
+    color: var(--ground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dock {
+      transition: none;
+    }
   }
 
   /* ---------- small screens ---------- */
   @media (max-width: 860px) {
     .hero-foot,
+    .about,
     .speed,
     .includes,
     .work-item,
@@ -777,8 +1272,19 @@ const faqLd = {
       order: 0;
     }
 
-    .hundred {
+    .hundred,
+    .result-num {
       font-size: clamp(7rem, 40vw, 12rem);
+    }
+
+    .result {
+      gap: 1.5rem;
+    }
+
+    .portrait {
+      position: relative;
+      top: auto;
+      width: 62%;
     }
   }
 </style>
