@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:25-alpine AS base
 WORKDIR /app
 
 RUN corepack enable
@@ -16,7 +16,7 @@ FROM build-deps AS build
 COPY . .
 RUN pnpm run build
 
-FROM node:22-alpine AS runtime
+FROM node:25-alpine AS runtime
 WORKDIR /app
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
