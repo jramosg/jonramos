@@ -12,7 +12,7 @@ import {
   Row,
   Column,
   Link,
-} from '@react-email/components';
+} from 'react-email';
 
 interface ContactEmailProps {
   name: string;
@@ -64,7 +64,7 @@ export const ContactEmail = ({
   const t = translations[language] || translations.en;
 
   return (
-    <Html>
+    <Html lang={language}>
       <Head />
       <Preview>{t.preview}</Preview>
       <Tailwind
@@ -91,7 +91,10 @@ export const ContactEmail = ({
           },
         }}
       >
-        <Body className="bg-white font-sans text-brand my-auto mx-auto px-2">
+        <Body
+          lang={language}
+          className="bg-white font-sans text-brand my-auto mx-auto px-2"
+        >
           <Container className="border border-solid border-[#eaeaea] rounded-lg my-[40px] mx-auto p-[20px] max-w-[465px]">
             <Section className="mt-[32px]">
               <div className="w-12 h-12 bg-black rounded-full mx-auto flex items-center justify-center mb-6">

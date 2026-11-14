@@ -1,5 +1,5 @@
 import { defineAction, ActionError } from 'astro:actions';
-import { z } from 'astro:schema';
+import { z } from 'astro/zod';
 import { sendContactEmail } from '@/service/emailService';
 
 export const server = {
@@ -7,7 +7,7 @@ export const server = {
     accept: 'form',
     input: z.object({
       name: z.string().min(1, 'Name is required'),
-      email: z.string().email('Invalid email'),
+      email: z.email('Invalid email'),
       message: z.string().min(1, 'Message is required'),
       language: z.enum(['es', 'eu', 'en']).default('en'),
     }),

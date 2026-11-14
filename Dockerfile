@@ -1,7 +1,8 @@
-FROM node:22-alpine AS base
+FROM node:26-alpine AS base
 WORKDIR /app
 
-RUN corepack enable
+# Node 25+ no longer bundles Corepack; install the pnpm from packageManager.
+RUN npm install -g pnpm@10.33.0
 ENV PNPM_STORE_PATH=/pnpm/store
 
 COPY package.json pnpm-lock.yaml ./
@@ -16,7 +17,7 @@ FROM build-deps AS build
 COPY . .
 RUN pnpm run build
 
-FROM node:22-alpine AS runtime
+FROM node:26-alpine AS runtime
 WORKDIR /app
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist

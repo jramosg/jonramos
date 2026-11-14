@@ -21,7 +21,7 @@ const logger = (() => {
     });
   }
 
-  const logDir = import.meta.env.LOG_DIR || path.resolve(process.cwd(), 'logs');
+  const logDir = process.env.LOG_DIR || path.resolve(process.cwd(), 'logs');
   try {
     if (!fs.existsSync(logDir)) {
       fs.mkdirSync(logDir, { recursive: true });
