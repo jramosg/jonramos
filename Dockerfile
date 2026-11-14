@@ -2,10 +2,11 @@ FROM node:26-alpine AS base
 WORKDIR /app
 
 # Node 25+ no longer bundles Corepack; install the pnpm from packageManager.
-RUN npm install -g pnpm@10.33.0
+# pnpm-workspace.yaml lists the install scripts pnpm may run.
+RUN npm install -g pnpm@12.18.0
 ENV PNPM_STORE_PATH=/pnpm/store
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 FROM base AS prod-deps
 RUN pnpm install --prod --frozen-lockfile
