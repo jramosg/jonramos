@@ -18,7 +18,7 @@
     "@fontsource-variable/crimson-pro": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@react-email/components": "1.0.1",
-    "@react-email/render": "^2.0.0",
+    "@react-email/render": "^2.3.1",
     "astro": "^5.16.11",
     "gsap": "^3.15.1",
     "leaflet": "^1.9.4",
