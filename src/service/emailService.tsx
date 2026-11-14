@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { render, toPlainText } from '@react-email/render';
+import { render, toPlainText } from 'react-email';
 import type { Langs } from '@/i18n/ui';
 import { logger } from '@/logger';
 
