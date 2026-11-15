@@ -38,7 +38,7 @@
     "@types/react-dom": "^19.3.0",
     "pino-pretty": "^13.2.0",
     "prettier": "3.10.1",
-    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-astro": "1.1.2",
     "wawoff2": "2.0.1"
   },
   "pnpm": {
