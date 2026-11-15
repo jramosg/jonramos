@@ -52,19 +52,15 @@ const onHome = here === `/${lang}`;
     </a>
 
     <ul class="links">
-      {
-        links.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              data-section={link.spy && onHome ? link.id : undefined}
-              aria-current={!link.spy && onPage(link.href) ? 'page' : undefined}
-            >
-              {link.name}
-            </a>
-          </li>
-        ))
-      }
+      {links.map((link) => <li>
+        <a
+          href={link.href}
+          data-section={link.spy && onHome ? link.id : undefined}
+          aria-current={!link.spy && onPage(link.href) ? 'page' : undefined}
+        >
+          {link.name}
+        </a>
+      </li>)}
       <li>
         <a
           href={local.href}
@@ -98,15 +94,11 @@ const onHome = here === `/${lang}`;
           {local.name}
         </a>
       </li>
-      {
-        links.map((link) => (
-          <li>
-            <a href={link.href} class="drawer-link" tabindex="-1">
-              {link.name}
-            </a>
-          </li>
-        ))
-      }
+      {links.map((link) => <li>
+        <a href={link.href} class="drawer-link" tabindex="-1">
+          {link.name}
+        </a>
+      </li>)}
     </ul>
     <div class="drawer-tools">
       <LanguagePicker />

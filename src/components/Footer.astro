@@ -42,17 +42,15 @@ const socials = [
       <a href={getNavigationUrl(lang, '#contact')}>{t('nav.contact')}</a>
     </nav>
     <div class="row">
-      <p class="small">
-        &copy; {currentYear} Jon Ramos. Urnieta, Gipuzkoa.
-      </p>
+      <p class="small">&copy; {currentYear} Jon Ramos. Urnieta, Gipuzkoa.</p>
       <nav class="socials" aria-label="Social links">
-        {
-          socials.map((social) => (
-            <a href={social.href} target="_blank" rel="noopener noreferrer me">
-              {social.label}
-            </a>
-          ))
-        }
+        {socials.map((social) => <a
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer me"
+        >
+          {social.label}
+        </a>)}
       </nav>
       <a href={getNavigationUrl(lang, '#home')} class="top">
         {t('footer.backToTop')}

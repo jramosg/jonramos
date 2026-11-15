@@ -160,11 +160,9 @@ const page = isHome
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
-    {
-      !noindex && (
-        <meta name="robots" content="index, follow, max-image-preview:large" />
-      )
-    }
+    {!noindex && (
+      <meta name="robots" content="index, follow, max-image-preview:large" />
+    )}
 
     <!-- Preload the one face that paints the hero -->
     <link
@@ -207,21 +205,17 @@ const page = isHome
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={ogLocales[lang]} />
-    {
-      (Object.keys(ogLocales) as Lang[])
-        .filter((l) => l !== lang)
-        .map((l) => (
-          <meta property="og:locale:alternate" content={ogLocales[l]} />
-        ))
-    }
-    {
-      isHome && (
-        <>
-          <meta property="profile:first_name" content="Jon" />
-          <meta property="profile:last_name" content="Ramos" />
-        </>
-      )
-    }
+    {(Object.keys(ogLocales) as Lang[])
+      .filter((l) => l !== lang)
+      .map((l) => (
+        <meta property="og:locale:alternate" content={ogLocales[l]} />
+      ))}
+    {isHome && (
+      <>
+        <meta property="profile:first_name" content="Jon" />
+        <meta property="profile:last_name" content="Ramos" />
+      </>
+    )}
     <meta name="twitter:card" content="summary_large_image" />
 
     <script is:inline>
@@ -290,5 +284,6 @@ const page = isHome
   <body>
     <a href="#main-content" class="skip-link">{skipLabel[lang]}</a>
     <slot />
-  </body><ThemeProvider />
+  </body>
+  <ThemeProvider />
 </html>

@@ -12,11 +12,9 @@ const t = useTranslations(lang);
     <h2 class="section-title">{t('contributions.section.projects')}</h2>
 
     <div class="projects-grid">
-      {
-        projects.map((project) => (
-          <ProjectContributionCard project={project} lang={lang} />
-        ))
-      }
+      {projects.map((project) => (
+        <ProjectContributionCard project={project} lang={lang} />
+      ))}
     </div>
   </div>
 </section>

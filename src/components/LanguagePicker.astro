@@ -17,19 +17,15 @@ const hrefFor = (code: string) =>
 ---
 
 <div class="language-picker">
-  {
-    Object.entries(languages).map(([langCode, label]) => (
-      <a
-        href={hrefFor(langCode)}
-        class={`lang-link ${lang === langCode ? 'active' : ''}`}
-        hreflang={langCode}
-        lang={langCode}
-        aria-current={lang === langCode ? 'true' : undefined}
-      >
-        {label}
-      </a>
-    ))
-  }
+  {Object.entries(languages).map(([langCode, label]) => <a
+    href={hrefFor(langCode)}
+    class={`lang-link ${lang === langCode ? 'active' : ''}`}
+    hreflang={langCode}
+    lang={langCode}
+    aria-current={lang === langCode ? 'true' : undefined}
+  >
+    {label}
+  </a>)}
 </div>
 
 <style>

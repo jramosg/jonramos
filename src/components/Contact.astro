@@ -48,26 +48,20 @@ const links = [
         <p class="text" itemprop="description">{t('contact.text')}</p>
 
         <ul class="links">
-          {
-            links.map(({ href, label, value }) => (
-              <li>
-                <span class="label">{label}</span>
-                <a
-                  href={href}
-                  target={href.startsWith('http') ? '_blank' : undefined}
-                  rel={
-                    href.startsWith('http')
-                      ? 'noopener noreferrer me'
-                      : undefined
-                  }
-                  class="u-link"
-                  itemprop={href.startsWith('mailto') ? 'email' : 'sameAs'}
-                >
-                  {value}
-                </a>
-              </li>
-            ))
-          }
+          {links.map(({ href, label, value }) => <li>
+            <span class="label">{label}</span>
+            <a
+              href={href}
+              target={href.startsWith('http') ? '_blank' : undefined}
+              rel={
+                href.startsWith('http') ? 'noopener noreferrer me' : undefined
+              }
+              class="u-link"
+              itemprop={href.startsWith('mailto') ? 'email' : 'sameAs'}
+            >
+              {value}
+            </a>
+          </li>)}
         </ul>
 
         <div

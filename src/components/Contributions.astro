@@ -14,12 +14,10 @@ const stats = getContributionStats();
     <header class="section-header">
       <h2 class="section-title">{t('contributions.hero.title')}</h2>
       <p class="section-subtitle">
-        {
-          t('contributions.section.subtitle')
-            .replace('{projects}', String(stats.totalProjects))
-            .replace('{contributions}', String(stats.totalContributions))
-            .replace('{technologies}', stats.technologies.join(', '))
-        }
+        {t('contributions.section.subtitle')
+          .replace('{projects}', String(stats.totalProjects))
+          .replace('{contributions}', String(stats.totalContributions))
+          .replace('{technologies}', stats.technologies.join(', '))}
       </p>
     </header>
 
@@ -41,11 +39,9 @@ const stats = getContributionStats();
     </div>
 
     <div class="projects-grid">
-      {
-        projects.map((project) => (
-          <ProjectContributionCard project={project} lang={lang} />
-        ))
-      }
+      {projects.map((project) => (
+        <ProjectContributionCard project={project} lang={lang} />
+      ))}
     </div>
   </div>
 </section>

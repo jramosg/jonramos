@@ -89,8 +89,7 @@ const faqLd = {
       type="application/ld+json"
       is:inline
       set:html={JSON.stringify(faqLd)}
-    />
-  </Fragment>
+    /></Fragment>
 
   <!-- 1. Hero: the bay-blue wall -->
   <section class="hero on-wall" aria-labelledby="local-title">
@@ -125,13 +124,9 @@ const faqLd = {
   <section class="about container">
     <div>
       <p class="statement" data-statement>
-        {
-          words(c.about).map((w) => (
-            <>
-              <span class="w">{w}</span>{' '}
-            </>
-          ))
-        }
+        {words(c.about).map((w) => (
+          <> <span class="w">{w}</span>{' '} </>
+        ))}
       </p>
       <a href={`/${lang}`} class="u-link about-link">{c.aboutLink}</a>
     </div>
@@ -154,41 +149,37 @@ const faqLd = {
   >
     <h2 id="work-title" class="h2">{c.workTitle}</h2>
     <ul class="work-list">
-      {
-        c.work.map((w) => (
-          <li class="work-item">
-            <a
-              href={w.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="shot"
-              tabindex="-1"
-              aria-hidden="true"
-            >
-              <Image
-                src={images[w.image]}
-                alt={`${w.name}, ${w.place}`}
-                widths={[480, 760, 1100]}
-                sizes="(max-width: 860px) 100vw, 58vw"
-                loading="lazy"
-              />
-            </a>
-            <div class="work-text">
-              <h3>{w.name}</h3>
-              <p class="place">{w.place}</p>
-              <p>{w.body}</p>
-              <a
-                href={w.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="u-link"
-              >
-                {c.workVisit}
-              </a>
-            </div>
-          </li>
-        ))
-      }
+      {c.work.map((w) => <li class="work-item">
+        <a
+          href={w.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="shot"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          <Image
+            src={images[w.image]}
+            alt={`${w.name}, ${w.place}`}
+            widths={[480, 760, 1100]}
+            sizes="(max-width: 860px) 100vw, 58vw"
+            loading="lazy"
+          />
+        </a>
+        <div class="work-text">
+          <h3>{w.name}</h3>
+          <p class="place">{w.place}</p>
+          <p>{w.body}</p>
+          <a
+            href={w.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="u-link"
+          >
+            {c.workVisit}
+          </a>
+        </div>
+      </li>)}
     </ul>
   </section>
 
@@ -200,21 +191,19 @@ const faqLd = {
       <p class="speed-body">{c.speedBody}</p>
       <p class="speed-proof">
         {c.speedProof}{' '}
-        {
-          proofs.map((w, i) => (
-            <>
-              {i > 0 && ', '}
-              <a
-                href={pageSpeed(w.href)}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="u-link"
-              >
-                {w.name}
-              </a>
-            </>
-          ))
-        }
+        {proofs.map((w, i) => (
+          <>
+            {i > 0 && ', '}
+            <a
+              href={pageSpeed(w.href)}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="u-link"
+            >
+              {w.name}
+            </a>
+          </>
+        ))}
       </p>
 
       <form
@@ -263,19 +252,15 @@ const faqLd = {
     <div class="wall-inner">
       <h2 id="steps-title" class="h2 wall-title">{c.stepsTitle}</h2>
       <ol class="track">
-        {
-          c.steps.map((step, i) => (
-            <li class="cuadro">
-              <span class="num" aria-hidden="true">
-                {i + 1}
-              </span>
-              <div class="cuadro-text">
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </div>
-            </li>
-          ))
-        }
+        {c.steps.map((step, i) => <li class="cuadro">
+          <span class="num" aria-hidden="true">
+            {i + 1}
+          </span>
+          <div class="cuadro-text">
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        </li>)}
       </ol>
     </div>
   </section>
@@ -305,14 +290,10 @@ const faqLd = {
   <section class="section container faq" aria-labelledby="faq-title">
     <h2 id="faq-title" class="h2">{c.faqTitle}</h2>
     <div class="faq-list">
-      {
-        c.faq.map(({ q, a }) => (
-          <details>
-            <summary>{q}</summary>
-            <p>{a}</p>
-          </details>
-        ))
-      }
+      {c.faq.map(({ q, a }) => <details>
+        <summary>{q}</summary>
+        <p>{a}</p>
+      </details>)}
     </div>
   </section>
 

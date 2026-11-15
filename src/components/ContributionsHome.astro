@@ -51,47 +51,37 @@ const projectLogos: Record<string, any> = {
 
     <ul class="projects" itemscope itemtype="https://schema.org/ItemList">
       <meta itemprop="name" content="Open Source Contributions" />
-      {
-        projects.map((project) => {
-          const { featured, notable } = getContributionsByTier(
-            project.contributions,
-          );
-          const preview =
-            featured.length > 0 ? featured.slice(0, 3) : notable.slice(0, 3);
-          return (
-            <li class="project">
-              <div class="project-name">
-                {projectLogos[project.name] && (
-                  <Image
-                    src={projectLogos[project.name]}
-                    alt=""
-                    class="logo"
-                    width={40}
-                    height={40}
-                    fit="contain"
-                    loading="lazy"
-                  />
-                )}
-                <h3>{project.name}</h3>
-                <span class="count">{project.contributions.length}</span>
-              </div>
-              <ul class="prs">
-                {preview.map((c) => (
-                  <li>
-                    <a
-                      href={c.prLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {c.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          );
-        })
-      }
+      {projects.map((project) => {
+        const { featured, notable } = getContributionsByTier(
+          project.contributions,
+        );
+        const preview =
+          featured.length > 0 ? featured.slice(0, 3) : notable.slice(0, 3);
+        return <li class="project">
+          <div class="project-name">
+            {projectLogos[project.name] && (
+              <Image
+                src={projectLogos[project.name]}
+                alt=""
+                class="logo"
+                width={40}
+                height={40}
+                fit="contain"
+                loading="lazy"
+              />
+            )}
+            <h3>{project.name}</h3>
+            <span class="count">{project.contributions.length}</span>
+          </div>
+          <ul class="prs">
+            {preview.map((c) => <li>
+              <a href={c.prLink} target="_blank" rel="noopener noreferrer">
+                {c.title}
+              </a>
+            </li>)}
+          </ul>
+        </li>;
+      })}
     </ul>
 
     <a href={`/${lang}/contributions`} class="btn btn-ghost all">
