@@ -139,19 +139,15 @@ const projectLogos: Record<string, any> = {
                 >
                   {t('contributions.filter.all')}
                 </div>
-                {
-                  projects.map((p) => (
-                    <div
-                      class="select-option"
-                      data-value={p.name.toLowerCase()}
-                      role="option"
-                      aria-selected="false"
-                      tabindex="0"
-                    >
-                      {p.name}
-                    </div>
-                  ))
-                }
+                {projects.map((p) => <div
+                  class="select-option"
+                  data-value={p.name.toLowerCase()}
+                  role="option"
+                  aria-selected="false"
+                  tabindex="0"
+                >
+                  {p.name}
+                </div>)}
               </div>
             </div>
           </div>
@@ -165,169 +161,139 @@ const projectLogos: Record<string, any> = {
           {t('contributions.section.projects')}
         </h2>
         <div class="projects-list">
-          {
-            projects.map((project) => {
-              const INITIAL_COUNT = 5;
-              const hasMany = project.contributions.length > INITIAL_COUNT;
-              const sortedContributions = sortContributionsByDate(
-                project.contributions,
-              );
-              return (
-                <article
-                  class="project-card"
-                  id={project.name.toLowerCase()}
-                  data-project={project.name.toLowerCase()}
-                >
-                  <div class="project-header">
-                    <div class="project-title-row">
-                      {projectLogos[project.name] && (
-                        <Image
-                          src={projectLogos[project.name]}
-                          alt={`${project.name} logo`}
-                          class="project-logo"
-                          height={48}
-                          loading="eager"
-                        />
-                      )}
-                      <h3 class="project-name">{project.name}</h3>
-                      {project.stats?.category && (
-                        <span class="project-category">
-                          {project.stats.category}
-                        </span>
-                      )}
+          {projects.map((project) => {
+            const INITIAL_COUNT = 5;
+            const hasMany = project.contributions.length > INITIAL_COUNT;
+            const sortedContributions = sortContributionsByDate(
+              project.contributions,
+            );
+            return <article
+              class="project-card"
+              id={project.name.toLowerCase()}
+              data-project={project.name.toLowerCase()}
+            >
+              <div class="project-header">
+                <div class="project-title-row">
+                  {projectLogos[project.name] && (
+                    <Image
+                      src={projectLogos[project.name]}
+                      alt={`${project.name} logo`}
+                      class="project-logo"
+                      height={48}
+                      loading="eager"
+                    />
+                  )}
+                  <h3 class="project-name">{project.name}</h3>
+                  {project.stats?.category && <span class="project-category">
+                    {project.stats.category}
+                  </span>}
+                </div>
+                <p class="project-description">{project.description}</p>
+                <div class="project-meta">
+                  <div class="tech-stack">
+                    {project.technology.map((tech) => <span class="tech-badge"
+                      >{tech}</span
+                    >)}
+                  </div>
+                  <div class="project-links">
+                    <a
+                      href={project.repository}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="project-link"
+                      aria-label={`View ${project.name} repository on GitHub`}
+                    >
+                      <GithubIcon width={18} height={18} aria-hidden="true" />
+                      {t('contributions.card.repository')}
+                    </a>
+                    {project.website &&
+                      project.website !== project.repository && <a
+                        href={project.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-link"
+                      >
+                        <ExternalLinkIcon width={18} height={18} />
+                        {t('contributions.card.website')}
+                      </a>}
+                  </div>
+                </div>
+              </div>
+
+              <div class="contributions-section">
+                <h4 class="contributions-title">
+                  {project.contributions.length}{' '}
+                  {project.contributions.length === 1
+                    ? t('contributions.card.contributions')
+                    : t('contributions.card.contributions_plural')}
+                </h4>
+                <div class="contributions-list" data-contributions-list>
+                  {sortedContributions.map((contribution, index) => <div
+                    class={`contribution-item ${index >= INITIAL_COUNT ? 'hidden-contribution' : ''}`}
+                    data-search-text={`${contribution.title} ${contribution.description} ${contribution.tags?.join(' ')}`.toLowerCase()}
+                  >
+                    <div class="contribution-number">
+                      {String(index + 1).padStart(2, '0')}
                     </div>
-                    <p class="project-description">{project.description}</p>
-                    <div class="project-meta">
-                      <div class="tech-stack">
-                        {project.technology.map((tech) => (
-                          <span class="tech-badge">{tech}</span>
-                        ))}
+                    <div class="contribution-content">
+                      <div class="contribution-header-row">
+                        <h5 class="contribution-title">
+                          {contribution.title}
+                        </h5>
+                        <time class="contribution-date">
+                          {new Date(contribution.date).toLocaleDateString(
+                            lang,
+                            {
+                              year: 'numeric',
+                              month: 'short',
+                            },
+                          )}
+                        </time>
                       </div>
-                      <div class="project-links">
-                        <a
-                          href={project.repository}
+                      <p class="contribution-description">
+                        {contribution.description}
+                      </p>
+                      {contribution.impact && <div class="contribution-impact">
+                        <ActivityIcon width={16} height={16} />
+                        <span>{contribution.impact}</span>
+                      </div>}
+                      <div class="contribution-footer">
+                        {contribution.tags && <div class="contribution-tags">
+                          {contribution.tags.map((tag) => <span class="tag"
+                            >{tag}</span
+                          >)}
+                        </div>}
+                        {contribution.prLink && <a
+                          href={contribution.prLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          class="project-link"
-                          aria-label={`View ${project.name} repository on GitHub`}
+                          class="pr-link"
                         >
-                          <GithubIcon
-                            width={18}
-                            height={18}
-                            aria-hidden="true"
-                          />
-                          {t('contributions.card.repository')}
-                        </a>
-                        {project.website &&
-                          project.website !== project.repository && (
-                            <a
-                              href={project.website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="project-link"
-                            >
-                              <ExternalLinkIcon width={18} height={18} />
-                              {t('contributions.card.website')}
-                            </a>
-                          )}
+                          <GitPullRequestIcon width={16} height={16} />
+                          {t('contributions.card.viewPR')}
+                        </a>}
                       </div>
                     </div>
-                  </div>
-
-                  <div class="contributions-section">
-                    <h4 class="contributions-title">
-                      {project.contributions.length}{' '}
-                      {project.contributions.length === 1
-                        ? t('contributions.card.contributions')
-                        : t('contributions.card.contributions_plural')}
-                    </h4>
-                    <div class="contributions-list" data-contributions-list>
-                      {sortedContributions.map((contribution, index) => (
-                        <div
-                          class={`contribution-item ${index >= INITIAL_COUNT ? 'hidden-contribution' : ''}`}
-                          data-search-text={`${contribution.title} ${contribution.description} ${contribution.tags?.join(' ')}`.toLowerCase()}
-                        >
-                          <div class="contribution-number">
-                            {String(index + 1).padStart(2, '0')}
-                          </div>
-                          <div class="contribution-content">
-                            <div class="contribution-header-row">
-                              <h5 class="contribution-title">
-                                {contribution.title}
-                              </h5>
-                              <time class="contribution-date">
-                                {new Date(contribution.date).toLocaleDateString(
-                                  lang,
-                                  {
-                                    year: 'numeric',
-                                    month: 'short',
-                                  },
-                                )}
-                              </time>
-                            </div>
-                            <p class="contribution-description">
-                              {contribution.description}
-                            </p>
-                            {contribution.impact && (
-                              <div class="contribution-impact">
-                                <ActivityIcon width={16} height={16} />
-                                <span>{contribution.impact}</span>
-                              </div>
-                            )}
-                            <div class="contribution-footer">
-                              {contribution.tags && (
-                                <div class="contribution-tags">
-                                  {contribution.tags.map((tag) => (
-                                    <span class="tag">{tag}</span>
-                                  ))}
-                                </div>
-                              )}
-                              {contribution.prLink && (
-                                <a
-                                  href={contribution.prLink}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  class="pr-link"
-                                >
-                                  <GitPullRequestIcon width={16} height={16} />
-                                  {t('contributions.card.viewPR')}
-                                </a>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    {hasMany && (
-                      <button
-                        class="show-more-btn"
-                        data-show-more
-                        data-count={
-                          project.contributions.length - INITIAL_COUNT
-                        }
-                        data-show-more-text={t(
-                          'contributions.card.showMore',
-                        ).replace(
-                          '{count}',
-                          (
-                            project.contributions.length - INITIAL_COUNT
-                          ).toString(),
-                        )}
-                        data-show-less-text={t('contributions.card.showLess')}
-                      >
-                        {t('contributions.card.showMore').replace(
-                          '{count}',
-                          (
-                            project.contributions.length - INITIAL_COUNT
-                          ).toString(),
-                        )}
-                      </button>
-                    )}
-                  </div>
-                </article>
-              );
-            })
-          }
+                  </div>)}
+                </div>
+                {hasMany && <button
+                  class="show-more-btn"
+                  data-show-more
+                  data-count={project.contributions.length - INITIAL_COUNT}
+                  data-show-more-text={t('contributions.card.showMore').replace(
+                    '{count}',
+                    (project.contributions.length - INITIAL_COUNT).toString(),
+                  )}
+                  data-show-less-text={t('contributions.card.showLess')}
+                >
+                  {t('contributions.card.showMore').replace(
+                    '{count}',
+                    (project.contributions.length - INITIAL_COUNT).toString(),
+                  )}
+                </button>}
+              </div>
+            </article>;
+          })}
         </div>
       </div>
     </section>
@@ -338,45 +304,39 @@ const projectLogos: Record<string, any> = {
           {t('contributions.section.timeline')}
         </h2>
         <div class="timeline" role="list">
-          {
-            allContributions.map((contribution) => (
-              <div
-                class="timeline-item"
-                role="listitem"
-                data-project={contribution.projectName.toLowerCase()}
-              >
-                <div class="timeline-marker" aria-hidden="true" />
-                <div class="timeline-content">
-                  <time class="timeline-date">
-                    {new Date(contribution.date).toLocaleDateString(lang, {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </time>
-                  <h3 class="timeline-title">{contribution.title}</h3>
-                  <div class="timeline-project">
-                    <a
-                      href={`#${contribution.projectName.toLowerCase()}`}
-                      class="project-badge"
-                    >
-                      {contribution.projectName}
-                    </a>
-                  </div>
-                  {contribution.prLink && (
-                    <a
-                      href={contribution.prLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="timeline-link"
-                    >
-                      {t('contributions.timeline.viewPR')}
-                    </a>
-                  )}
-                </div>
+          {allContributions.map((contribution) => <div
+            class="timeline-item"
+            role="listitem"
+            data-project={contribution.projectName.toLowerCase()}
+          >
+            <div class="timeline-marker" aria-hidden="true" />
+            <div class="timeline-content">
+              <time class="timeline-date">
+                {new Date(contribution.date).toLocaleDateString(lang, {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              <h3 class="timeline-title">{contribution.title}</h3>
+              <div class="timeline-project">
+                <a
+                  href={`#${contribution.projectName.toLowerCase()}`}
+                  class="project-badge"
+                >
+                  {contribution.projectName}
+                </a>
               </div>
-            ))
-          }
+              {contribution.prLink && <a
+                href={contribution.prLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="timeline-link"
+              >
+                {t('contributions.timeline.viewPR')}
+              </a>}
+            </div>
+          </div>)}
         </div>
       </div>
     </section>

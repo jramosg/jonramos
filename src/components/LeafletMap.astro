@@ -26,12 +26,13 @@ const {
     data-longitude={longitude}
     data-zoom={zoom}
     data-tiles={tileLayer}
-    data-marker-component={markerComponent ||
-      `<div style=\"font-family: var(--font-main); padding: 4px;\"><strong>${company}</strong><br>${location.city}</div>`}
+    data-marker-component={
+      markerComponent ||
+      `<div style=\"font-family: var(--font-main); padding: 4px;\"><strong>${company}</strong><br>${location.city}</div>`
+    }
     data-company={company}
     data-city={location.city}
-  >
-  </leaflet-map>
+  > </leaflet-map>
 </div>
 
 <script>

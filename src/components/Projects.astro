@@ -84,18 +84,14 @@ const projects = [
     </header>
 
     <ol class="list">
-      {
-        projects.map((project, index) => (
-          <li
-            itemprop="itemListElement"
-            itemscope
-            itemtype="https://schema.org/ListItem"
-          >
-            <meta itemprop="position" content={String(index + 1)} />
-            <ProjectCard {...project} />
-          </li>
-        ))
-      }
+      {projects.map((project, index) => <li
+        itemprop="itemListElement"
+        itemscope
+        itemtype="https://schema.org/ListItem"
+      >
+        <meta itemprop="position" content={String(index + 1)} />
+        <ProjectCard {...project} />
+      </li>)}
     </ol>
   </div>
 </section>

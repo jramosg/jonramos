@@ -54,56 +54,52 @@ const publications = [
     </header>
 
     <ol class="publication-list" aria-label={t('publications.listLabel')}>
-      {
-        publications.map((publication, index) => (
-          <li
-            class="publication-item"
-            itemprop="itemListElement"
-            itemscope
-            itemtype="https://schema.org/ListItem"
+      {publications.map((publication, index) => <li
+        class="publication-item"
+        itemprop="itemListElement"
+        itemscope
+        itemtype="https://schema.org/ListItem"
+      >
+        <meta itemprop="position" content={String(index + 1)} />
+        <article
+          class="publication"
+          itemprop="item"
+          itemscope
+          itemtype="https://schema.org/ScholarlyArticle"
+        >
+          <time
+            class="publication-year"
+            datetime={publication.year}
+            itemprop="datePublished"
           >
-            <meta itemprop="position" content={String(index + 1)} />
-            <article
-              class="publication"
-              itemprop="item"
-              itemscope
-              itemtype="https://schema.org/ScholarlyArticle"
-            >
-              <time
-                class="publication-year"
-                datetime={publication.year}
-                itemprop="datePublished"
-              >
-                {publication.year}
-              </time>
+            {publication.year}
+          </time>
 
-              <div class="publication-body">
-                <h3 class="publication-title" itemprop="headline">
-                  <a
-                    href={publication.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    itemprop="url"
-                  >
-                    {publication.title}
-                  </a>
-                </h3>
-                <p class="publication-meta">
-                  <span
-                    itemprop="isPartOf"
-                    itemscope
-                    itemtype="https://schema.org/Periodical"
-                  >
-                    <span itemprop="name">{publication.journal}</span>
-                  </span>
-                  <span class="assoc">{t('publications.association')}</span>
-                </p>
-                <meta itemprop="contributor" content="Jon Ramos" />
-              </div>
-            </article>
-          </li>
-        ))
-      }
+          <div class="publication-body">
+            <h3 class="publication-title" itemprop="headline">
+              <a
+                href={publication.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                itemprop="url"
+              >
+                {publication.title}
+              </a>
+            </h3>
+            <p class="publication-meta">
+              <span
+                itemprop="isPartOf"
+                itemscope
+                itemtype="https://schema.org/Periodical"
+              >
+                <span itemprop="name">{publication.journal}</span>
+              </span>
+              <span class="assoc">{t('publications.association')}</span>
+            </p>
+            <meta itemprop="contributor" content="Jon Ramos" />
+          </div>
+        </article>
+      </li>)}
     </ol>
   </div>
 </section>

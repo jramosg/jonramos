@@ -24,22 +24,18 @@ const { featured, notable, minor } = getContributionsByTier(
         <span class="name-prefix">#</span>
         {project.name}
       </h3>
-      {
-        project.stats?.category && (
-          <span class="project-category">{project.stats.category}</span>
-        )
-      }
+      {project.stats?.category && <span class="project-category"
+        >{project.stats.category}</span
+      >}
     </div>
 
     <p class="project-description">{project.description}</p>
 
     <div class="project-meta">
       <div class="tech-stack">
-        {
-          project.technology.map((tech) => (
-            <span class="tech-badge">{tech}</span>
-          ))
-        }
+        {project.technology.map((tech) => <span class="tech-badge"
+          >{tech}</span
+        >)}
       </div>
 
       <div class="project-links">
@@ -64,30 +60,30 @@ const { featured, notable, minor } = getContributionsByTier(
           </svg>
           repo
         </a>
-        {
-          project.website && project.website !== project.repository && (
-            <a
-              href={project.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="project-link"
-              aria-label={`Visit ${project.name} website`}
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-              </svg>
-              site
-            </a>
-          )
-        }
+        {project.website && project.website !== project.repository && <a
+          href={project.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="project-link"
+          aria-label={`Visit ${project.name} website`}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+            />
+            <path
+              d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+            />
+          </svg>
+          site
+        </a>}
       </div>
     </div>
 
@@ -95,167 +91,141 @@ const { featured, notable, minor } = getContributionsByTier(
       <span class="summary-total"
         >{project.contributions.length} contributions</span
       >
-      {
-        featured.length > 0 && (
-          <span class="summary-featured">{featured.length} featured</span>
-        )
-      }
+      {featured.length > 0 && <span class="summary-featured"
+        >{featured.length} featured</span
+      >}
     </div>
   </header>
 
   <div class="contributions-container">
     {/* Featured Contributions - Hero treatment */}
-    {
-      featured.length > 0 && (
-        <div class="tier-section featured-section">
-          <div class="tier-label">
-            <span class="tier-icon">★</span>
-            Featured
-          </div>
-          <ul class="contributions-list featured-list">
-            {featured.map((contribution) => (
-              <li class="contribution-item featured">
-                <a
-                  class="contribution-link"
-                  href={contribution.prLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="contribution-glow" />
-                  <div class="contribution-header">
-                    <h4 class="contribution-title">{contribution.title}</h4>
-                    <time class="contribution-date">
-                      {new Date(contribution.date).toLocaleDateString(lang, {
-                        year: 'numeric',
-                        month: 'short',
-                      })}
-                    </time>
-                  </div>
-                  <p class="contribution-description">
-                    {contribution.description}
-                  </p>
-                  {contribution.impact && (
-                    <div class="contribution-impact">
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                      </svg>
-                      <span>{contribution.impact}</span>
-                    </div>
-                  )}
-                  {contribution.tags && (
-                    <div class="contribution-tags">
-                      {contribution.tags.slice(0, 4).map((tag) => (
-                        <span class="tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                  <span class="pr-indicator">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <circle cx="18" cy="18" r="3" />
-                      <circle cx="6" cy="6" r="3" />
-                      <path d="M13 6h3a2 2 0 0 1 2 2v7" />
-                      <line x1="6" y1="9" x2="6" y2="21" />
-                    </svg>
-                    View PR
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
+    {featured.length > 0 && <div class="tier-section featured-section">
+      <div class="tier-label">
+        <span class="tier-icon">★</span>
+        Featured
+      </div>
+      <ul class="contributions-list featured-list">
+        {featured.map((contribution) => <li class="contribution-item featured">
+          <a
+            class="contribution-link"
+            href={contribution.prLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="contribution-glow" />
+            <div class="contribution-header">
+              <h4 class="contribution-title">{contribution.title}</h4>
+              <time class="contribution-date">
+                {new Date(contribution.date).toLocaleDateString(lang, {
+                  year: 'numeric',
+                  month: 'short',
+                })}
+              </time>
+            </div>
+            <p class="contribution-description">
+              {contribution.description}
+            </p>
+            {contribution.impact && <div class="contribution-impact">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+              <span>{contribution.impact}</span>
+            </div>}
+            {contribution.tags && <div class="contribution-tags">
+              {contribution.tags
+                .slice(0, 4)
+                .map((tag) => <span class="tag">{tag}</span>)}
+            </div>}
+            <span class="pr-indicator">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="18" cy="18" r="3" />
+                <circle cx="6" cy="6" r="3" />
+                <path d="M13 6h3a2 2 0 0 1 2 2v7" />
+                <line x1="6" y1="9" x2="6" y2="21" />
+              </svg>
+              View PR
+            </span>
+          </a>
+        </li>)}
+      </ul>
+    </div>}
 
     {/* Notable Contributions - Standard cards */}
-    {
-      notable.length > 0 && (
-        <div class="tier-section notable-section">
-          <div class="tier-label notable-label">
-            <span class="tier-icon">◆</span>
-            Notable
-          </div>
-          <ul class="contributions-list notable-list">
-            {notable.map((contribution) => (
-              <li class="contribution-item notable">
-                <a
-                  class="contribution-link"
-                  href={contribution.prLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="contribution-header">
-                    <h4 class="contribution-title">{contribution.title}</h4>
-                    <time class="contribution-date">
-                      {new Date(contribution.date).toLocaleDateString(lang, {
-                        year: 'numeric',
-                        month: 'short',
-                      })}
-                    </time>
-                  </div>
-                  <p class="contribution-description">
-                    {contribution.description}
-                  </p>
-                  {contribution.tags && (
-                    <div class="contribution-tags">
-                      {contribution.tags.slice(0, 3).map((tag) => (
-                        <span class="tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
+    {notable.length > 0 && <div class="tier-section notable-section">
+      <div class="tier-label notable-label">
+        <span class="tier-icon">◆</span>
+        Notable
+      </div>
+      <ul class="contributions-list notable-list">
+        {notable.map((contribution) => <li class="contribution-item notable">
+          <a
+            class="contribution-link"
+            href={contribution.prLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="contribution-header">
+              <h4 class="contribution-title">{contribution.title}</h4>
+              <time class="contribution-date">
+                {new Date(contribution.date).toLocaleDateString(lang, {
+                  year: 'numeric',
+                  month: 'short',
+                })}
+              </time>
+            </div>
+            <p class="contribution-description">
+              {contribution.description}
+            </p>
+            {contribution.tags && <div class="contribution-tags">
+              {contribution.tags
+                .slice(0, 3)
+                .map((tag) => <span class="tag">{tag}</span>)}
+            </div>}
+          </a>
+        </li>)}
+      </ul>
+    </div>}
 
     {/* Minor Contributions - Compact list */}
-    {
-      minor.length > 0 && (
-        <div class="tier-section minor-section">
-          <div class="tier-label minor-label">
-            <span class="tier-icon">○</span>
-            Other ({minor.length})
-          </div>
-          <ul class="contributions-list minor-list">
-            {minor.map((contribution) => (
-              <li class="contribution-item minor">
-                <a
-                  class="contribution-link"
-                  href={contribution.prLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span class="minor-bullet">—</span>
-                  <span class="contribution-title">{contribution.title}</span>
-                  <time class="contribution-date">
-                    {new Date(contribution.date).toLocaleDateString(lang, {
-                      month: 'short',
-                      year: '2-digit',
-                    })}
-                  </time>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
+    {minor.length > 0 && <div class="tier-section minor-section">
+      <div class="tier-label minor-label">
+        <span class="tier-icon">○</span>
+        Other ({minor.length})
+      </div>
+      <ul class="contributions-list minor-list">
+        {minor.map((contribution) => <li class="contribution-item minor">
+          <a
+            class="contribution-link"
+            href={contribution.prLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="minor-bullet">—</span>
+            <span class="contribution-title">{contribution.title}</span>
+            <time class="contribution-date">
+              {new Date(contribution.date).toLocaleDateString(lang, {
+                month: 'short',
+                year: '2-digit',
+              })}
+            </time>
+          </a>
+        </li>)}
+      </ul>
+    </div>}
   </div>
 </article>
 

@@ -44,15 +44,20 @@ const t = useTranslations(lang);
       name="message"
       rows="4"
       required
-      class="form-input textarea"></textarea>
+      class="form-input textarea"
+    ></textarea>
   </div>
 
   <button type="submit" class="submit-btn btn btn-paint">
     <span class="btn-text">{t('contact.form.send')}</span>
   </button>
 
-  <div class="form-status" id="form-status" role="status" aria-live="polite">
-  </div>
+  <div
+    class="form-status"
+    id="form-status"
+    role="status"
+    aria-live="polite"
+  ></div>
 </form>
 
 <script>

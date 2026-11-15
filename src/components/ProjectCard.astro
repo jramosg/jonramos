@@ -45,26 +45,22 @@ const address =
       </a>
       <span class="tags" itemprop="keywords">{tags.join(', ')}</span>
     </p>
-    {
-      demos && demos.length > 0 && (
-        <p class="demos">
-          Demo:{' '}
-          {demos.map((demo, i) => (
-            <>
-              {i > 0 && ', '}
-              <a
-                href={demo.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="u-link"
-              >
-                {demo.label}
-              </a>
-            </>
-          ))}
-        </p>
-      )
-    }
+    {demos && demos.length > 0 && <p class="demos">
+      Demo:{' '}
+      {demos.map((demo, i) => (
+        <>
+          {i > 0 && ', '}
+          <a
+            href={demo.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="u-link"
+          >
+            {demo.label}
+          </a>
+        </>
+      ))}
+    </p>}
   </div>
 </article>
 
